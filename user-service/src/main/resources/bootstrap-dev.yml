@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: user-service
+  cloud:
+    kubernetes:
+      discovery:
+        enabled: false
+      config:
+        enabled: false
+      secrets:
+        enabled: false
+      reload:
+        enabled: false
+      ribbon:
+        enabled: false

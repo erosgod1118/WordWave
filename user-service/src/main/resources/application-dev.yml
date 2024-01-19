@@ -1,0 +1,55 @@
+spring.datasource:
+  url: jdbc:mysql://localhost:3306/wordwave_db?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+  username: root
+  password: password
+  testWhileIdle: true
+  validationQuery: SELECT 1
+
+app.read.datasource:
+  url: jdbc:mysql://localhost:3306/wordwave_db?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+  username: root
+  password: password
+  testWhileIdle: true
+  validationQuery: SELECT 1
+
+# spring jpa configuration
+hibernate:
+  physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+  implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+
+# jwt configurations
+jwt:
+  access.token:
+    secret: Pld3EbyIILsQkNGzaXWJEKo2VGdya0yOJAnIVGW0aLBZddm28lD7cWTweXNog2e2
+    expiration: 864000000
+  refresh.token:
+    secret: 6sdlaiWPf6V8A4yfBzgQciR4RtvE4zlO8Vh2rmromzjf50HXLJLO8CGgSw1lFFC4
+    expiration: 25920000000
+
+co.polarpublishing.data:
+  update.schedule.wpdata.cron-expression: 0 0 0 * * *
+  update.schedule.unsubscribe-reasons: 0 0 11 * * 1
+
+users.unsubscribe-reasons.jobs.mail: bogdan.gabor+cancellations@pm.me
+
+# mail configuration
+spring.mail:
+  protocol: smtps
+  host: smtp.gmail.com
+  port: 465
+  username: support@bookbeam.io
+  password: 3p{dRSXkc;h_P~mZ
+  smtp.auth: true
+  smtp.starttls.enable: true
+  properties.mail.smtp:
+    auth: true
+    starttls.enable: true
+
+upload.file.path: /home/wordwave-configs/users_avatars/
+
+com.wp.concurrent-request.max-quantity: 10
+
+wp:
+  username: tomass
+  password: test1234
+  apiUrl: http://dev.bookbeam.io/wp-json/auth-api
