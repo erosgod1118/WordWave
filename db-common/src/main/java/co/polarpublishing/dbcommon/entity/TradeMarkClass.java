@@ -19,9 +19,10 @@ import javax.persistence.Table;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class TradeMarkClass {
 
-    @Id
-    @Column(name = "id")
-    private Long id;
+	@Id
+	@Column(name = "id")
+	private Long id;
 
-    private String description;
+	private String description;
+	
 }

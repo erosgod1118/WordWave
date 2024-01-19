@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,12 +28,18 @@ public class BookPositionByKeyword {
   @ManyToOne
   @JoinColumn(name = "keyword_id")
   private Keyword keyword;
+
   private String asin;
+
   @JoinColumn(name = "market_place_id")
   private Long marketPlaceId;
+
   @JoinColumn(name = "store_id")
   private Long storeId;
+
   private Integer position;
+  
   @JoinColumn(name = "time_stamp")
   private Long timeStamp;
+
 }

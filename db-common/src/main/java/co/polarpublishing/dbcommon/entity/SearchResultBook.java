@@ -21,7 +21,7 @@ import lombok.ToString;
 /**
  * Entity representing a particular search result book.
  *
- * @author mani
+ * @author FMRGJ
  */
 @Entity
 @Table(name = "keywords_search_results_books")
@@ -38,19 +38,24 @@ public class SearchResultBook {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @EqualsAndHashCode.Include
   private Long id;
+
   @Column(name = "search_page_number")
   private int pageNumber;
+
   @Column(name = "search_page_item_index")
   private Integer pageItemIndex;
+
   @ToString.Exclude
   @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumns( {
-      @JoinColumn(name = "asin"),
-      @JoinColumn(name = "marketplace_id")
+    @JoinColumn(name = "asin"),
+    @JoinColumn(name = "marketplace_id")
   })
   private BookModel book;
+  
   @ToString.Exclude
   @ManyToOne
   @JoinColumn(name = "keyword_search_result_id")
   private SearchResult searchResult;
+
 }

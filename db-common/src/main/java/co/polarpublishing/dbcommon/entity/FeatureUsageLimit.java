@@ -43,7 +43,6 @@ public class FeatureUsageLimit extends AbstractEntity {
   @AllArgsConstructor
   @NoArgsConstructor
   public static class Id implements Serializable {
-
     @Enumerated(EnumType.STRING)
     private Feature feature;
 
@@ -51,4 +50,5 @@ public class FeatureUsageLimit extends AbstractEntity {
     @JoinColumn(name = "subscription_plan_id")
     private SubscriptionPlan subscriptionPlan;
   }
+
 }

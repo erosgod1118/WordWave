@@ -19,17 +19,19 @@ import java.io.Serializable;
 @Data
 public class UserBookNotification extends AbstractEntity {
 
-    @EmbeddedId
-    private Id id;
+	@EmbeddedId
+	private Id id;
 
-    @Embeddable
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Data
-    @Builder
-    public static class Id implements Serializable {
-        private Long userId;
-        private String asin;
-        private Long marketplaceId;
-    }
+	@Embeddable
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Data
+	@Builder
+	public static class Id implements Serializable {
+
+		private Long userId;
+		private String asin;
+		private Long marketplaceId;
+			
+	}
 }

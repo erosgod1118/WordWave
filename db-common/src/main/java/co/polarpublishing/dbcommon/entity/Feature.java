@@ -1,6 +1,7 @@
 package co.polarpublishing.dbcommon.entity;
 
 public enum Feature {
+
   CE_BSR_HISTORY("CE_BSR_HISTORY"), CHROME_EXTENSION("CHROME_EXTENSION"), LISTING_ANALYSIS("LISTING_ANALYSIS");
 
   private String name;
@@ -12,4 +13,5 @@ public enum Feature {
   public String getName() {
     return this.name;
   }
+  
 }

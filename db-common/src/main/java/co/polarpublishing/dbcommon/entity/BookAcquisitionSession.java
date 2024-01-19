@@ -26,8 +26,10 @@ public class BookAcquisitionSession extends AbstractEntity {
 
   @EmbeddedId
   private Id id;
+
   @Enumerated(value = EnumType.STRING)
   private TaskStatus status;
+
   @Enumerated(value = EnumType.STRING)
   private BookType type;
 
@@ -37,8 +39,10 @@ public class BookAcquisitionSession extends AbstractEntity {
   @AllArgsConstructor
   @NoArgsConstructor
   public static class Id implements Serializable {
+
     private String asin;
     private Long marketplaceId;
+    
   }
 
 }

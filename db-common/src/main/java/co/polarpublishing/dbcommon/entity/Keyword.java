@@ -46,16 +46,18 @@ public class Keyword {
     if (this == o) {
       return true;
     }
+
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
+
     Keyword keyword = (Keyword) o;
     return Objects.equals(id, keyword.id);
   }
 
   @Override
   public int hashCode() {
-
     return Objects.hash(id);
   }
+
 }

@@ -23,7 +23,7 @@ import lombok.ToString;
 /**
  * Entity representing keyword search result in Amazon.
  *
- * @author mani
+ * @author FMRGJ
  */
 @Entity
 @Table(name = "keyword_search_results")
@@ -40,6 +40,7 @@ public class SearchResult {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @EqualsAndHashCode.Include
   private Long id;
+
   private long keywordId;
   private long parentKeywordId;
 
@@ -53,18 +54,22 @@ public class SearchResult {
 
   private long timestamp;
   private Long booksQuantity;
-  @OneToMany(mappedBy = "searchResult", orphanRemoval = true,
-      cascade = CascadeType.ALL)
+
+  @OneToMany(mappedBy = "searchResult", orphanRemoval = true, cascade = CascadeType.ALL)
   @ToString.Exclude
   private List<SearchResultBook> searchResultBooks;
+
   private long userId;
+
   @OneToOne(mappedBy = "searchResult", orphanRemoval = false)
   @ToString.Exclude
   private KeywordAnalytic keywordAnalytic;
+  
   private Long keywordResearchSessionId;
 
   @PrePersist
   public void setTimestamp() {
     this.timestamp = System.currentTimeMillis();
   }
+
 }

@@ -1,7 +1,9 @@
 package co.polarpublishing.dbcommon.entity;
 
 import co.polarpublishing.common.model.StoreTypeName;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 import javax.persistence.*;
 
@@ -15,7 +17,7 @@ import lombok.Setter;
 /**
  * Entity representing store/department in Amazon.
  *
- * @author mani
+ * @author FMRGJ
  */
 @Entity
 @Table(name = "stores")
@@ -31,20 +33,26 @@ public class Store {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+
   private String name;
+
   @Column(name = "amazon_search_alias")
   private String amazonSearchAlias;
+
   @Column(name = "amazon_id")
   private String amazonId;
+
   @ManyToOne
   @JoinColumn(name = "marketplace_id")
   private Marketplace marketplace;
+
   @Transient
   private StoreTypeName type;
 
   @ManyToOne
   @JoinColumn(name = "type_id")
   private StoreType storeType;
+  
   @Column(name = "root_category_id")
   private Long rootCategoryId;
 
@@ -62,4 +70,5 @@ public class Store {
         ", rootCategoryId=" + rootCategoryId +
         '}';
   }
+
 }

@@ -45,4 +45,5 @@ public class SubscriptionPlan extends AbstractEntity {
         .findFirst()
         .get();
   }
+  
 }

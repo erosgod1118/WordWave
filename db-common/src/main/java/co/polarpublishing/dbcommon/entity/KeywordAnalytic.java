@@ -2,6 +2,7 @@ package co.polarpublishing.dbcommon.entity;
 
 import co.polarpublishing.common.constant.KeywordAnalyticMiscellaneous;
 import co.polarpublishing.dbcommon.entity.attributeconverter.BothWaysJsonNodeConverter;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import java.util.Objects;
@@ -27,7 +28,7 @@ import lombok.ToString;
 /**
  * Entity representing computed analytics of a keyword.
  *
- * @author mani
+ * @author FMRGJ
  */
 @Entity
 @Table(name = "keywords_analytics")
@@ -41,25 +42,34 @@ public class KeywordAnalytic {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
   private Long marketplaceId;
   private Long storeId;
+
   @ManyToOne
   @JoinColumn(name = "keyword_id")
   private Keyword keyword;
+
   private Long timestamp;
   private Double averagePrice;
+
   @Column(name = "average_star_rating")
   private Double averageRating;
+
   @Column(name = "average_best_seller_rank")
   private Long averageBestsellerRank;
+
   @Column(name = "average_reviews")
   private Long averageReviewsQuantity;
+
   @Convert(converter = BothWaysJsonNodeConverter.class)
   private JsonNode miscellaneous;
+
   @OneToOne
   @EqualsAndHashCode.Exclude
   @ToString.Exclude
   private SearchResult searchResult;
+
   private Long keywordResearchSessionId;
 
   @Override
@@ -83,16 +93,17 @@ public class KeywordAnalytic {
     if (this == o) {
       return true;
     }
+
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
+
     KeywordAnalytic that = (KeywordAnalytic) o;
     return Objects.equals(id, that.id);
   }
 
   @Override
   public int hashCode() {
-
     return Objects.hash(id);
   }
 
@@ -101,12 +112,12 @@ public class KeywordAnalytic {
     this.timestamp = System.currentTimeMillis();
   }
 
-  public JsonNode getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous
-                                                           miscellaneousDataType) {
-
-    if (this.miscellaneous == null || this.miscellaneous.isNull() || this.miscellaneous.get
-        (miscellaneousDataType.getName()) == null || this.miscellaneous.get(miscellaneousDataType
-        .getName()).isNull()) {
+  public JsonNode getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous miscellaneousDataType) {
+    if (this.miscellaneous == null 
+      || this.miscellaneous.isNull() 
+      || this.miscellaneous.get(miscellaneousDataType.getName()) == null 
+      || this.miscellaneous.get(miscellaneousDataType.getName()).isNull()) 
+    {
       return NullNode.getInstance();
     }
 
@@ -114,65 +125,57 @@ public class KeywordAnalytic {
   }
 
   public Integer getCompetitionScore() {
+    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous.COMPETITION_SCORE);
 
-    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous
-        .COMPETITION_SCORE);
     return dataNode.isNull() ? null : dataNode.asInt();
   }
 
   public Integer getOpportunityScore() {
+    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous.OPPORTUNITY_SCORE);
 
-    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous
-        .OPPORTUNITY_SCORE);
     return dataNode.isNull() ? null : dataNode.asInt();
   }
 
   public Integer getMarketSizeScore() {
+    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous.MARKET_SIZE_SCORE);
 
-    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous
-        .MARKET_SIZE_SCORE);
     return dataNode.isNull() ? null : dataNode.asInt();
   }
 
   public Long getAvgMinMonthlySalesQuantity() {
+    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous.AVERAGE_MIN_MONTHLY_SALES);
 
-    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous
-        .AVERAGE_MIN_MONTHLY_SALES);
     return dataNode.isNull() ? null : dataNode.asLong();
   }
 
   public Long getAvgMaxMonthlySalesQuantity() {
+    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous.AVERAGE_MAX_MONTHLY_SALES);
 
-    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous
-        .AVERAGE_MAX_MONTHLY_SALES);
     return dataNode.isNull() ? null : dataNode.asLong();
   }
 
   public Double getAvgMinMonthlyEarnings() {
+    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous.AVERAGE_MIN_MONTHLY_EARNING);
 
-    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous
-        .AVERAGE_MIN_MONTHLY_EARNING);
     return dataNode.isNull() ? null : dataNode.asDouble();
   }
 
   public Double getAvgMaxMonthlyEarnings() {
+    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous.AVERAGE_MAX_MONTHLY_EARNING);
 
-    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous
-        .AVERAGE_MAX_MONTHLY_EARNING);
     return dataNode.isNull() ? null : dataNode.asDouble();
   }
 
   public Long getSearchResultBooksQuantity() {
+    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous.SEARCH_RESULT_BOOKS_QUANTITY);
 
-    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous
-        .SEARCH_RESULT_BOOKS_QUANTITY);
     return dataNode.isNull() ? null : dataNode.asLong();
   }
 
   public Long getFirstPageAvgBsr() {
-
-    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous
-        .FIRST_PAGE_AVERAGE_BESTSELLER_RANK);
+    JsonNode dataNode = this.getDataNodeFromMiscellaneousDocument(KeywordAnalyticMiscellaneous.FIRST_PAGE_AVERAGE_BESTSELLER_RANK);
+    
     return dataNode.isNull() ? null : dataNode.asLong();
   }
+
 }

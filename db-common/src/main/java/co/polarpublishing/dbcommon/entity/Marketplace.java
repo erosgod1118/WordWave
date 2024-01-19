@@ -23,7 +23,7 @@ import lombok.ToString;
 /**
  * Entity representing Amazon's marketplace.
  *
- * @author mani
+ * @author FMRGJ
  */
 @Entity
 @Table(name = "marketplaces")
@@ -42,21 +42,26 @@ public class Marketplace {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @EqualsAndHashCode.Include
   private Long id;
+
   private String name;
+
   @Column(name = "amazon_id")
   private String amazonId;
+
   @Column(name = "priority_level")
   private Integer priorityLevel;
+
   @OneToMany(mappedBy = "marketplace", orphanRemoval = true)
   @ToString.Exclude
   private List<Store> stores;
+
   @OneToOne
   @JoinColumn(name = "country_id")
   @ToString.Exclude
   private Country country;
+
   @Column(name = "suggestions_url")
   private String suggestionsUrl;
-
 
   @Override
   public String toString() {
@@ -72,16 +77,18 @@ public class Marketplace {
     if (this == o) {
       return true;
     }
+
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
+    
     Marketplace that = (Marketplace) o;
     return Objects.equals(id, that.id);
   }
 
   @Override
   public int hashCode() {
-
     return Objects.hash(id);
   }
+
 }

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
  * it's a join table, but to isolate things between user and book resource
  * domain only the association is mapped in this service.
  *
- * @author mani
+ * @author FMRGJ
  */
 @Entity
 @Table(name = "user_books")
@@ -34,9 +34,9 @@ public class UserBookAssociation extends AbstractEntity {
   @Data
   @Builder
   public static class Id implements Serializable {
-
     private Long userId;
     private String asin;
     private Long marketplaceId;
   }
+  
 }

@@ -18,4 +18,5 @@ public abstract class State {
   protected void populateCreationTimestamp() {
     this.creationTimestamp = System.currentTimeMillis();
   }
+  
 }

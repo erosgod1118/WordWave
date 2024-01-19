@@ -11,17 +11,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import co.polarpublishing.common.model.StoreTypeName;
+
 import lombok.Data;
 
 @Entity
 @Table(name = "store_types")
 @Data
 public class StoreType implements Serializable {
-    @Id
-    @GeneratedValue
-    private Long id;
 
-    @Column(name = "name")
-    @Enumerated(EnumType.STRING)
-    private StoreTypeName storeTypeName;
+	@Id
+	@GeneratedValue
+	private Long id;
+
+	@Column(name = "name")
+	@Enumerated(EnumType.STRING)
+	private StoreTypeName storeTypeName;
+	
 }

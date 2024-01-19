@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 /**
  * Entity representing a user book keyword.
  *
- * @author mani
+ * @author FMRGJ
  */
 @Entity
 @Table(name = "user_book_keywords")
@@ -38,9 +38,13 @@ public class UserBookKeywordAssociation {
     private Long userId;
     private String asin;
     private Long marketplaceId;
+
     @ManyToOne
     @JoinColumn(name = "keyword_id")
     private Keyword keyword;
+    
     private Long storeId;
+
   }
+
 }
