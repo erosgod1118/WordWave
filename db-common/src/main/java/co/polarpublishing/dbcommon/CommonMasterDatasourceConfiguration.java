@@ -24,7 +24,8 @@ public class CommonMasterDatasourceConfiguration {
 	@Primary
 	@ConfigurationProperties("spring.datasource")
 	public DataSource masterDataSource() {
-		return masterDataSourceProperties().initializeDataSourceBuilder()
+		return masterDataSourceProperties()
+						.initializeDataSourceBuilder()
 						.type(HikariDataSource.class).build();
 	}
 
