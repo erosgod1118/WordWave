@@ -13,6 +13,8 @@
 
   <modules>
     <module>common</module>
+    <module>db-common</module>
+    <module>user-service</module>
   </modules>
 
   <parent>

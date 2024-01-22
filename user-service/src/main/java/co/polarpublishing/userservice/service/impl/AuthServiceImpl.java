@@ -50,7 +50,6 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public UserDto signIn(String email, String password) throws UserNotFoundException {
 		User user = userReadRepository.findByEmailAndBannedIsFalseAllIgnoreCase(email);
-
 		if (user == null || !BCrypt.checkpw(password, user.getPassword())) {
 			throw new UserNotFoundException("User with such email and password does not exist.");
 		}

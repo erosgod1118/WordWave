@@ -29,7 +29,8 @@ public class JwtServiceImpl implements JwtService {
 
 	@Override
 	public String generateAccessToken(TokenInfo tokenInfo, String userPlan) {
-		return Jwts.builder()
+		return Jwts
+						.builder()
 						.setSubject(tokenInfo.toString())
 						.claim("plan", userPlan)
 						.setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
@@ -39,7 +40,8 @@ public class JwtServiceImpl implements JwtService {
 
 	@Override
 	public String generateRefreshToken(TokenInfo tokenInfo, String userPlan) {
-		return Jwts.builder()
+		return Jwts
+						.builder()
 						.setSubject(tokenInfo.toString())
 						.claim("plan", userPlan)
 						.setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
@@ -48,29 +50,38 @@ public class JwtServiceImpl implements JwtService {
 	}
 
 	public TokenInfo getAccessTokenInfo(String token) {
-		Claims claims = Jwts.parser()
+		Claims claims = Jwts
+						.parser()
 						.setSigningKey(jwtAccessTokenSecret)
 						.parseClaimsJws(token)
 						.getBody();
-
 		String[] subject = claims.getSubject().split("::");
-
 		long userId = Long.parseLong(subject[1]);
 		String plan = claims.get("plan", String.class);
-		return TokenInfo.builder().userId(userId).email(subject[0]).plan(plan).build();
+
+		return TokenInfo
+						.builder()
+						.userId(userId)
+						.email(subject[0])
+						.plan(plan)
+						.build();
 	}
 
 	public TokenInfo getRefreshTokenInfo(String token) {
-		String[] subject = Jwts.parser()
+		String[] subject = Jwts
+						.parser()
 						.setSigningKey(jwtRefreshTokenSecret)
 						.parseClaimsJws(token)
 						.getBody()
 						.getSubject()
 						.split("::");
-
 		long userId = Long.parseLong(subject[1]);
 
-		return TokenInfo.builder().userId(userId).email(subject[0]).build();
+		return TokenInfo
+						.builder()
+						.userId(userId)
+						.email(subject[0])
+						.build();
 	}
-	
+
 }

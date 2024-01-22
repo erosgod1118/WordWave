@@ -39,7 +39,9 @@ public class AmazonKeysController {
 	private final JwtService jwtService;
 
 	@ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
-	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success. Returns updated user object.")})
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "Success. Returns updated user object.")
+	})
 	@RequestMapping(value = "/marketplaces", method = RequestMethod.GET)
 	public ResponseEntity getListOfMarketplaces() {
 		return ResponseEntity.ok(amazonKeysService.getListOfMarketplaces());

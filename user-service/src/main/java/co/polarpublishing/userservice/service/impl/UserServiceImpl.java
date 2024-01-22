@@ -58,52 +58,56 @@ public class UserServiceImpl implements UserService {
   private UserBillingHistoryWriteRepository userBillingHistoryWriteRepository;
   private UserAssembler userAssembler;
   private JwtService jwtService;
-
   private MailService mailService;
-
-  @Autowired private final UserConverter userConverter;
-
-  @Autowired private final WpDataService wpDataService;
+  @Autowired 
+  private final UserConverter userConverter;
+  @Autowired 
+  private final WpDataService wpDataService;
 
   @Override
   public UserDto findByEmail(String email) throws UserNotFoundException {
     User user = findModelByEmail(email);
-
     return userAssembler.toDto(user);
   }
 
   @Override
   public User findModelByEmail(String email) throws UserNotFoundException {
-    return Optional.ofNullable(userReadRepository.findByEmailAndBannedIsFalseAllIgnoreCase(email))
-        .orElseThrow(UserNotFoundException::new);
+    return Optional
+            .ofNullable(userReadRepository.findByEmailAndBannedIsFalseAllIgnoreCase(email))
+            .orElseThrow(UserNotFoundException::new);
   }
 
   @Override
   public UserDto findById(Long id) throws UserNotFoundException {
-    User user =
-        Optional.ofNullable(userReadRepository.findByIdAndBannedIsFalse(id))
-            .orElseThrow(UserNotFoundException::new);
+    User user = Optional
+                  .ofNullable(userReadRepository.findByIdAndBannedIsFalse(id))
+                  .orElseThrow(UserNotFoundException::new);
 
     return userAssembler.toDto(user);
   }
 
   @Override
   public User findByResetToken(String resetToken) throws UserNotFoundException {
-    return Optional.ofNullable(userReadRepository.findByResetTokenAndBannedIsFalse(resetToken))
+    return Optional
+            .ofNullable(userReadRepository.findByResetTokenAndBannedIsFalse(resetToken))
             .orElseThrow(UserNotFoundException::new);
   }
 
   public UserDto resetPassword(ResetPasswordDto resetPasswordDto) throws UserNotFoundException {
     User user = this.findByResetToken(resetPasswordDto.getResetToken());
+
     user.setPassword(new BCryptPasswordEncoder().encode(resetPasswordDto.getNewPassword()));
     user.setResetToken(null);
+
     this.update(user);
 
     UserDto userDto = userAssembler.toDto(user);
-    TokenInfo tokenInfo = TokenInfo.builder()
+    TokenInfo tokenInfo = TokenInfo
+            .builder()
             .userId(userDto.getUserId())
             .email(userDto.getEmail())
             .build();
+
     userDto.setAccessToken(jwtService.generateAccessToken(tokenInfo, user.getUserCurrentPlan()));
 
     return userDto;
@@ -111,7 +115,8 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User findByConfirmationToken(String confirmationToken) throws UserNotFoundException {
-    return Optional.ofNullable(userReadRepository.findByConfirmationTokenAndBannedIsFalse(confirmationToken))
+    return Optional
+            .ofNullable(userReadRepository.findByConfirmationTokenAndBannedIsFalse(confirmationToken))
             .orElseThrow(UserNotFoundException::new);
   }
 
@@ -125,10 +130,12 @@ public class UserServiceImpl implements UserService {
     this.update(user);
 
     UserDto userDto = userAssembler.toDto(user);
-    TokenInfo tokenInfo = TokenInfo.builder()
+    TokenInfo tokenInfo = TokenInfo
+            .builder()
             .userId(userDto.getUserId())
             .email(userDto.getEmail())
             .build();
+
     userDto.setAccessToken(jwtService.generateAccessToken(tokenInfo, user.getUserCurrentPlan()));
 
     return userDto;
@@ -137,16 +144,15 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserDto update(Long userId, UserDto userDto) throws UserNotFoundException {
     try {
-      Optional.ofNullable(userWriteRepository.findByIdAndBannedIsFalse(userId))
-          .orElseThrow(UserNotFoundException::new);
+      Optional
+        .ofNullable(userWriteRepository.findByIdAndBannedIsFalse(userId))
+        .orElseThrow(UserNotFoundException::new);
 
       User user = userAssembler.toEntity(userDto);
       user.setId(userId);
 
       User updatedUser = userWriteRepository.save(user);
-
       return userAssembler.toDto(updatedUser);
-
     } catch (Exception ex) {
       throw new UserNotFoundException();
     }
@@ -154,21 +160,21 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User update(User user) throws UserNotFoundException {
-      Optional.ofNullable(userWriteRepository.findByIdAndBannedIsFalse(user.getId()))
-              .orElseThrow(UserNotFoundException::new);
-      return userWriteRepository.save(user);
+    Optional
+      .ofNullable(userWriteRepository.findByIdAndBannedIsFalse(user.getId()))
+      .orElseThrow(UserNotFoundException::new);
+      
+    return userWriteRepository.save(user);
   }
 
   @Override
-  public void changePassword(Long userId, ChangePasswordDto changePasswordDto)
-      throws UserNotFoundException {
+  public void changePassword(Long userId, ChangePasswordDto changePasswordDto) throws UserNotFoundException {
     User user;
 
     try {
-      user =
-          Optional.ofNullable(userWriteRepository.findByIdAndBannedIsFalse(userId))
+      user = Optional
+              .ofNullable(userWriteRepository.findByIdAndBannedIsFalse(userId))
               .orElseThrow(UserNotFoundException::new);
-
     } catch (Exception ex) {
       throw new UserNotFoundException();
     }
@@ -177,7 +183,10 @@ public class UserServiceImpl implements UserService {
       throw new UserNotFoundException("User with such password does not exist.");
     }
 
-    user.setPassword(new BCryptPasswordEncoder().encode(changePasswordDto.getNewPassword()));
+    user.setPassword(
+      new BCryptPasswordEncoder()
+          .encode(changePasswordDto.getNewPassword())
+    );
     userWriteRepository.save(user);
   }
 
@@ -199,8 +208,8 @@ public class UserServiceImpl implements UserService {
     User user = findModelByEmail(email);
     this.updateBillingHistory(user);
 
-    return userConverter.convertFromListBillingHistoryDao(
-        userBillingHistoryWriteRepository.findAllByUser(user));
+    return userConverter
+            .convertFromListBillingHistoryDao(userBillingHistoryWriteRepository.findAllByUser(user));
   }
 
   @Override

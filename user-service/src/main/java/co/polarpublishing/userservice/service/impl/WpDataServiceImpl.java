@@ -140,6 +140,7 @@ public class WpDataServiceImpl implements WpDataService {
     JSONArray billingList = obj.getJSONArray("data");
 
     List<UserBillingHistory> userBillingHistoryList = new ArrayList<>();
+    
     for (int i = 0; i < billingList.length(); i++) {
       UserBillingHistory record = new UserBillingHistory();
       JSONObject billingObject = billingList.getJSONObject(i);

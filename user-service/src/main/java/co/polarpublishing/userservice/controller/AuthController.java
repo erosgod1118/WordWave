@@ -85,7 +85,6 @@ public class AuthController {
 		"/book-tracker-service/api/v1/landing-page/auth/aweber/callback",
 		"/book-tracker-service/api/v1/landing-page/auth/mailchimp/callback"
 	)));
-
 	private static final Map<String, String> LIMITED_ENDPOINTS = Stream.of(new String[][]{
 		{"POST:/book-tracker-service/api/v1/niche-finder", "NICHE_FINDER_SEARCHES"},
 		{"POST:/book-tracker-service/api/v1/tracking-books", "BOOK_TRACKER_BOOKS"},
@@ -94,7 +93,6 @@ public class AuthController {
 		{"POST:/keyword-research-service/api/v1/keyword-research-updates/start", "KEYWORD_RESEARCH_SEARCHES"},
 		{"GET:/category-explorer-service/api/v1/categoryexplorer/subcategories/", "CATEGORY_EXPLORER_SEARCHES"}
 	}).collect(Collectors.toMap(data -> data[0], data -> data[1]));
-
 	private final AuthService authService;
 	private final UserService userService;
 	private final JwtService jwtService;
@@ -122,11 +120,15 @@ public class AuthController {
 		try {
 			//check latest WP data
 			UserWpDataDto wpData = userService.getUserWpData(signInDto.getEmail());
+
 			String subscriptionStatus = wpData.getUserSubscriptionStatus();
 			if (subscriptionStatus == null || subscriptionStatus.equals("0")) {
-				return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+				return ResponseEntity
+								.status(HttpStatus.UNAUTHORIZED)
 								.body(
-									ErrorResponse.builder().code(401)
+									ErrorResponse
+										.builder()
+										.code(401)
 										.message("No subscription")
 										.status(HttpStatus.UNAUTHORIZED.value())
 										.timestamp(DateAndTimeUtil.getCurrentEpochTime())
@@ -135,11 +137,11 @@ public class AuthController {
 			}
 
 			UserDto signInUser = authService.signIn(signInDto.getEmail(), signInDto.getPassword());
-			TokenInfo tokenInfo = TokenInfo.builder()
+			TokenInfo tokenInfo = TokenInfo
+							.builder()
 							.userId(signInUser.getUserId())
 							.email(signInUser.getEmail())
 							.build();
-
 			String accessToken = jwtService.generateAccessToken(tokenInfo, signInUser.getUserCurrentPlan());
 			String refreshToken = jwtService.generateRefreshToken(tokenInfo, signInUser.getUserCurrentPlan());
 
@@ -148,8 +150,9 @@ public class AuthController {
 
 			return ResponseEntity.ok(signInUser);
 		} catch (UserNotFoundException ex) {
-			return ResponseEntity.status(
-				HttpStatus.BAD_REQUEST).body(
+			return ResponseEntity
+				.status(HttpStatus.BAD_REQUEST)
+				.body(
 					ErrorResponse
 						.builder()
 						.code(ex.getCode())
@@ -157,7 +160,7 @@ public class AuthController {
 						.status(HttpStatus.BAD_REQUEST.value())
 						.timestamp(DateAndTimeUtil.getCurrentEpochTime())
 						.build()
-			);
+				);
 		}
 	}
 
@@ -171,6 +174,7 @@ public class AuthController {
 			//check latest WP data
 			TokenInfo tokenInfo = jwtService.getRefreshTokenInfo(refreshToken.getJwt());
 			UserWpDataDto wpData = userService.getUserWpData(tokenInfo.getEmail());
+
 			String subscriptionStatus = wpData.getUserSubscriptionStatus();
 			if (subscriptionStatus == null || subscriptionStatus.equals("0")) {
 				ErrorResponse errorResponse = ErrorResponse
@@ -183,7 +187,10 @@ public class AuthController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
 			}
 
-			TokenDto accessToken = TokenDto.builder().jwt(jwtService.generateAccessToken(tokenInfo, wpData.getUserCurrentPlan())).build();
+			TokenDto accessToken = TokenDto
+															.builder()
+															.jwt(jwtService.generateAccessToken(tokenInfo, wpData.getUserCurrentPlan()))
+															.build();
 			return ResponseEntity.ok(accessToken);
 		} catch (UserNotFoundException ex) {
 			return ResponseEntity
