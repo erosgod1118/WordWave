@@ -1,6 +1,7 @@
 package co.polarpublishing.userservice.entity;
 
 import co.polarpublishing.dbcommon.entity.AbstractEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,25 +20,27 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserLimit extends AbstractEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long userId;
-    private String name;
-    private String type;
-    private Integer max;
-    private Integer value;
 
-    public boolean isExceeded() {
-        return value >= max;
-    }
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    public void increment() {
-        this.value++;
-    }
+	private Long userId;
+	private String name;
+	private String type;
+	private Integer max;
+	private Integer value;
 
-    public Integer remaining() {
-        return max - value;
-    }
+	public boolean isExceeded() {
+		return value >= max;
+	}
+
+	public void increment() {
+		this.value++;
+	}
+
+	public Integer remaining() {
+		return max - value;
+	}
+
 }
-

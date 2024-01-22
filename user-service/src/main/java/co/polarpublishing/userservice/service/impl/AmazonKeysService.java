@@ -10,14 +10,14 @@ import java.util.List;
 
 public interface AmazonKeysService {
 
-    List<MarketplaceKeysDto> getListOfMarketplaces();
+	List<MarketplaceKeysDto> getListOfMarketplaces();
 
-    AmazonKeysDto addKeys(Long userId, AmazonKeysDto dto) throws KeysForSuchMarketplaceAlreadyExistsException;
+	AmazonKeysDto addKeys(Long userId, AmazonKeysDto dto) throws KeysForSuchMarketplaceAlreadyExistsException;
 
-    AmazonKeysDto updateKeys(Long userId, AmazonKeysDto dto) throws KeysNotFoundException;
+	AmazonKeysDto updateKeys(Long userId, AmazonKeysDto dto) throws KeysNotFoundException;
 
-    void deleteKeys(Long id) throws KeysNotFoundException;
+	void deleteKeys(Long id) throws KeysNotFoundException;
 
-    List<AmazonKeysDto> getKeysForUser(User user);
+	List<AmazonKeysDto> getKeysForUser(User user);
 
 }

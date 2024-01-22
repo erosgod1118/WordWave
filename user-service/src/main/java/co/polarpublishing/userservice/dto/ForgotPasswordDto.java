@@ -14,8 +14,8 @@ import javax.validation.constraints.Pattern;
 @Builder
 public class ForgotPasswordDto {
 
-    @NotNull(message = "Missing required parameter 'email'.")
-    @Pattern(regexp = "^.+@.+\\..+$", message = "Invalid email address.")
-    private String email;
+	@NotNull(message = "Missing required parameter 'email'.")
+	@Pattern(regexp = "^.+@.+\\..+$", message = "Invalid email address.")
+	private String email;
 
 }

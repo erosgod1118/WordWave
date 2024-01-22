@@ -14,4 +14,5 @@ import lombok.Setter;
 public class UserState {
 
   private FeaturesUsageState featuresUsageState = new FeaturesUsageState();
+  
 }

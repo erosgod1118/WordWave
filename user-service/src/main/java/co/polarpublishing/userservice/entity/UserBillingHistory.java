@@ -14,19 +14,20 @@ import java.time.Instant;
 @Builder
 public class UserBillingHistory {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
-    private Integer amount;
+	private Integer amount;
 
-    @Column(name = "created_at")
-    private Long createdAt;
+	@Column(name = "created_at")
+	private Long createdAt;
 
-    @Column(name = "invoice_link")
-    private String invoiceLink;
+	@Column(name = "invoice_link")
+	private String invoiceLink;
+
 }

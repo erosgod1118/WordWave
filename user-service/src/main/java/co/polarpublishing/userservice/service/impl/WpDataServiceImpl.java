@@ -4,7 +4,9 @@ import co.polarpublishing.userservice.dto.TrialUpgradeDto;
 import co.polarpublishing.userservice.entity.User;
 import co.polarpublishing.userservice.entity.UserBillingHistory;
 import co.polarpublishing.userservice.service.WpDataService;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -43,10 +45,12 @@ public class WpDataServiceImpl implements WpDataService {
   @Override
   @Async("wpThreadPoolTaskExecutor")
   public Future<User> getUserWpData(User user) {
-
     HttpPost post = new HttpPost(wpApiUrl + "/check_users_subscription");
+
     log.info("Get data from WP");
+
     List<NameValuePair> urlParameters = new ArrayList<>();
+
     urlParameters.add(new BasicNameValuePair("username", wpUsername));
     urlParameters.add(new BasicNameValuePair("password", wpPassword));
     urlParameters.add(new BasicNameValuePair("userEmail", user.getEmail()));
@@ -56,6 +60,7 @@ public class WpDataServiceImpl implements WpDataService {
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
+
     post.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
     String jsonResponse = "";
@@ -67,15 +72,21 @@ public class WpDataServiceImpl implements WpDataService {
     } catch (IOException e) {
       e.printStackTrace();
     }
+
     JSONObject obj = new JSONObject(jsonResponse);
+
     log.info("WP Api response code: " + obj.get("code"));
     log.info("WP Api response message: " + obj.get("message"));
+
     if (obj.get("data") == JSONObject.NULL || obj.get("message").equals("No record found")) {
       return null;
     }
+
     JSONObject data = obj.getJSONObject("data");
     JSONObject userData = data.getJSONObject("user");
+
     log.info("Json object is not empty");
+
     String subscriptionStatus = data.getString("hasValidSubscription");
     String lastBillingDate = userData.getString("last_billing_date");
     String nextBillingDate = userData.getString("next_billing_date");
@@ -92,9 +103,9 @@ public class WpDataServiceImpl implements WpDataService {
   @Override
   @Async("wpThreadPoolTaskExecutor")
   public Future<List<UserBillingHistory>> getBillingHistory(User user) {
-
     HttpPost post = new HttpPost(wpApiUrl + "/get_user_billing_history");
     List<NameValuePair> urlParameters = new ArrayList<>();
+
     urlParameters.add(new BasicNameValuePair("username", wpUsername));
     urlParameters.add(new BasicNameValuePair("password", wpPassword));
     urlParameters.add(new BasicNameValuePair("userEmail", user.getEmail()));
@@ -104,6 +115,7 @@ public class WpDataServiceImpl implements WpDataService {
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
+
     post.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
     String jsonResponse = "";
@@ -115,9 +127,12 @@ public class WpDataServiceImpl implements WpDataService {
     } catch (IOException e) {
      log.error(e.getMessage(), e);
     }
+
     JSONObject obj = new JSONObject(jsonResponse);
+
     log.info("WP Api response code: " + obj.get("code"));
     log.info("WP Api response message: " + obj.get("message"));
+
     if (obj.get("data") == JSONObject.NULL || obj.get("message").equals("No record found")) {
       return null;
     }
@@ -126,28 +141,27 @@ public class WpDataServiceImpl implements WpDataService {
 
     List<UserBillingHistory> userBillingHistoryList = new ArrayList<>();
     for (int i = 0; i < billingList.length(); i++) {
-
       UserBillingHistory record = new UserBillingHistory();
       JSONObject billingObject = billingList.getJSONObject(i);
       Integer amount = billingObject.getInt("amount");
       Long createdAt = billingObject.getLong("created");
       String invoiceLink = billingObject.getString("receipt_url");
+
       record.setAmount(amount);
       record.setCreatedAt(createdAt);
       record.setInvoiceLink(invoiceLink);
       record.setUser(user);
       userBillingHistoryList.add(record);
     }
+
     return new AsyncResult<List<UserBillingHistory>>(userBillingHistoryList);
   }
 
   @Override
   public User changeUserSubscription(User user, String planType) {
-
-
-    HttpPost post =
-        new HttpPost(wpApiUrl + "/change_user_subscription_plan");
+    HttpPost post = new HttpPost(wpApiUrl + "/change_user_subscription_plan");
     List<NameValuePair> urlParameters = new ArrayList<>();
+
     urlParameters.add(new BasicNameValuePair("username", wpUsername));
     urlParameters.add(new BasicNameValuePair("password", wpPassword));
     urlParameters.add(new BasicNameValuePair("userEmail", user.getEmail()));
@@ -162,13 +176,13 @@ public class WpDataServiceImpl implements WpDataService {
 
     String jsonResponse = "";
     try {
-      try (CloseableHttpClient httpClient = HttpClients.createDefault();
-          CloseableHttpResponse response = httpClient.execute(post)) {
+      try (CloseableHttpClient httpClient = HttpClients.createDefault(); CloseableHttpResponse response = httpClient.execute(post)) {
         jsonResponse = EntityUtils.toString(response.getEntity());
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
+
     JSONObject obj = new JSONObject(jsonResponse);
     if (obj.get("data") == JSONObject.NULL || obj.get("message").equals("No record found")) {
       return null;
@@ -180,17 +194,16 @@ public class WpDataServiceImpl implements WpDataService {
     JSONObject item = itemsData.getJSONObject(0);
     JSONObject plan = item.getJSONObject("plan");
     String newSubscriptionName = plan.getString("nickname");
-    user.setUserCurrentPlan(newSubscriptionName);
 
+    user.setUserCurrentPlan(newSubscriptionName);
     return user;
   }
 
   @Override
   public String unsubscribeUser(User user, Integer immediately) {
-
-    HttpPost post =
-            new HttpPost(wpApiUrl + "/cancel_user_subscription");
+    HttpPost post = new HttpPost(wpApiUrl + "/cancel_user_subscription");
     List<NameValuePair> urlParameters = new ArrayList<>();
+
     urlParameters.add(new BasicNameValuePair("username", wpUsername));
     urlParameters.add(new BasicNameValuePair("password", wpPassword));
     urlParameters.add(new BasicNameValuePair("userEmail", user.getEmail()));
@@ -212,6 +225,7 @@ public class WpDataServiceImpl implements WpDataService {
     } catch (IOException e) {
       e.printStackTrace();
     }
+
     JSONObject obj = new JSONObject(jsonResponse);
     if (obj.get("data") == JSONObject.NULL || obj.get("message").equals("No record found")) {
       return null;
@@ -224,6 +238,7 @@ public class WpDataServiceImpl implements WpDataService {
   public String getSubscriptionPlanId(String nickname) {
     HttpPost post = new HttpPost(wpApiUrl + "/get_all_subscription_plans");
     List<NameValuePair> urlParameters = new ArrayList<>();
+
     urlParameters.add(new BasicNameValuePair("username", wpUsername));
     urlParameters.add(new BasicNameValuePair("password", wpPassword));
 
@@ -260,6 +275,7 @@ public class WpDataServiceImpl implements WpDataService {
   public String trialUpgrade(TrialUpgradeDto upgradeDto) {
     HttpPost post = new HttpPost(wpApiUrl + "/trial_upgrade");
     List<NameValuePair> urlParameters = new ArrayList<>();
+
     urlParameters.add(new BasicNameValuePair("username", wpUsername));
     urlParameters.add(new BasicNameValuePair("password", wpPassword));
     urlParameters.add(new BasicNameValuePair("plan", upgradeDto.getPlan()));
@@ -291,6 +307,7 @@ public class WpDataServiceImpl implements WpDataService {
   public JSONObject checkCoupon(String coupon) {
     HttpPost post = new HttpPost(wpApiUrl.replace("wp-json/auth-api", "wp-admin/admin-ajax.php"));
     List<NameValuePair> urlParameters = new ArrayList<>();
+
     urlParameters.add(new BasicNameValuePair("coupon", coupon));
     urlParameters.add(new BasicNameValuePair("username", wpUsername));
     urlParameters.add(new BasicNameValuePair("password", wpPassword));
@@ -314,9 +331,9 @@ public class WpDataServiceImpl implements WpDataService {
 
   @Override
   public String createCustomerPortal(String email, String returnUrl) {
-    HttpPost post =
-            new HttpPost(wpApiUrl + "/create-customer-portal-session");
+    HttpPost post = new HttpPost(wpApiUrl + "/create-customer-portal-session");
     List<NameValuePair> urlParameters = new ArrayList<>();
+
     urlParameters.add(new BasicNameValuePair("username", wpUsername));
     urlParameters.add(new BasicNameValuePair("password", wpPassword));
     urlParameters.add(new BasicNameValuePair("userEmail", email));
@@ -327,17 +344,18 @@ public class WpDataServiceImpl implements WpDataService {
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
+
     post.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
     String jsonResponse = "";
     try {
-      try (CloseableHttpClient httpClient = HttpClients.createDefault();
-           CloseableHttpResponse response = httpClient.execute(post)) {
+      try (CloseableHttpClient httpClient = HttpClients.createDefault(); CloseableHttpResponse response = httpClient.execute(post)) {
         jsonResponse = EntityUtils.toString(response.getEntity());
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
+
     JSONObject obj = new JSONObject(jsonResponse);
     if (obj.get("data") == JSONObject.NULL || obj.get("message").equals("No record found")) {
       return null;
@@ -346,4 +364,5 @@ public class WpDataServiceImpl implements WpDataService {
     String data = obj.getString("data");
     return data;
   }
+
 }

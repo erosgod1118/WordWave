@@ -14,12 +14,12 @@ import javax.validation.constraints.Size;
 @Builder
 public class ChangePasswordDto {
 
-    @NotNull(message = "Missing required parameter 'currentPassword'.")
-    @Size(min = 4, message = "Current password should be at least 4 characters")
-    private String currentPassword;
+	@NotNull(message = "Missing required parameter 'currentPassword'.")
+	@Size(min = 4, message = "Current password should be at least 4 characters")
+	private String currentPassword;
 
-    @NotNull(message = "Missing required parameter 'newPassword'.")
-    @Size(min = 4, message = "New password should be at least 4 characters")
-    private String newPassword;
+	@NotNull(message = "Missing required parameter 'newPassword'.")
+	@Size(min = 4, message = "New password should be at least 4 characters")
+	private String newPassword;
 
 }

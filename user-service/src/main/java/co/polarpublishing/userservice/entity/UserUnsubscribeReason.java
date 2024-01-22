@@ -1,6 +1,7 @@
 package co.polarpublishing.userservice.entity;
 
 import co.polarpublishing.dbcommon.entity.AbstractEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,11 +24,14 @@ import javax.persistence.Table;
 @Table(name = "user_unsubscribe_reason")
 
 public class UserUnsubscribeReason extends AbstractEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long userId;
-    private String reason;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	private Long userId;
+	private String reason;
+
 }
 
 

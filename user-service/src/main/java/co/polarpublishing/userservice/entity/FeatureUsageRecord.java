@@ -2,6 +2,7 @@ package co.polarpublishing.userservice.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -53,8 +55,10 @@ public class FeatureUsageRecord {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     @Enumerated(EnumType.STRING)
     private Feature feature;
+
     private long timestamp;
 
     @Override
@@ -62,9 +66,11 @@ public class FeatureUsageRecord {
       if (this == o) {
         return true;
       }
+
       if (o == null || getClass() != o.getClass()) {
         return false;
       }
+      
       Id id = (Id) o;
       return timestamp == id.timestamp &&
           user.getId().equals(id.user.getId()) &&
@@ -85,4 +91,5 @@ public class FeatureUsageRecord {
           '}';
     }
   }
+
 }

@@ -16,4 +16,5 @@ public interface StateManagementService {
   FeaturesUsageState getFeaturesUsageState(long userId) throws UserNotFoundException;
 
   UsageState getFeatureUsageState(long userId, Feature feature) throws UserNotFoundException;
+  
 }

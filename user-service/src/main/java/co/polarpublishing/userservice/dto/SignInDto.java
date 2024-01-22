@@ -1,6 +1,7 @@
 package co.polarpublishing.userservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,13 +17,13 @@ import javax.validation.constraints.Size;
 @Builder
 public class SignInDto {
 
-    @NotNull(message = "Missing required parameter 'email'.")
-    @Pattern(regexp = "^.+@.+\\..+$", message = "Invalid email address.")
-    private String email;
+	@NotNull(message = "Missing required parameter 'email'.")
+	@Pattern(regexp = "^.+@.+\\..+$", message = "Invalid email address.")
+	private String email;
 
-    @NotNull(message = "Missing required parameter 'password'.")
-    @Size(min = 4, message = "Password should be at least 4 characters")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
+	@NotNull(message = "Missing required parameter 'password'.")
+	@Size(min = 4, message = "Password should be at least 4 characters")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private String password;
 
 }

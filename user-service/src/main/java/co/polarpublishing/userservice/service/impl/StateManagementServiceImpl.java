@@ -17,10 +17,13 @@ import co.polarpublishing.userservice.repository.read.UserReadRepository;
 import co.polarpublishing.userservice.repository.write.UserLimitRepository;
 import co.polarpublishing.userservice.service.StateManagementService;
 import co.polarpublishing.userservice.service.dto.ChromeExtensionStateDto;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,9 +40,7 @@ public class StateManagementServiceImpl implements StateManagementService {
   @Override
   public ChromeExtensionStateDto getChromeExtensionState(long userId) throws UserNotFoundException {
 
-    User foundUser =
-        this.userReadRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
-
+    User foundUser = this.userReadRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
     if (foundUser.getUserCurrentPlan() != null
         && !foundUser.getUserCurrentPlan().trim().isEmpty()
         && foundUser.getUserCurrentPlan().trim().equalsIgnoreCase("cancelled")) {
@@ -56,25 +57,27 @@ public class StateManagementServiceImpl implements StateManagementService {
     } else {
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       long userLastBillingDateTimestamp = 0;
+
       try {
         userLastBillingDateTimestamp =
             formatter.parse(foundUser.getUserLastBillingDate()).getTime();
       } catch (ParseException e) {
         throw new RuntimeException(e.getMessage());
       }
-      dateAndTimeRange =
-          DateAndTimeUtil.getCurrentMonthDateAndTimeRangeWithRespectToReferenceDateAndTime(
-              userLastBillingDateTimestamp);
+
+      dateAndTimeRange = DateAndTimeUtil.getCurrentMonthDateAndTimeRangeWithRespectToReferenceDateAndTime(userLastBillingDateTimestamp);
     }
 
-    int bsrHistoryFeatureUsageCount =
-        this.featureUsageRecordReadRepository.countByUserIdAndFeatureAndTimestampRange(
-            userId, Feature.CE_BSR_HISTORY, dateAndTimeRange.getFrom(), dateAndTimeRange.getTo());
-    if (foundUser.getUserCurrentPlan().equalsIgnoreCase("Starter Annual")
-        || foundUser.getUserCurrentPlan().equalsIgnoreCase("Starter Monthly")) {
+    int bsrHistoryFeatureUsageCount = this.featureUsageRecordReadRepository
+                                            .countByUserIdAndFeatureAndTimestampRange(
+                                              userId, 
+                                              Feature.CE_BSR_HISTORY, 
+                                              dateAndTimeRange.getFrom(), 
+                                              dateAndTimeRange.getTo()
+                                            );
+    if (foundUser.getUserCurrentPlan().equalsIgnoreCase("Starter Annual") || foundUser.getUserCurrentPlan().equalsIgnoreCase("Starter Monthly")) {
       bsrHistoryFeatureUsageRemainingToken = 120 - bsrHistoryFeatureUsageCount;
-    } else if (foundUser.getUserCurrentPlan().equalsIgnoreCase("Basic Annual")
-        || foundUser.getUserCurrentPlan().equalsIgnoreCase("Basic Monthly")) {
+    } else if (foundUser.getUserCurrentPlan().equalsIgnoreCase("Basic Annual") || foundUser.getUserCurrentPlan().equalsIgnoreCase("Basic Monthly")) {
       bsrHistoryFeatureUsageRemainingToken = 250 - bsrHistoryFeatureUsageCount;
     } else if (foundUser.getUserCurrentPlan().equalsIgnoreCase("Pro Annual")
         || foundUser.getUserCurrentPlan().equalsIgnoreCase("Pro Monthly")
@@ -84,6 +87,7 @@ public class StateManagementServiceImpl implements StateManagementService {
     } else if (foundUser.getUserCurrentPlan().equalsIgnoreCase("Trial")) {
       bsrHistoryFeatureUsageRemainingToken = 5 - bsrHistoryFeatureUsageCount;
     }
+
     bsrHistoryFeatureUsageRemainingToken =
         bsrHistoryFeatureUsageRemainingToken != null && bsrHistoryFeatureUsageRemainingToken >= 0
             ? bsrHistoryFeatureUsageRemainingToken
@@ -91,14 +95,12 @@ public class StateManagementServiceImpl implements StateManagementService {
 
     // Getting chrome extension usage remaining tokens.
     Integer remainingTokensForChromeExtension = null;
-    UserLimit userLimit =
-        this.userLimitRepository.findByUserIdAndType(userId, Feature.CHROME_EXTENSION.getName());
+    UserLimit userLimit = this.userLimitRepository.findByUserIdAndType(userId, Feature.CHROME_EXTENSION.getName());
     if (userLimit != null
         && foundUser.getUserCurrentPlan() != null
         && foundUser.getUserCurrentPlan().trim().equalsIgnoreCase("trial")) {
       remainingTokensForChromeExtension = userLimit.getMax() - userLimit.getValue();
-      remainingTokensForChromeExtension =
-          remainingTokensForChromeExtension >= 0 ? remainingTokensForChromeExtension : 0;
+      remainingTokensForChromeExtension = remainingTokensForChromeExtension >= 0 ? remainingTokensForChromeExtension : 0;
     }
 
     Integer maxChromeExtensionUsage =
@@ -116,8 +118,8 @@ public class StateManagementServiceImpl implements StateManagementService {
   @Override
   @Transactional(transactionManager = "readReplicaTransactionManager", readOnly = true)
   public UserState getUserState(long userId) throws UserNotFoundException {
-
     log.info("Getting user state for user {}.", userId);
+
     UserState userState = new UserState();
     userState.setFeaturesUsageState(this.getFeaturesUsageState(userId));
 
@@ -127,8 +129,8 @@ public class StateManagementServiceImpl implements StateManagementService {
   @Override
   @Transactional(transactionManager = "readReplicaTransactionManager", readOnly = true)
   public FeaturesUsageState getFeaturesUsageState(long userId) throws UserNotFoundException {
-
     log.info("Getting feature usage state for user {}.", userId);
+
     FeaturesUsageState featuresUsageState = new FeaturesUsageState();
     featuresUsageState.setListingAnalysisFeatureUsageState(
         this.getFeatureUsageState(userId, Feature.LISTING_ANALYSIS));
@@ -138,22 +140,19 @@ public class StateManagementServiceImpl implements StateManagementService {
 
   @Override
   @Transactional(transactionManager = "readReplicaTransactionManager", readOnly = true)
-  public UsageState getFeatureUsageState(long userId, Feature feature)
-      throws UserNotFoundException {
-
+  public UsageState getFeatureUsageState(long userId, Feature feature) throws UserNotFoundException {
     log.info("Getting feature usage state for user {} and feature {}.", userId, feature);
-    User foundUser =
-        this.userReadRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
 
+    User foundUser = this.userReadRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
     UsageState featureUsageState = new UsageState();
+    
     if (foundUser.getUserCurrentPlan() != null
         && !foundUser.getUserCurrentPlan().trim().isEmpty()
         && foundUser.getUserCurrentPlan().trim().equalsIgnoreCase("cancelled")) {
       return featureUsageState;
     }
 
-    SubscriptionPlan subscriptionPlan =
-        this.subscriptionPlanReadRepository
+    SubscriptionPlan subscriptionPlan = this.subscriptionPlanReadRepository
             .findByNameIgnoreCase(foundUser.getUserCurrentPlan())
             .orElse(null);
     if (subscriptionPlan == null) {
@@ -161,31 +160,30 @@ public class StateManagementServiceImpl implements StateManagementService {
     }
 
     FeatureUsageLimit listingAnalysisUsageLimit =
-        subscriptionPlan.getFeatureUsageLimit(
-            co.polarpublishing.dbcommon.entity.Feature.valueOf(feature.name()));
+        subscriptionPlan.getFeatureUsageLimit(co.polarpublishing.dbcommon.entity.Feature.valueOf(feature.name()));
     if (listingAnalysisUsageLimit == null) {
       featureUsageState.setMaxAllowedQuantity(Integer.MAX_VALUE);
     } else {
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       long userLastBillingDateTimestamp = 0;
+
       try {
-        userLastBillingDateTimestamp =
-            formatter.parse(foundUser.getUserLastBillingDate()).getTime();
+        userLastBillingDateTimestamp = formatter.parse(foundUser.getUserLastBillingDate()).getTime();
       } catch (ParseException e) {
         throw new RuntimeException(e.getMessage());
       }
+
       DateAndTimeRange dateAndTimeRange =
-          DateAndTimeUtil.getCurrentMonthDateAndTimeRangeWithRespectToReferenceDateAndTime(
-              userLastBillingDateTimestamp);
+          DateAndTimeUtil.getCurrentMonthDateAndTimeRangeWithRespectToReferenceDateAndTime(userLastBillingDateTimestamp);
       int count =
-          this.featureUsageRecordReadRepository.countByUserIdAndFeatureAndTimestampRange(
-              userId, feature, dateAndTimeRange.getFrom(), dateAndTimeRange.getTo());
+          this.featureUsageRecordReadRepository.countByUserIdAndFeatureAndTimestampRange(userId, feature, dateAndTimeRange.getFrom(), dateAndTimeRange.getTo());
+      
       featureUsageState.setMaxAllowedQuantity(listingAnalysisUsageLimit.getMaxAllowedUsage());
-      featureUsageState.setRemainingQuantity(
-          listingAnalysisUsageLimit.getMaxAllowedUsage() - count);
+      featureUsageState.setRemainingQuantity(listingAnalysisUsageLimit.getMaxAllowedUsage() - count);
       featureUsageState.setUsedQuantity(count);
     }
 
     return featureUsageState;
   }
+
 }

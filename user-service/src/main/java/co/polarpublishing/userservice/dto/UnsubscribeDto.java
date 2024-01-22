@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UnsubscribeDto {
-    String title;
-    String message;
-    Boolean status;
+
+	String title;
+	String message;
+	Boolean status;
+
 }

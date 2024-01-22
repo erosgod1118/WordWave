@@ -58,9 +58,9 @@ public class UserController {
 
   @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
   @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Success. Returns user by id."),
-        @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist with such id.")
-      })
+    @ApiResponse(code = 200, message = "Success. Returns user by id."),
+    @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist with such id.")
+  })
   @RequestMapping(value = "/current", method = RequestMethod.GET)
   public ResponseEntity findByEmail(HttpServletRequest request) {
     try {
@@ -72,79 +72,78 @@ public class UserController {
 
     } catch (UserNotFoundException ex) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body(
-              ErrorResponse.builder()
-                  .code(ex.getCode())
-                  .message(ex.getMessage())
-                  .status(HttpStatus.BAD_REQUEST.value())
-                  .timestamp(DateAndTimeUtil.getCurrentEpochTime())
-                  .build());
+            .body(
+              ErrorResponse
+                .builder()
+                .code(ex.getCode())
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(DateAndTimeUtil.getCurrentEpochTime())
+                .build()
+            );
     }
   }
 
   @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
   @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Success. Returns user by id."),
-        @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist with such id.")
-      })
+    @ApiResponse(code = 200, message = "Success. Returns user by id."),
+    @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist with such id.")
+  })
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
   public ResponseEntity findById(@PathVariable Long id) {
     try {
       UserDto userDto = userService.findById(id);
-
       return ResponseEntity.ok(userDto);
-
     } catch (UserNotFoundException ex) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body(
-              ErrorResponse.builder()
-                  .code(ex.getCode())
-                  .message(ex.getMessage())
-                  .status(HttpStatus.BAD_REQUEST.value())
-                  .timestamp(DateAndTimeUtil.getCurrentEpochTime())
-                  .build());
+            .body(
+              ErrorResponse
+                .builder()
+                .code(ex.getCode())
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(DateAndTimeUtil.getCurrentEpochTime())
+                .build()
+            );
     }
   }
 
   @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
   @ApiResponses(value = {
-        @ApiResponse(code = 204, message = "Success. Password was changed successfully."),
-        @ApiResponse(code = 400, message = "Failure. Indicates the request body is invalid."),
-        @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist with such id.")
-      })
+    @ApiResponse(code = 204, message = "Success. Password was changed successfully."),
+    @ApiResponse(code = 400, message = "Failure. Indicates the request body is invalid."),
+    @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist with such id.")
+  })
   @RequestMapping(value = "/current/change-password", method = RequestMethod.PUT)
-  public ResponseEntity changePassword(
-      @Valid @RequestBody ChangePasswordDto changePasswordDto, HttpServletRequest request) {
-
+  public ResponseEntity changePassword(@Valid @RequestBody ChangePasswordDto changePasswordDto, HttpServletRequest request) {
     try {
       TokenInfo tokenInfo = jwtService.getAccessTokenInfo(request.getHeader(HttpHeaders.AUTHORIZATION));
       UserDto userDto = userService.findByEmail(tokenInfo.getEmail());
 
       userService.changePassword(userDto.getUserId(), changePasswordDto);
-
       return ResponseEntity.noContent().build();
-
     } catch (UserNotFoundException ex) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body(
-              ErrorResponse.builder()
-                  .code(ex.getCode())
-                  .message(ex.getMessage())
-                  .status(HttpStatus.BAD_REQUEST.value())
-                  .timestamp(DateAndTimeUtil.getCurrentEpochTime())
-                  .build());
+            .body(
+              ErrorResponse
+                .builder()
+                .code(ex.getCode())
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(DateAndTimeUtil.getCurrentEpochTime())
+                .build()
+            );
     }
   }
 
   @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
   @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Success. Returns updated user object."),
-        @ApiResponse(code = 400, message = "Failure. Indicates the request body is invalid."),
-        @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist")
-      })
+    @ApiResponse(code = 200, message = "Success. Returns updated user object."),
+    @ApiResponse(code = 400, message = "Failure. Indicates the request body is invalid."),
+    @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist")
+  })
   @RequestMapping(value = "/current", method = RequestMethod.PUT)
-  public ResponseEntity update(
-      @Valid @RequestBody UpdateUserDto updateUserDto, HttpServletRequest request) {
+  public ResponseEntity update(@Valid @RequestBody UpdateUserDto updateUserDto, HttpServletRequest request) {
     try {
       TokenInfo tokenInfo = jwtService.getAccessTokenInfo(request.getHeader(HttpHeaders.AUTHORIZATION));
       UserDto userDto = userService.findByEmail(tokenInfo.getEmail());
@@ -154,25 +153,26 @@ public class UserController {
 
       UserDto updatedUser = userService.update(userDto.getUserId(), userDto);
       return ResponseEntity.ok(updatedUser);
-
     } catch (UserNotFoundException ex) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body(
-              ErrorResponse.builder()
-                  .code(ex.getCode())
-                  .message(ex.getMessage())
-                  .status(HttpStatus.BAD_REQUEST.value())
-                  .timestamp(DateAndTimeUtil.getCurrentEpochTime())
-                  .build());
+            .body(
+              ErrorResponse
+                .builder()
+                .code(ex.getCode())
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(DateAndTimeUtil.getCurrentEpochTime())
+                .build()
+            );
     }
   }
 
   @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
   @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Success. Promotes user."),
-        @ApiResponse(code = 400, message = "Failure. Indicates the request body is invalid."),
-        @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist")
-      })
+    @ApiResponse(code = 200, message = "Success. Promotes user."),
+    @ApiResponse(code = 400, message = "Failure. Indicates the request body is invalid."),
+    @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist")
+  })
   @RequestMapping(value = "/promote-to-pro", method = RequestMethod.PUT)
   public ResponseEntity promoteToPro(long userId, HttpServletRequest request) {
     try {
@@ -182,35 +182,39 @@ public class UserController {
       if (userDto.getRoles().stream().noneMatch(r -> r.getRole().equals(RoleName.ROLE_ADMIN))) {
         throw new NoAccessRightsException();
       }
-      //            userService.promoteUser(userId);
+
       return ResponseEntity.noContent().build();
     } catch (NoAccessRightsException e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body(
-              ErrorResponse.builder()
-                  .code(e.getCode())
-                  .message(e.getMessage())
-                  .status(HttpStatus.BAD_REQUEST.value())
-                  .timestamp(DateAndTimeUtil.getCurrentEpochTime())
-                  .build());
+            .body(
+              ErrorResponse
+                .builder()
+                .code(e.getCode())
+                .message(e.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(DateAndTimeUtil.getCurrentEpochTime())
+                .build()
+            );
     } catch (UserNotFoundException ex) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body(
-              ErrorResponse.builder()
-                  .code(ex.getCode())
-                  .message(ex.getMessage())
-                  .status(HttpStatus.BAD_REQUEST.value())
-                  .timestamp(DateAndTimeUtil.getCurrentEpochTime())
-                  .build());
+            .body(
+              ErrorResponse
+                .builder()
+                .code(ex.getCode())
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(DateAndTimeUtil.getCurrentEpochTime())
+                .build()
+            );
     }
   }
 
   @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
   @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Success. Demotes user."),
-        @ApiResponse(code = 400, message = "Failure. Indicates the request body is invalid."),
-        @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist")
-      })
+    @ApiResponse(code = 200, message = "Success. Demotes user."),
+    @ApiResponse(code = 400, message = "Failure. Indicates the request body is invalid."),
+    @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist")
+  })
   @RequestMapping(value = "/demote", method = RequestMethod.PUT)
   public ResponseEntity demote(long userId, HttpServletRequest request) {
     try {
@@ -220,35 +224,39 @@ public class UserController {
       if (userDto.getRoles().stream().noneMatch(r -> r.getRole().equals(RoleName.ROLE_ADMIN))) {
         throw new NoAccessRightsException();
       }
-      //            userService.demoteUser(userId);
+
       return ResponseEntity.noContent().build();
     } catch (NoAccessRightsException e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body(
-              ErrorResponse.builder()
-                  .code(e.getCode())
-                  .message(e.getMessage())
-                  .status(HttpStatus.BAD_REQUEST.value())
-                  .timestamp(DateAndTimeUtil.getCurrentEpochTime())
-                  .build());
+            .body(
+              ErrorResponse
+                .builder()
+                .code(e.getCode())
+                .message(e.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(DateAndTimeUtil.getCurrentEpochTime())
+                .build()
+            );
     } catch (UserNotFoundException ex) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body(
-              ErrorResponse.builder()
-                  .code(ex.getCode())
-                  .message(ex.getMessage())
-                  .status(HttpStatus.BAD_REQUEST.value())
-                  .timestamp(DateAndTimeUtil.getCurrentEpochTime())
-                  .build());
+            .body(
+              ErrorResponse
+                .builder()
+                .code(ex.getCode())
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(DateAndTimeUtil.getCurrentEpochTime())
+                .build()
+            );
     }
   }
 
   @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
   @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Success. Bans user."),
-        @ApiResponse(code = 400, message = "Failure. Indicates the request body is invalid."),
-        @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist")
-      })
+    @ApiResponse(code = 200, message = "Success. Bans user."),
+    @ApiResponse(code = 400, message = "Failure. Indicates the request body is invalid."),
+    @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist")
+  })
   @RequestMapping(value = "/ban", method = RequestMethod.PUT)
   public ResponseEntity ban(long userId, HttpServletRequest request) {
     try {
@@ -258,35 +266,39 @@ public class UserController {
       if (userDto.getRoles().stream().noneMatch(r -> r.getRole().equals(RoleName.ROLE_ADMIN))) {
         throw new NoAccessRightsException();
       }
-      //            userService.ban(userId);
+
       return ResponseEntity.noContent().build();
     } catch (NoAccessRightsException e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body(
-              ErrorResponse.builder()
-                  .code(e.getCode())
-                  .message(e.getMessage())
-                  .status(HttpStatus.BAD_REQUEST.value())
-                  .timestamp(DateAndTimeUtil.getCurrentEpochTime())
-                  .build());
+            .body(
+              ErrorResponse
+                .builder()
+                .code(e.getCode())
+                .message(e.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(DateAndTimeUtil.getCurrentEpochTime())
+                .build()
+            );
     } catch (UserNotFoundException ex) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body(
-              ErrorResponse.builder()
-                  .code(ex.getCode())
-                  .message(ex.getMessage())
-                  .status(HttpStatus.BAD_REQUEST.value())
-                  .timestamp(DateAndTimeUtil.getCurrentEpochTime())
-                  .build());
+            .body(
+              ErrorResponse
+                .builder()
+                .code(ex.getCode())
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(DateAndTimeUtil.getCurrentEpochTime())
+                .build()
+            );
     }
   }
 
   @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
   @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Success. Unbans user."),
-        @ApiResponse(code = 400, message = "Failure. Indicates the request body is invalid."),
-        @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist")
-      })
+    @ApiResponse(code = 200, message = "Success. Unbans user."),
+    @ApiResponse(code = 400, message = "Failure. Indicates the request body is invalid."),
+    @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist")
+  })
   @RequestMapping(value = "/unban", method = RequestMethod.PUT)
   public ResponseEntity unban(long userId, HttpServletRequest request) {
     try {
@@ -296,59 +308,59 @@ public class UserController {
       if (userDto.getRoles().stream().noneMatch(r -> r.getRole().equals(RoleName.ROLE_ADMIN))) {
         throw new NoAccessRightsException();
       }
-      //            userService.unban(userId);
+
       return ResponseEntity.noContent().build();
     } catch (NoAccessRightsException e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body(
-              ErrorResponse.builder()
-                  .code(e.getCode())
-                  .message(e.getMessage())
-                  .status(HttpStatus.BAD_REQUEST.value())
-                  .timestamp(DateAndTimeUtil.getCurrentEpochTime())
-                  .build());
+            .body(
+              ErrorResponse
+                .builder()
+                .code(e.getCode())
+                .message(e.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(DateAndTimeUtil.getCurrentEpochTime())
+                .build()
+            );
     } catch (UserNotFoundException ex) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body(
-              ErrorResponse.builder()
-                  .code(ex.getCode())
-                  .message(ex.getMessage())
-                  .status(HttpStatus.BAD_REQUEST.value())
-                  .timestamp(DateAndTimeUtil.getCurrentEpochTime())
-                  .build());
+            .body(
+              ErrorResponse
+                .builder()
+                .code(ex.getCode())
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(DateAndTimeUtil.getCurrentEpochTime())
+                .build()
+            );
     }
   }
 
   @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
   @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Success. Returns link to avatar in the response body."),
-        @ApiResponse(code = 400, message = "Failure. Indicates the request body is invalid."),
-        @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist")
-      })
+    @ApiResponse(code = 200, message = "Success. Returns link to avatar in the response body."),
+    @ApiResponse(code = 400, message = "Failure. Indicates the request body is invalid."),
+    @ApiResponse(code = 404, message = "Failure. Indicates the user does not exist")
+  })
   @RequestMapping(value = "/current/upload-avatar", method = RequestMethod.POST)
-  public ResponseEntity uploadAvatar(
-      @RequestParam(value = "file") MultipartFile file, HttpServletRequest request)
-      throws IOException {
-
+  public ResponseEntity uploadAvatar(@RequestParam(value = "file") MultipartFile file, HttpServletRequest request) throws IOException {
     try {
       TokenInfo tokenInfo = jwtService.getAccessTokenInfo(request.getHeader(HttpHeaders.AUTHORIZATION));
       UserDto userDto = userService.findByEmail(tokenInfo.getEmail());
 
       if (file.isEmpty()) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body(
-                ErrorResponse.builder()
-                    .code(2006)
-                    .message("Please select a photo to upload.")
-                    .status(HttpStatus.BAD_REQUEST.value())
-                    .timestamp(DateAndTimeUtil.getCurrentEpochTime())
-                    .build());
+              .body(
+                ErrorResponse
+                  .builder()
+                  .code(2006)
+                  .message("Please select a photo to upload.")
+                  .status(HttpStatus.BAD_REQUEST.value())
+                  .timestamp(DateAndTimeUtil.getCurrentEpochTime())
+                  .build()
+              );
       }
 
-      String filename =
-          String.format(
-              "%s.%s", userDto.getUserId(), FilenameUtils.getExtension(file.getOriginalFilename()));
-
+      String filename = String.format("%s.%s", userDto.getUserId(), FilenameUtils.getExtension(file.getOriginalFilename()));
       String filepath = Paths.get(USER_UPLOAD_AVATAR_PATH, filename).toString();
       String avatarLink = String.format("/api/v1/users/avatar/%s", filename);
 
@@ -360,16 +372,17 @@ public class UserController {
       userService.update(userDto.getUserId(), userDto);
 
       return ResponseEntity.ok(UploadPhotoResponseDto.builder().location(avatarLink).build());
-
     } catch (UserNotFoundException ex) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body(
-              ErrorResponse.builder()
-                  .code(ex.getCode())
-                  .message(ex.getMessage())
-                  .status(HttpStatus.BAD_REQUEST.value())
-                  .timestamp(DateAndTimeUtil.getCurrentEpochTime())
-                  .build());
+            .body(
+              ErrorResponse
+                .builder()
+                .code(ex.getCode())
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(DateAndTimeUtil.getCurrentEpochTime())
+                .build()
+            );
     }
   }
 
@@ -388,6 +401,7 @@ public class UserController {
     } else {
       email = jwtService.getAccessTokenInfo(request.getHeader(HttpHeaders.AUTHORIZATION)).getEmail();
     }
+
     if (email == null) {
       throw new UserNotFoundException("User with email: " + userEmail + " not found");
     }
@@ -404,6 +418,7 @@ public class UserController {
     } else {
       email = jwtService.getAccessTokenInfo(request.getHeader(HttpHeaders.AUTHORIZATION)).getEmail();
     }
+
     if (email == null) {
       throw new UserNotFoundException("User with email: " + userEmail + " not found");
     }
@@ -412,16 +427,16 @@ public class UserController {
     return ResponseEntity.ok(response);
   }
 
-  @PutMapping(
-      path = "/update-wp-data",
-      consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+  @PutMapping(path = "/update-wp-data", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
   public ResponseEntity updateWpData(@RequestParam(required = false) String userEmail, HttpServletRequest request) throws UserNotFoundException {
     String email = "";
+
     if (userEmail != null && !userEmail.equals("")) {
       email = userEmail;
     } else {
       email = jwtService.getAccessTokenInfo(request.getHeader(HttpHeaders.AUTHORIZATION)).getEmail();
     }
+
     if (email == null) {
       throw new UserNotFoundException("User with email: " + userEmail + " not found");
     }
@@ -445,15 +460,19 @@ public class UserController {
   @PutMapping(path = "/change-user-plan", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
   public ResponseEntity<String> changeUserPlan(@RequestParam(required = false) String userEmail, @RequestParam String planType, HttpServletRequest request) throws UserNotFoundException {
     String email = "";
+
     if (userEmail != null && !userEmail.equals("")) {
       email = userEmail;
     } else {
       email = jwtService.getAccessTokenInfo(request.getHeader(HttpHeaders.AUTHORIZATION)).getEmail();
     }
+
     if (email == null) {
       throw new UserNotFoundException("User with email: " + userEmail + " not found");
     }
+
     log.info("Changing user plan {} to: {}", email, planType);
+
     String newPlanType = userService.changeUserSubscription(email, planType);
     return ResponseEntity.ok(newPlanType);
   }
@@ -461,30 +480,34 @@ public class UserController {
   @PostMapping(path = "/create-customer-portal-session", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
   public ResponseEntity<StripePortalDto> createCustomerPortal(@RequestParam(required = false) String userEmail, @RequestParam String returnUrl,  HttpServletRequest request) throws UserNotFoundException {
     String email = "";
+
     if (userEmail != null && !userEmail.equals("")) {
       email = userEmail;
     } else {
       email = jwtService.getAccessTokenInfo(request.getHeader(HttpHeaders.AUTHORIZATION)).getEmail();
     }
+
     if (email == null) {
       throw new UserNotFoundException("User with email: " + userEmail + " not found");
     }
 
     String responseUrl = userService.crateCustomerPortal(email, returnUrl);
     StripePortalDto response = new StripePortalDto();
+
     response.setUrl(responseUrl);
     return ResponseEntity.ok(response);
   }
 
   @PostMapping(path = "/unsubscribe-user", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
   public ResponseEntity<UnsubscribeDto> unsubscribeUser(@RequestParam(required = false) String userEmail, @RequestParam(required = false) String reason, HttpServletRequest request) throws UserNotFoundException {
-
     String email = "";
+
     if (userEmail != null && !userEmail.equals("")) {
       email = userEmail;
     } else {
       email = jwtService.getAccessTokenInfo(request.getHeader(HttpHeaders.AUTHORIZATION)).getEmail();
     }
+
     if (email == null) {
       throw new UserNotFoundException("User with email: " + userEmail + " not found");
     }
@@ -497,6 +520,7 @@ public class UserController {
   public ResponseEntity<TrialQuestionnaireDto> trialQuestionnaire(@RequestBody TrialQuestionnaireDto questionnaire, HttpServletRequest request) throws UserNotFoundException {
     String email = jwtService.getAccessTokenInfo(request.getHeader(HttpHeaders.AUTHORIZATION)).getEmail();
     TrialQuestionnaireDto res = userService.answerTrialQuestionnaire(email, questionnaire);
+
     return ResponseEntity.ok(res);
   }
 
@@ -504,6 +528,7 @@ public class UserController {
   public ResponseEntity<TrialQuestionnaireDto> checkQuestionnaire(HttpServletRequest request) throws UserNotFoundException {
     String email = jwtService.getAccessTokenInfo(request.getHeader(HttpHeaders.AUTHORIZATION)).getEmail();
     TrialQuestionnaireDto res = userService.checkTrialQuestionnaire(email);
+
     return ResponseEntity.ok(res);
   }
 

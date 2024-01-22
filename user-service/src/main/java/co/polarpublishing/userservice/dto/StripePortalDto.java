@@ -9,5 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 public class StripePortalDto {
-    String url;
+
+	String url;
+
 }

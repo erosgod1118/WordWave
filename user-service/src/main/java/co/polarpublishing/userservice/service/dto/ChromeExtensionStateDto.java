@@ -20,4 +20,5 @@ public class ChromeExtensionStateDto {
   Integer remainingTokensForBsrHistory;
   Integer remainingTokensForChromeExtensionUsage;
   Integer maxChromeExtensionUsageQuantity;
+  
 }

@@ -14,11 +14,11 @@ import javax.validation.constraints.Size;
 @Builder
 public class ResetPasswordDto {
 
-    @NotNull(message = "Missing required parameter 'resetToken'.")
-    private String resetToken;
+	@NotNull(message = "Missing required parameter 'resetToken'.")
+	private String resetToken;
 
-    @NotNull(message = "Missing required parameter 'newPassword'.")
-    @Size(min = 4, message = "Password should be at least 4 characters")
-    private String newPassword;
+	@NotNull(message = "Missing required parameter 'newPassword'.")
+	@Size(min = 4, message = "Password should be at least 4 characters")
+	private String newPassword;
 
 }

@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UploadPhotoResponseDto {
 
-    private String location;
+	private String location;
 
 }

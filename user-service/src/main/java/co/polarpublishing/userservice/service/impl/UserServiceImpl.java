@@ -27,8 +27,10 @@ import co.polarpublishing.userservice.service.JwtService;
 import co.polarpublishing.userservice.service.MailService;
 import co.polarpublishing.userservice.service.UserService;
 import co.polarpublishing.userservice.service.WpDataService;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -417,14 +419,18 @@ public class UserServiceImpl implements UserService {
     List<UserUnsubscribeReason> reasons = userUnsubscribeReasonWriteRepository.findAllByCreationTimestampAfter(timestamp);
 
     StringBuilder message = new StringBuilder("<table><tr> <th>ID</th> <th>USER_ID</th> <th>REASON</th> <th>DATE</th></tr>");
-    reasons.forEach(reason -> message.append("<tr><td>").append(reason.getId()).append("</td>")
+    
+    reasons.forEach(reason -> message
+            .append("<tr><td>").append(reason.getId()).append("</td>")
             .append("<td>").append(reason.getUserId()).append("</td>")
             .append("<td>").append(reason.getReason()).append("</td>")
             .append("<td>").append(new Date(reason.getCreationTimestamp())).append("</td></tr>")
     );
+
     message.append("</table>");
 
-    MailDto mail = MailDto.builder()
+    MailDto mail = MailDto
+            .builder()
             .subject("Cancellation Reasons")
             .message(message.toString())
             .to(cancellationMail)
@@ -438,41 +444,5 @@ public class UserServiceImpl implements UserService {
     String data = wpDataService.createCustomerPortal(email, returnUrl);
     return data;
   }
-
-  // TODO: need to review it as getting user roles needs to be reviewed
-  /*
-  @Override
-  public void promoteUser(long userId) throws UserNotFoundException {
-      User user = userWriteRepository.findById(userId)
-              .orElseThrow(UserNotFoundException::new);
-      user.getRoles().add(UserRole.builder().roleId(3L).role(RoleName.ROLE_PRO).build());
-      userWriteRepository.save(user);
-  }
-
-  @Override
-  public void demoteUser(long userId) throws UserNotFoundException {
-      User user = userWriteRepository.findById(userId)
-              .orElseThrow(UserNotFoundException::new);
-      user.getRoles().remove(UserRole.builder().roleId(3L).role(RoleName.ROLE_PRO).build());
-      userWriteRepository.save(user);
-  }
-
-  @Override
-  public void ban(long userId) throws UserNotFoundException {
-      User user = userWriteRepository.findById(userId)
-              .orElseThrow(UserNotFoundException::new);
-      user.setBanned(true);
-      userWriteRepository.save(user);
-  }
-
-
-  @Override
-  public void unban(long userId) throws UserNotFoundException {
-      User user = userWriteRepository.findById(userId)
-              .orElseThrow(UserNotFoundException::new);
-      user.setBanned(false);
-      userWriteRepository.save(user);
-  }
-  */
 
 }

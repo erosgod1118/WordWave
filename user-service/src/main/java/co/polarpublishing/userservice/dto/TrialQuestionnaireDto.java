@@ -12,6 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TrialQuestionnaireDto {
-    String answers;
-    Boolean status;
+
+	String answers;
+	Boolean status;
+
 }

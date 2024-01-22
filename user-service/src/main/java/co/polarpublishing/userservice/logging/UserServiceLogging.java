@@ -11,16 +11,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class UserServiceLogging {
 
-    @AfterThrowing(
-            pointcut = "execution(* co.polarpublishing.userservice..*ServiceImpl.*(..))",
-            throwing = "error")
-    public void logServiceAfterThrowing(JoinPoint joinPoint, Throwable error) {
-        log.warn(
-                String.format(
-                        "%s. Exception: %s",
-                        joinPoint.getSignature(),
-                        error
-                )
-        );
-    }
+	@AfterThrowing(
+		pointcut = "execution(* co.polarpublishing.userservice..*ServiceImpl.*(..))",
+		throwing = "error"
+	)
+	public void logServiceAfterThrowing(JoinPoint joinPoint, Throwable error) {
+		log.warn(String.format("%s. Exception: %s", joinPoint.getSignature(), error));
+	}
+
 }

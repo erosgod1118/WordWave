@@ -12,16 +12,17 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Builder
 public class TrialUpgradeDto {
-    @NotNull(message = "Missing required parameter 'plan'.")
-    String plan;
 
-    @NotNull(message = "Missing required parameter 'token'.")
-    String token;
+	@NotNull(message = "Missing required parameter 'plan'.")
+	String plan;
 
-    @NotNull(message = "Missing required parameter 'email'.")
-    String email;
+	@NotNull(message = "Missing required parameter 'token'.")
+	String token;
 
-    String period;
+	@NotNull(message = "Missing required parameter 'email'.")
+	String email;
 
-    String coupon;
+	String period;
+	String coupon;
+
 }

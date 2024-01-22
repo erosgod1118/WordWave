@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface UserLimitService {
 
-    boolean exceeds(String endpoint, String type, Long userId, String plan);
+	boolean exceeds(String endpoint, String type, Long userId, String plan);
 
-    List<UserLimit> getAllLimits(Long userId);
+	List<UserLimit> getAllLimits(Long userId);
 
-    UserLimit getSpecificLimit(Long userId, String type);
+	UserLimit getSpecificLimit(Long userId, String type);
 
-    void insertUserLimits(Long userId);
+	void insertUserLimits(Long userId);
 
 }

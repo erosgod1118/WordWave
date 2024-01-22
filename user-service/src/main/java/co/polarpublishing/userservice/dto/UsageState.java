@@ -12,7 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UsageState {
+
   private int usedQuantity;
   private int remainingQuantity;
   private int maxAllowedQuantity;
+  
 }

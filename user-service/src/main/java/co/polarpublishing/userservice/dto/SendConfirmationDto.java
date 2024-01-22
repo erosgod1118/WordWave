@@ -13,7 +13,9 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @Builder
 public class SendConfirmationDto {
-    @NotNull(message = "Missing required parameter 'email'.")
-    @Pattern(regexp = "^.+@.+\\..+$", message = "Invalid email address.")
-    private String email;
+
+	@NotNull(message = "Missing required parameter 'email'.")
+	@Pattern(regexp = "^.+@.+\\..+$", message = "Invalid email address.")
+	private String email;
+
 }

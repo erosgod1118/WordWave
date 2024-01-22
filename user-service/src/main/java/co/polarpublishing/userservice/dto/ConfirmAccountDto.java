@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class ConfirmAccountDto {
 
-    @NotNull(message = "Missing required parameter 'confirmationToken'.")
-    private String confirmationToken;
+	@NotNull(message = "Missing required parameter 'confirmationToken'.")
+	private String confirmationToken;
 
 }

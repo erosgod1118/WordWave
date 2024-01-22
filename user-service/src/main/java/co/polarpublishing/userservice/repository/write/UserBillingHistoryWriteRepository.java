@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface UserBillingHistoryWriteRepository extends BaseReadWriteRepository<UserBillingHistory, Long> {
 
-    List<UserBillingHistory> findAllByUser(User user);
+	List<UserBillingHistory> findAllByUser(User user);
+
 }

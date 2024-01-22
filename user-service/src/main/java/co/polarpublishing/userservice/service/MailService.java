@@ -25,4 +25,5 @@ public interface MailService {
    * @param mailDto {@link MailDto} object.
    */
   void sendHtml(MailDto mailDto, String from);
+  
 }

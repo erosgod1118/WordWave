@@ -12,7 +12,9 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TokenDto {
-    @NotNull(message = "Missing required parameter 'jwt'.")
-    String jwt;
+
+	@NotNull(message = "Missing required parameter 'jwt'.")
+	String jwt;
+
 }
 
