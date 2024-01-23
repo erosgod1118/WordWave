@@ -2,7 +2,7 @@ package co.polarpublishing.userservice.assembler;
 
 import co.polarpublishing.common.dto.UserDto;
 import co.polarpublishing.common.constant.RoleName;
-import co.polarpublishing.common.dto.UserRoleDto;
+// import co.polarpublishing.common.dto.UserRoleDto;
 import co.polarpublishing.userservice.entity.User;
 import co.polarpublishing.userservice.entity.UserRole;
 
@@ -17,12 +17,13 @@ import java.util.stream.Collectors;
 public class UserAssembler {
 
 	private final UserRoleAssembler userRoleAssembler;
-	private final AmazonKeysAssembler amazonKeysAssembler;
+	// private final AmazonKeysAssembler amazonKeysAssembler;
 
 	@Autowired
-	public UserAssembler(UserRoleAssembler userRoleAssembler, AmazonKeysAssembler amazonKeysAssembler) {
+	public UserAssembler(UserRoleAssembler userRoleAssembler) {
+	// public UserAssembler(UserRoleAssembler userRoleAssembler, AmazonKeysAssembler amazonKeysAssembler) {
 		this.userRoleAssembler = userRoleAssembler;
-		this.amazonKeysAssembler = amazonKeysAssembler;
+		// this.amazonKeysAssembler = amazonKeysAssembler;
 	}
 
 	public UserDto toDto(User user) {

@@ -13,6 +13,7 @@ import lombok.Setter;
 @Setter
 public class FeaturesUsageState {
 
+  @Builder.Default
   private UsageState listingAnalysisFeatureUsageState = new UsageState();
   
 }

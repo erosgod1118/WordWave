@@ -3,7 +3,7 @@ package co.polarpublishing.userservice.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.Instant;
+// import java.time.Instant;
 
 @Entity
 @Table(name = "user_billing_history")

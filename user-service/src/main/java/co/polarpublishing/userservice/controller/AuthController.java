@@ -231,8 +231,8 @@ public class AuthController {
 
 			if (TRIAL.equals(signUpDto.getUserCurrentPlan())) {
 				String confirmationToken = UUID.randomUUID().toString();
-
 				signUpDto.setConfirmationToken(confirmationToken);
+				
 				savedUser = authService.signUp(signUpDto);
 				userLimitService.insertUserLimits(savedUser.getUserId());
 

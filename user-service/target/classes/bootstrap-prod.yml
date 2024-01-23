@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: user-service
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        mode: polling
+      secrets:
+        name: dbcred
+      config:
+        namespace: apps
+        sources:
+          - name: common-configuration
+          - name: user-service-configuration

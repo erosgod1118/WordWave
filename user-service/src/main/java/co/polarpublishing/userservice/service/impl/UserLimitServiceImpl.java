@@ -5,7 +5,7 @@ import co.polarpublishing.userservice.repository.write.UserLimitRepository;
 import co.polarpublishing.userservice.service.UserLimitService;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+// import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Slf4j
+// @Slf4j
 @Service
 @AllArgsConstructor
 public class UserLimitServiceImpl implements UserLimitService {

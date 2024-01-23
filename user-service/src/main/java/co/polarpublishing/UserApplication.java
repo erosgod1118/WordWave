@@ -15,5 +15,7 @@ import org.springframework.context.annotation.Import;
 @EnableFeignClients(basePackages = {"co.polarpublishing.userservice.feign", "co.polarpublishing.common.client"})
 @ComponentScan({"co.polarpublishing.userservice", "co.polarpublishing.common"})
 public class UserApplication {
-  
+  public static void main(String[] args) {
+    SpringApplication.run(UserApplication.class, args);
+  }
 }
