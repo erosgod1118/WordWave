@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "books_acquisition_sessions")
-@Data
+// @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

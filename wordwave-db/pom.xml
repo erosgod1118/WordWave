@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>co.polarpublishing</groupId>
+	<artifactId>wordwave-db</artifactId>
+	<version>1.0.0</version>
+	<name>wordwave-db</name>
+	<description>Liquibase. Wordwave DB</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<liquibase.version>3.6.2</liquibase.version>
+		<mysql.connector.version>8.0.12</mysql.connector.version>
+		<!-- database properties -->
+		<liquibase.driver>com.mysql.cj.jdbc.Driver</liquibase.driver>
+		<liquibase.url>jdbc:mysql://localhost:3306/wordwave_db?nullNamePatternMatchesAll=true</liquibase.url>
+		<liquibase.username>wordwave</liquibase.username>
+		<liquibase.password>WordWave12#</liquibase.password>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>${liquibase.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-maven-plugin</artifactId>
+				<version>${liquibase.version}</version>
+				<configuration>
+					<changeLogFile>${basedir}/src/main/resources/master.xml</changeLogFile>
+					<driver>${liquibase.driver}</driver>
+					<url>${liquibase.url}</url>
+					<username>${liquibase.username}</username>
+					<password>${liquibase.password}</password>
+				</configuration>
+				<executions>
+					<execution>
+						<id>update-db</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>update</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

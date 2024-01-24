@@ -32,9 +32,9 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+// @ToString
 @JsonIgnoreProperties(value = {"country", "stores", "hibernateLazyInitializer", "handler"})
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+// @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Marketplace {
 
   @Id

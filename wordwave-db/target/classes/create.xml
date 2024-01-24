@@ -1,0 +1,1370 @@
+<databaseChangeLog
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- common tables that are references throughout the model -->
+    <changeSet id="db-create-change-set-1" author="vkrivcov" context="default">
+
+        <createTable tableName="countries">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(55)" />
+            <column name="code" type="varchar(3)" />
+        </createTable>
+
+        <createTable tableName="marketplaces">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="amazon_id" type="varchar(25)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="country_id" type="bigint">
+                <constraints foreignKeyName="fk_marketplaces_country_id" references="countries(id)" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="categories">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="category_id" type="bigint">
+                <!--<constraints foreignKeyName="fk_categories_analytics_category_id" references="categories(id)" nullable="false"/>-->
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="marketplace_id" type="bigint">
+                <!--<constraints foreignKeyName="fk_categories_marketplace_id" references="marketplaces(id)" nullable="false"/>-->
+            </column>
+            <column name="store_id" type="int"/>
+            <column name="category_level" type="int"/>
+            <column name="url" type="text"/>
+        </createTable>
+
+        <addUniqueConstraint columnNames="category_id, marketplace_id"
+                             constraintName="unique_record"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             tableName="categories"/>
+
+        <createTable tableName="stores">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amazon_search_alias" type="varchar(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amazon_id" type="varchar(25)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="marketplace_id" type="bigint">
+                <constraints foreignKeyName="fk_stores_marketplace_id" references="marketplaces(id)" nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="books">
+            <column name="asin" type="varchar(11)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="marketplace_id" type="bigint">
+                <constraints foreignKeyName="fk_books_marketplace_id" references="marketplaces(id)" nullable="false"/>
+            </column>
+            <column name="isbn" type="varchar(128)">
+                <constraints unique="true"/>
+            </column>
+            <column name="book_type" type="varchar(45)"/>
+            <column name="author" type="varchar(128)"/>
+            <column name="thumbnail" type="varchar(256)"/>
+
+        </createTable>
+
+        <createTable tableName="resource_categories">
+            <column name="id" type="bigint">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="category" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="book_categories">
+            <column name="asin" type="varchar(11)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="category_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="keywords">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- core user related tables -->
+    <changeSet id="db-create-change-set-2" author="vkrivcov" context="default">
+        <createTable tableName="users">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(128)"/>
+            <column name="last_name" type="varchar(128)"/>
+            <column name="email" type="varchar(256)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="banned" type="bool" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_login_date" type="bigint"/>
+            <column name="reset_token" type="varchar(36)"/>
+            <column name="avatar_link" type="varchar(256)"/>
+        </createTable>
+
+        <createTable tableName="roles">
+            <column name="role_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="role" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_roles">
+            <column name="role_id" type="bigint">
+                <constraints foreignKeyName="fk_user_roles_role_id" references="roles(role_id)" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="fk_user_roles_user_id" references="users(id)" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_books">
+            <column name="user_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="asin" type="varchar(11)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_keywords">
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="fk_user_keywords_user_id" references="users(id)" nullable="false"/>
+            </column>
+            <column name="keyword_id" type="bigint">
+                <constraints foreignKeyName="fk_user_keywords_keyword_id" references="keywords(id)" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="amazon_keys">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="marketplace_id" type="bigint">
+                <constraints foreignKeyName="fk_amazon_keys_marketplace_id" references="marketplaces(id)"
+                             nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="fk_amazon_keys_user_id" references="users(id)" nullable="false"/>
+            </column>
+            <column name="associate_id" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="access_key" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="secret_key" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_keys">
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="fk_user_keys_user_id" references="users(id)" nullable="false"/>
+            </column>
+            <column name="amazon_key" type="bigint">
+                <constraints foreignKeyName="fk_user_keys_amazon_key" references="amazon_keys(id)" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- resources and their category tables -->
+    <changeSet id="db-create-change-set-3" author="vkrivcov" context="default">
+        <createTable tableName="resources">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="bigint">
+                <constraints foreignKeyName="fk_resources_category_id" references="resource_categories(id)"
+                             nullable="false"/>
+            </column>
+            <column name="url" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="extension" type="varchar(10)"/>
+            <column name="video_id" type="varchar(256)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- news, comments, reviews and posts tables -->
+    <changeSet id="db-create-change-set-4" author="vkrivcov" context="default">
+        <createTable tableName="news">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="title" type="varchar(256)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="text">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="posts">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="title" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="fk_posts_user_id" references="users(id)" nullable="false"/>
+            </column>
+            <column name="create_timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="edit_timestamp" type="bigint"/>
+            <column name="text" type="text">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="comments">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="fk_comments_user_id" references="users(id)" nullable="false"/>
+            </column>
+            <column name="post_id" type="bigint">
+                <constraints foreignKeyName="fk_comments_post_id" references="posts(id)" nullable="false"/>
+            </column>
+            <column name="create_timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="edit_timestamp" type="bigint"/>
+            <column name="text" type="text">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- core analytics tables  -->
+    <changeSet id="db-create-change-set-5" author="vkrivcov" context="default">
+        <!-- categories_analytics: majority of fields are allowed null values as they might be not available at the beginning and we might crawl them -->
+        <createTable tableName="categories_analytics">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="category_id" type="bigint">
+                <!--<constraints foreignKeyName="fk_categories_analytics_category_id" references="categories(id)" nullable="false"/>-->
+            </column>
+            <column name="name" type="varchar(265)"/>
+            <column name="store_id" type="bigint">
+                <!--<constraints foreignKeyName="fk_categories_analytics_store_id" references="stores(id)" nullable="false"/>-->
+            </column>
+            <column name="category_level" type="int"/>
+
+            <!-- top rank field will hold data for topN rank i.e. {"top1_rank" : "XXX", "top20_rank" : "XXXXX" ...} -->
+            <column name="top_rank" type="json"/>
+
+            <!-- we will calculate average price/rank/score/reviews for pageN here and is up to us to what level of N we will go -->
+            <column name="average_best_seller_rank" type="bigint"/>
+            <column name="average_price" type="json"/>
+            <column name="average_star_rating" type="double"/>
+            <column name="average_reviews" type="bigint"/>
+
+            <column name="parent_id" type="bigint"/>
+            <column name="timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="url" type="text"/>
+
+            <!-- general column that will be used for mixed data such as pageN stats etc. -->
+            <column name="miscellaneous" type="json"/>
+        </createTable>
+
+        <addUniqueConstraint columnNames="category_id, parent_id"
+                             constraintName="unique_record"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             tableName="categories_analytics"/>
+
+        <!-- book_analytics: majority of analytics fields are NOT allowed null values as we should have them in the spot and it would be difficult to get them separately -->
+        <createTable tableName="books_analytics">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="asin" type="varchar(11)">
+                <constraints foreignKeyName="fk_book_analytics_asin" references="books(asin)" nullable="false"/>
+            </column>
+
+            <!-- sometimes we will not have rating/review hence allow null values there -->
+            <column name="star_rating" type="bigint"/>
+            <column name="reviews" type="bigint"/>
+
+            <!-- best seller rankings should always be there as well as we want to record timestamp at all the time to track creation/updates -->
+            <column name="best_seller_rank" type="bigint"/>
+            <column name="timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- note 1: allow null values there (if calc service is down we should use default values + recalculate later on) -->
+            <!-- note 2: additionally min/max price will have JSON encoded string with variety of prices such as user/new etc. -->
+            <!-- at the initial point we will probably will not calculate daily sales for user books but it might be useful for the future -->
+            <column name="daily_sales_min" type="json"/>
+            <column name="daily_sales_max" type="json"/>
+
+            <!-- price JSON encoded string will contain variations for new/used/etc. i.e. {"new" : XXXX, "used" : XXXX} -->
+            <column name="prices" type="json"/>
+
+            <!-- general column that will be used for mixed data such as stats etc. -->
+            <column name="miscellaneous" type="json"/>
+        </createTable>
+
+        <createTable tableName="keywords_analytics">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="keyword_id" type="bigint">
+                <constraints foreignKeyName="fk_keywords_analytics_keyword_id" references="keywords(id)"
+                             nullable="false"/>
+            </column>
+            <column name="marketplace_id" type="bigint">
+                <constraints foreignKeyName="fk_keywords_analytics_marketplace_id" references="marketplaces(id)"
+                             nullable="false"/>
+            </column>
+            <column name="store_id" type="bigint">
+                <constraints foreignKeyName="fk_keywords_analytics_store_id" references="stores(id)" nullable="false"/>
+            </column>
+
+            <!-- we will calculate average price/rank/score/reviews for pageN here and is up to us to what level of N we will go -->
+            <!-- note: average best seller rank can be null to start with as this information will not be available to use straight away -->
+            <column name="average_best_seller_rank" type="bigint"/>
+            <column name="average_price" type="double"/>
+            <column name="average_star_rating" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="average_reviews" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- general column that will be used for mixed data such as weekly sakes etc. -->
+            <column name="miscellaneous" type="json"/>
+        </createTable>
+    </changeSet>
+
+    <!-- keyword search result tables  -->
+    <changeSet id="db-create-change-set-6" author="vkrivcov" context="default">
+        <createTable tableName="keyword_search_results">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="keyword_id" type="bigint">
+                <constraints foreignKeyName="fk_keyword_search_results_keyword_id" references="keywords(id)"
+                             nullable="false"/>
+            </column>
+            <column name="marketplace_id" type="bigint">
+                <constraints foreignKeyName="fk_keyword_search_results_marketplace_id" references="marketplaces(id)"
+                             nullable="false"/>
+            </column>
+            <column name="store_id" type="bigint">
+                <constraints foreignKeyName="fk_keyword_search_results_store_id" references="stores(id)"
+                             nullable="false"/>
+            </column>
+
+            <!-- json will allow us some flexibility such as book quantity per page1, pageN etc. -->
+            <column name="books_quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="keywords_search_results_books">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="asin" type="varchar(11)">
+                <constraints foreignKeyName="fk_keywords_search_results_books_book_asin" references="books(asin)"
+                             nullable="false"/>
+            </column>
+            <column name="search_page_number" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="keyword_search_result_id" type="bigint">
+                <constraints foreignKeyName="fk_keywords_search_results_books_keyword_search_result_id"
+                             references="keyword_search_results(id)" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_book_keywords">
+            <column name="user_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="asin" type="varchar(11)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="keyword_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- reviewers related tables -->
+    <changeSet id="db-create-change-set-7" author="vkrivcov" context="default">
+        <createTable tableName="reviewers">
+            <column name="reviewer_id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="image_url" type="text" />
+            <column name="href_links" type="text" />
+            <column name="link" type="text" />
+            <column name="name" type="text" />
+            <column name="rank" type="int" />
+            <column name="total_reviews" type="int" />
+            <column name="helpful_votes" type="int" />
+            <column name="search_page_number" type="int" />
+            <column name="timestamp" type="bigint" />
+            <column name="percent_helpful" type="double" />
+        </createTable>
+
+        <!-- staging table where latest (on the fly) results will be stored while getting the latest information about the reviewers -->
+        <createTable tableName="reviewers_staging">
+            <column name="reviewer_id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="image_url" type="text" />
+            <column name="href_links" type="text" />
+            <column name="link" type="text" />
+            <column name="name" type="text" />
+            <column name="rank" type="int" />
+            <column name="total_reviews" type="int" />
+            <column name="helpful_votes" type="int" />
+            <column name="search_page_number" type="int" />
+            <column name="timestamp" type="bigint" />
+            <column name="percent_helpful" type="double" />
+        </createTable>
+    </changeSet>
+
+    <!-- custom tables -->
+    <!-- note: need to think whether we can merge them somewhere -->
+    <changeSet id="db-create-change-set-8" author="vkrivcov" context="default">
+        <!-- main table that holds parent id for books in different marketplaces -->
+        <createTable tableName="marketplaces_books_root_category">
+            <column name="marketplace_id" type="bigint">
+                <constraints foreignKeyName="fk_marketplaces_books_root_category_marketplace_id"
+                             references="marketplaces(id)" nullable="false"/>
+            </column>
+            <column name="books_root_category_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-9" author="vkrivcov" context="default">
+        <dropPrimaryKey tableName="user_book_keywords"/>
+        <addColumn tableName="user_book_keywords">
+            <column name="marketplace_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="user_book_keywords">
+            <column name="store_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addPrimaryKey tableName="user_book_keywords"
+                       columnNames="user_id, asin, keyword_id, marketplace_id, store_id"/>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-10" author="vkrivcov" context="default">
+        <dropNotNullConstraint tableName="resources"
+                               columnName="url" columnDataType="text"/>
+    </changeSet>
+
+    <!--Additional book properties-->
+    <changeSet id="db-create-change-set-11" author="mani" context="default">
+        <addColumn tableName="books">
+            <column name="pages_quantity" type="int"/>
+            <column name="publisher" type="varchar(255)"/>
+        </addColumn>
+        <addColumn tableName="keywords_search_results_books">
+            <column name="search_page_item_index" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <!-- Adding miscellaneous column in book table -->
+    <changeSet id="db-create-change-set-12" author="mani" context="default">
+        <addColumn tableName="books">
+            <column name="miscellaneous" type="json">
+                <constraints nullable="true"/>
+            </column>
+            <column name="creation_timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updation_timestamp" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <dropNotNullConstraint tableName="keywords_analytics" columnName="average_star_rating" columnDataType="double"/>
+        <dropNotNullConstraint tableName="keywords_analytics" columnName="average_reviews" columnDataType="bigint"/>
+        <dropNotNullConstraint tableName="keywords_analytics" columnName="average_best_seller_rank"
+                               columnDataType="bigint"/>
+        <dropNotNullConstraint tableName="keywords_analytics" columnName="average_price" columnDataType="double"/>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-13" author="okondratiuk" context="default">
+        <createTable tableName="store_types">
+            <column name="id" type="bigint"/>
+            <column name="name" type="text"/>
+        </createTable>
+        <createIndex indexName="idx_store_types_id"
+                     schemaName="wordwave_db"
+                     tableName="store_types"
+                     unique="true">
+            <column name="id" type="bigint"/>
+        </createIndex>
+        <addColumn schemaName="wordwave_db"
+                   tableName="stores">
+            <column name="type_id" type="bigint"/>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="type_id"
+                                 baseTableName="stores"
+                                 constraintName="fk_stores_store_types"
+                                 referencedColumnNames="id"
+                                 referencedTableName="store_types"/>
+        <addColumn schemaName="wordwave_db"
+                   tableName="categories">
+            <column name="parent_category_id" type="bigint"/>
+        </addColumn>
+        <addColumn schemaName="wordwave_db"
+                   tableName="stores">
+            <column name="root_category_id" type="bigint"/>
+        </addColumn>
+        <addColumn schemaName="wordwave_db"
+                   tableName="categories_analytics">
+            <column name="path" type="text"/>
+        </addColumn>
+        <addColumn schemaName="wordwave_db"
+                   tableName="categories">
+            <column name="path" type="text"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="db-create-change-set-14" author="okondratiuk" context="default">
+        <addAutoIncrement columnDataType="bigint"
+                          columnName="id"
+                          incrementBy="1"
+                          schemaName="wordwave_db"
+                          startWith="0"
+                          tableName="categories"/>
+        <addAutoIncrement columnDataType="bigint"
+                          columnName="id"
+                          incrementBy="1"
+                          schemaName="wordwave_db"
+                          startWith="0"
+                          tableName="categories_analytics"/>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-15" author="okondratiuk" context="default">
+        <dropIndex indexName="unique_record"
+                   schemaName="wordwave_db"
+                   tableName="categories"/>
+
+        <addUniqueConstraint columnNames="category_id, marketplace_id, store_id"
+                             constraintName="unique_category_record"
+                             deferrable="true"
+                             disabled="true"
+                             initiallyDeferred="true"
+                             tableName="categories"/>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-16" author="mani" context="default">
+        <!--Dropping references first-->
+        <dropForeignKeyConstraint baseTableName="books_analytics" constraintName="fk_book_analytics_asin"/>
+        <dropForeignKeyConstraint baseTableName="keywords_search_results_books"
+                                  constraintName="fk_keywords_search_results_books_book_asin"/>
+
+        <!--Chaning books primary key-->
+        <dropPrimaryKey tableName="books"/>
+        <dropForeignKeyConstraint baseTableName="books" constraintName="fk_books_marketplace_id"/>
+        <addPrimaryKey tableName="books" columnNames="asin, marketplace_id"/>
+
+        <dropPrimaryKey tableName="book_categories"/>
+        <addColumn tableName="book_categories">
+            <column name="marketplace_id" type="bigint"></column>
+        </addColumn>
+        <addPrimaryKey tableName="book_categories" columnNames="asin, marketplace_id, category_id"/>
+
+        <dropPrimaryKey tableName="user_books"/>
+        <addColumn tableName="user_books">
+            <column name="marketplace_id" type="bigint"></column>
+        </addColumn>
+        <addPrimaryKey tableName="user_books" columnNames="asin, marketplace_id, user_id"/>
+
+        <!--Adding reference to books-->
+        <addColumn tableName="books_analytics">
+            <column name="marketplace_id" type="bigint"></column>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="books_analytics" baseColumnNames="asin, marketplace_id"
+                                 constraintName="fk_books_analytics_books"
+                                 referencedTableName="books"
+                                 referencedColumnNames="asin, marketplace_id"/>
+        <addColumn tableName="keywords_search_results_books">
+            <column name="marketplace_id" type="bigint"></column>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="keywords_search_results_books" baseColumnNames="asin, marketplace_id"
+                                 constraintName="fk_keywords_search_results_books_books"
+                                 referencedTableName="books"
+                                 referencedColumnNames="asin, marketplace_id"/>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-17" author="mani" context="default">
+        <createTable tableName="books_acquisition_sessions">
+            <column name="asin" type="varchar(11)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_bas"/>
+            </column>
+            <column name="marketplace_id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_bas"/>
+            </column>
+            <column name="type" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updation_timestamp" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-18" author="okondratiuk" context="default">
+        <dropColumn tableName="books" columnName="author"/>
+
+        <addColumn schemaName="wordwave_db"
+                   tableName="books">
+            <column name="author" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="db-create-change-set-19" author="okondratiuk" context="default">
+        <createTable tableName="related_keyword">
+            <column name="related_keyword_id" autoIncrement="true" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_related_keyword_keywords_id" references="keywords(id)"/>
+            </column>
+            <column name="keyword_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_keyword_keywords_id" references="keywords(id)"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="related_keyword_id, keyword_id"
+                       constraintName="pk_related_keyword"
+                       schemaName="wordwave_db"
+                       tableName="related_keyword"/>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-20" author="okondratiuk" context="default">
+        <addColumn tableName="keyword_search_results">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="keyword_search_results">
+            <column name="parent_keyword_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="keywords_analytics">
+            <column name="search_result_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-21" author="Dubovich-Kostetskiy" context="default">
+    <createTable tableName="book_position_by_keyword">
+        <column name="id" autoIncrement="true" type="bigint">
+            <constraints primaryKey="true" nullable="false" unique="true"/>
+        </column>
+        <column name="asin" type="varchar(255)"/>
+        <column name="keyword_id" type="bigint">
+            <constraints foreignKeyName="fk_book_position_by_keyword_keyword_id" references="keywords(id)"
+              nullable="false"/>
+        </column>
+        <column name="position" type="bigint"/>
+        <column name="market_place_id" type="bigint"/>
+        <column name="store_id" type="bigint"/>
+        <column name="time_stamp" type="bigint"/>
+    </createTable>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-22" author="Dubovich-Kostetskiy" context="default">
+        <addColumn tableName="users">
+            <column name="user_current_plan" type="varchar(255)">
+            </column>
+        </addColumn>
+        <addColumn tableName="users">
+            <column name="user_subscription_status" type="varchar(255)">
+            </column>
+        </addColumn>
+        <addColumn tableName="users">
+            <column name="user_last_billing_date" type="varchar(255)">
+            </column>
+        </addColumn>
+        <addColumn tableName="users">
+            <column name="user_next_billing_date" type="varchar(255)">
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-23" author="Dubovich-Kostetskiy" context="default">
+        <createTable tableName="user_billing_history">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="invoice_link" type="varchar(255)"/>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="fk_user_billing_history_user_id" references="users(id)"/>
+            </column>
+            <column name="amount" type="bigint"/>
+            <column name="created_at" type="bigint"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-24" author="Mani Rai" context="default">
+        <createTable tableName="keyword_research_sessions">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_keyword_research_sessions_user_id" references="users(id)"/>
+            </column>
+            <column name="state" type="json">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updation_timestamp" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addColumn tableName="keyword_search_results">
+            <column name="keyword_research_session_id" type="bigint">
+                <constraints nullable="true" foreignKeyName="fk_keyword_search_results_keyword_research_session_id" references="keyword_research_sessions(id)"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="keywords_analytics">
+            <column name="keyword_research_session_id" type="bigint">
+                <constraints nullable="true" foreignKeyName="fk_keywords_analytics_keyword_research_session_id" references="keyword_research_sessions(id)"/>
+            </column>
+        </addColumn>
+        <createTable tableName="users_preferred_keyword_research_sessions">
+            <column name="keyword_research_session_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="creation_timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updation_timestamp" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <dropNotNullConstraint tableName="stores" columnName="amazon_id" columnDataType="varchar(25)"/>
+        <dropUniqueConstraint tableName="stores" constraintName="amazon_id" />
+    </changeSet>
+
+    <changeSet id="db-create-change-set-25" author="Mani Rai" context="default">
+        <modifyDataType tableName="books" columnName="title" newDataType="varchar(512)"/>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-26" author="Mani Rai" context="default">
+        <addColumn tableName="user_books">
+            <column name="creation_timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updation_timestamp" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-27" author="Mani Rai" context="default">
+        <modifyDataType tableName="books" columnName="thumbnail" newDataType="varchar(512)"/>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-28" author="Mani Rai" context="default">
+        <createTable tableName="formulas">
+            <column name="name" type="varchar(50)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="expression" type="varchar(5000)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Niche finder requests table -->
+    <changeSet id="db-create-change-set-29" author="Bogdan Gabor" context="default">
+        <createTable tableName="user_niche_finder_requests">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parameters" type="json">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updation_timestamp" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- User unsubscribe reason table -->
+    <changeSet id="db-create-change-set-30" author="Bogdan Gabor" context="default">
+        <createTable tableName="user_unsubscribe_reason">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reason" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updation_timestamp" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-31" author="Mani Rai" context="default">
+        <createTable tableName="feature_usage_records">
+            <column name="user_id" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="feature" type="varchar(45)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="db-create-change-set-32" author="Dima Lesnic" context="default">
+        <createTable tableName="suggestions">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="suggestion" type="varchar(256)"/>
+            <column name="marketplace_id" type="bigint"/>
+            <column name="creation_timestamp" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="occurrence" type="int"/>
+            <column name="user_id" type="bigint"/>
+            <column name="is_popular" type="bool" defaultValue="false"/>
+        </createTable>
+        <addUniqueConstraint
+                columnNames="suggestion,marketplace_id"
+                constraintName="suggestion_marketplace"
+                tableName="suggestions"/>
+        <createTable tableName="suggestions_books">
+            <column name="suggestion_id" type="bigint">
+                <constraints foreignKeyName="fk_suggestions_books_id" references="suggestions(id)" nullable="false"/>
+            </column>
+            <column name="asin" type="varchar(11)">
+                <constraints foreignKeyName="fk_suggestions_books_asin" references="books(asin)" nullable="false"/>
+            </column>
+            <column name="marketplace_id" type="bigint">
+                <constraints foreignKeyName="fk_suggestions_books_marketplace_id" references="books(marketplace_id)" nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="suggestions_books" baseColumnNames="asin, marketplace_id"
+                                 constraintName="fk_suggestions_books"
+                                 referencedTableName="books"
+                                 referencedColumnNames="asin, marketplace_id"/>
+        <createTable tableName="suggestion_rel">
+            <column name="parent_id" type="bigint">
+                <constraints foreignKeyName="fk_suggestions_parent_id" references="suggestions(id)" nullable="false"/>
+            </column>
+            <column name="child_id" type="bigint">
+                <constraints foreignKeyName="fk_suggestions_child_id" references="suggestions(id)" nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+    <changeSet id="db-create-change-set-33" author="Dima Lesnic" context="default">
+        <addColumn tableName="marketplaces">
+            <column name="suggestions_url" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="db-create-change-set-34" author="Mani Rai" context="default">
+        <dropNotNullConstraint tableName="keyword_search_results" columnName="books_quantity" columnDataType="int"/>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-35" author="Bogdan Gabor" context="default">
+        <createTable tableName="user_limits">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(256)"/>
+            <column name="type" type="varchar(256)"/>
+            <column name="max" type="int"/>
+            <column name="value" type="int"/>
+            <column name="creation_timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updation_timestamp" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="db-create-change-set-36" author="Bogdan Gabor" context="default">
+        <addColumn tableName="users">
+            <column name="confirmation_token" type="varchar(36)"/>
+            <column name="creation_timestamp" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="updation_timestamp" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <!-- top sales field will hold data for topN sales i.e. {"top1" : "XXXXX", "top5" : "XXX" ...} -->
+    <changeSet id="db-create-change-set-37" author="Bogdan Gabor" context="default">
+        <addColumn tableName="categories_analytics">
+            <column name="top_sales" type="json"/>
+        </addColumn>
+    </changeSet>
+    <!-- Trial questionnaire answers table -->
+    <changeSet id="db-create-change-set-38" author="Bogdan Gabor" context="default">
+        <createTable tableName="trial_questionnaire">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="answers" type="json">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updation_timestamp" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="db-create-change-set-39" author="Lesnic Dumitru" context="default">
+        <createTable tableName="suggestions_users">
+            <column name="suggestion_id" type="bigint">
+                <constraints foreignKeyName="fk_suggestions_users_suggestion_id" references="suggestions(id)" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="fk_suggestions_users_user_id" references="users(id)" nullable="false"/>
+            </column>
+        </createTable>
+        <addColumn tableName="suggestions">
+            <column name="is_important" type="bool" defaultValue="false"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="db-create-change-set-41" author="Bogdan Gabor" context="default">
+        <createTable tableName="reviews">
+            <column name="id" type="varchar(256)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="asin" type="varchar(256)"/>
+            <column name="marketplace_id" type="bigint"/>
+            <column name="stars" type="int"/>
+            <column name="title" type="blob"/>
+            <column name="text" type="blob"/>
+            <column name="date" type="varchar(256)"/>
+            <column name="creation_timestamp" type="bigint"/>
+            <column name="updation_timestamp" type="bigint"/>
+        </createTable>
+        <createTable tableName="user_book_notifications">
+            <column name="user_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="asin" type="varchar(11)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="marketplace_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="creation_timestamp" type="bigint"/>
+            <column name="updation_timestamp" type="bigint"/>
+        </createTable>
+        <addColumn tableName="books">
+            <column name="ratings" type="bigint" defaultValue="-1"/>
+            <column name="reviews" type="bigint" defaultValue="-1"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="db-create-change-set-42" author="Bogdan Gabor" context="default">
+        <createTable tableName="category_books">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="category_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aod" type="bigint"/>
+            <column name="position" type="int"/>
+            <column name="asin" type="varchar(11)"/>
+            <column name="marketplace_id" type="bigint"/>
+            <column name="title" type="varchar(256)"/>
+            <column name="author" type="varchar(256)"/>
+            <column name="thumbnail" type="varchar(256)"/>
+            <column name="bsr" type="bigint"/>
+            <column name="stars" type="double"/>
+            <column name="ratings" type="bigint"/>
+            <column name="book_type" type="varchar(45)"/>
+            <column name="price" type="double"/>
+            <column name="created_at" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="updated_at" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="db-create-change-set-43" author="Lesnic Dumitru" context="default">
+        <addColumn tableName="countries">
+            <column name="google_location_id" type="bigint"/>
+            <column name="google_language_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="db-create-change-set-44" author="Mani Rai" context="default">
+        <modifyDataType tableName="formulas" columnName="expression" newDataType="varchar(10000)"/>
+    </changeSet>
+    <changeSet id="db-create-change-set-45" author="Lesnic Dumitru" context="default">
+        <addColumn tableName="books">
+            <column name="price" type="double"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="db-create-change-set-46" author="Bogdan Gabor" context="default">
+        <addColumn tableName="category_books">
+            <column name="store_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="db-create-change-set-47" author="Lesnic Dumitru" context="default">
+        <addColumn tableName="categories">
+            <column name="products_count" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="db-create-change-set-48" author="Lesnic Dumitru" context="default">
+        <addColumn tableName="suggestions">
+            <column name="dominant_category" type="varchar(256)"/>
+            <column name="search_volume" type="int"/>
+            <column name="competitors" type="int"/>
+            <column name="title_density" type="int"/>
+            <column name="books_distribution" type="int"/>
+            <column name="audio_distribution" type="int"/>
+            <column name="kindle_distribution" type="int"/>
+            <column name="avg_reviews" type="int"/>
+            <column name="avg_price" type="double"/>
+            <column name="avg_date" type="date"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-49" author="Lesnic Dumitru" context="default">
+        <createTable tableName="user_krt_requests">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updation_timestamp" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+  <changeSet id="db-create-change-set-50" author="Mani Rai" context="default">
+    <createTable tableName="books_states">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="avg_rating" type="double">
+        <constraints nullable="true"/>
+      </column>
+      <column name="ratings_qty" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="reviews_qty" type="bigint">
+          <constraints nullable="true"/>
+      </column>
+      <column name="sale_price" type="double">
+        <constraints nullable="true"/>
+      </column>
+      <column name="list_price" type="double">
+        <constraints nullable="true"/>
+      </column>
+      <column name="root_category_rank" type="int">
+        <constraints nullable="true"/>
+      </column>
+      <column name="ranked_sub_categories" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="ranking_statistics" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="description_statistics" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="aplus_content_statistics" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="asin" type="varchar(11)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="marketplace_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="creation_timestamp" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="listings_analytics">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="avg_rating_analytic" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="ratings_qty_analytic" type="json">
+          <constraints nullable="true"/>
+      </column>
+      <column name="category_trees_qty_analytic" type="json">
+          <constraints nullable="true"/>
+      </column>
+      <column name="categories_qty_analytic" type="json">
+          <constraints nullable="true"/>
+      </column>
+      <column name="categories_ranking_analytic" type="json">
+          <constraints nullable="true"/>
+      </column>
+      <column name="desc_char_qty_analytic" type="json">
+          <constraints nullable="true"/>
+      </column>
+      <column name="desc_fmt_eles_qty_analytic" type="json">
+          <constraints nullable="true"/>
+      </column>
+      <column name="aplus_blocks_qty_analytic" type="json">
+          <constraints nullable="true"/>
+      </column>
+      <column name="aplus_imgs_alt_texts_analytic" type="json">
+          <constraints nullable="true"/>
+      </column>
+        <column name="overall_score" type="double">
+            <constraints nullable="true"/>
+        </column>
+      <column name="book_state_id" type="bigint">
+        <constraints foreignKeyName="fk_la_bs_id" references="books_states(id)" nullable="false"/>
+      </column>
+        <column name="user_id" type="bigint">
+            <constraints foreignKeyName="fk_la_user_id" references="users(id)" nullable="false"/>
+        </column>
+      <column name="creation_timestamp" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addColumn tableName="marketplaces">
+      <column name="priority_level" type="int">
+        <constraints nullable="true"/>
+      </column>
+    </addColumn>
+
+    <createTable tableName="subscription_plans">
+      <column name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true"></constraints>
+      </column>
+      <column name="name" type="varchar(45)">
+        <constraints nullable="false"></constraints>
+      </column>
+      <column name="creation_timestamp" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="updation_timestamp" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="feature_usage_limits">
+      <column name="feature" type="varchar(45)">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="PK_FEATURE_USAGE_LIMITS"></constraints>
+      </column>
+      <column name="subscription_plan_id" type="bigint">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="PK_FEATURE_USAGE_LIMITS"></constraints>
+      </column>
+      <column name="max_allowed_usage" type="int"></column>
+      <column name="enforcement_method" type="varchar(45)"></column>
+      <column name="creation_timestamp" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="updation_timestamp" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+    <changeSet id="db-create-change-set-51" author="Mani Rai" context="default">
+        <addColumn tableName="books_states">
+            <column name="aplus_content" type="json">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="db-create-change-set-52" author="Bogdan Gabor" context="default">
+        <createTable tableName="landing_pages">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="link" type="varchar(255)"/>
+            <column name="provider" type="varchar(255)"/>
+            <column name="list" type="varchar(255)"/>
+            <column name="path" type="varchar(255)"/>
+            <column name="template" type="json"/>
+            <column name="html" type="mediumblob"/>
+            <column name="created_at" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="updated_at" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <createTable tableName="landing_page_settings">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subdomain" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="mailchimp_dc" type="varchar(255)"/>
+            <column name="mailchimp_key" type="varchar(255)"/>
+            <column name="aweber_key" type="varchar(255)"/>
+            <column name="aweber_user_id" type="varchar(255)"/>
+            <column name="mailerlite_key" type="varchar(1000)"/>
+            <column name="created_at" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="updated_at" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <createTable tableName="landing_page_templates">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="thumbnail" type="varchar(255)"/>
+            <column name="template" type="json"/>
+            <column name="html" type="mediumblob"/>
+            <column name="config" type="json"/>
+            <column name="created_at" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="updated_at" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <createTable tableName="landing_page_analytics">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="page_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ip" type="varchar(255)"/>
+            <column name="referrer" type="varchar(255)"/>
+            <column name="user_agent" type="varchar(1000)"/>
+            <column name="created_at" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+		
+</databaseChangeLog>

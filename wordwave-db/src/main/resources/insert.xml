@@ -1,0 +1,1064 @@
+<databaseChangeLog
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- populate default users and their roles -->
+    <changeSet id="db-insert-change-set-1" author="vkrivcov" context="default">
+        <!-- data for 'roles' table -->
+        <insert tableName="roles">
+            <column name="role_id">1</column>
+            <column name="role">ROLE_ADMIN</column>
+        </insert>
+        <insert tableName="roles">
+            <column name="role_id">2</column>
+            <column name="role">ROLE_USER</column>
+        </insert>
+        <insert tableName="roles">
+            <column name="role_id">3</column>
+            <column name="role">ROLE_PRO</column>
+        </insert>
+
+        <!-- data for 'users' table -->
+        <insert tableName="users">
+            <column name="id">1</column>
+            <column name="first_name">Tomass</column>
+            <column name="last_name">Sarts</column>
+            <column name="email">contact@polarpublishing.co</column>
+            <!-- 0eQglI16jGHkWcWx -->
+            <column name="password">$2a$10$N1n.d.9ym2mWKxLrrYzW9e3NWI3k0G7RJ7Dih2vMu.9y.pM1IMkXi</column>
+        </insert>
+        <insert tableName="users">
+            <column name="id">2</column>
+            <column name="first_name">Vadim</column>
+            <column name="last_name">Krivcov</column>
+            <column name="email">krivcov.vadim@gmail.com</column>
+            <!-- 0eQglI16jGHkWcWx -->
+            <column name="password">$2a$12$ByngyE/MSxkpXYCyqb2IX.MB6IOdolGGGBB7VByLc/5FOp1AYtcgO</column>
+        </insert>
+        <insert tableName="users">
+            <column name="id">3</column>
+            <column name="first_name">Mani</column>
+            <column name="last_name">Rai</column>
+            <column name="email">rai.mani.37@gmail.com</column>
+            <!-- 0eQglI16jGHkWcWx -->
+            <column name="password">$2a$10$N1n.d.9ym2mWKxLrrYzW9e3NWI3k0G7RJ7Dih2vMu.9y.pM1IMkXi</column>
+        </insert>
+
+        <!-- note: test users will be removed in production version -->
+        <insert tableName="users">
+            <column name="id">4</column>
+            <column name="first_name">admin</column>
+            <column name="last_name">test user</column>
+            <column name="email">admin_test_user@polarpublishing.co</column>
+            <!-- 0eQglI16jGHkWcWx -->
+            <column name="password">$2a$10$N1n.d.9ym2mWKxLrrYzW9e3NWI3k0G7RJ7Dih2vMu.9y.pM1IMkXi</column>
+        </insert>
+        <insert tableName="users">
+            <column name="id">5</column>
+            <column name="first_name">basic</column>
+            <column name="last_name">test user</column>
+            <column name="email">basic_test_user@polarpublishing.co</column>
+            <!-- 0eQglI16jGHkWcWx -->
+            <column name="password">$2a$10$N1n.d.9ym2mWKxLrrYzW9e3NWI3k0G7RJ7Dih2vMu.9y.pM1IMkXi</column>
+        </insert>
+        <insert tableName="users">
+            <column name="id">6</column>
+            <column name="first_name">pro</column>
+            <column name="last_name">test user</column>
+            <column name="email">pro_test_user@polarpublishing.co</column>
+            <!-- 0eQglI16jGHkWcWx -->
+            <column name="password">$2a$10$N1n.d.9ym2mWKxLrrYzW9e3NWI3k0G7RJ7Dih2vMu.9y.pM1IMkXi</column>
+        </insert>
+
+        <!-- data for 'user_roles' table -->
+        <insert tableName="user_roles">
+            <column name="role_id">1</column>
+            <column name="user_id">1</column>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="role_id">1</column>
+            <column name="user_id">2</column>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="role_id">1</column>
+            <column name="user_id">3</column>
+        </insert>
+
+        <!-- test users -->
+        <insert tableName="user_roles">
+            <column name="role_id">1</column>
+            <column name="user_id">4</column>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="role_id">2</column>
+            <column name="user_id">5</column>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="role_id">3</column>
+            <column name="user_id">6</column>
+        </insert>
+    </changeSet>
+
+    <!-- populate default marketplace information -->
+    <changeSet id="db-insert-change-set-2" author="vkrivcov" context="default">
+        <insert tableName="countries">
+            <column name="id">1</column>
+            <column name="name">United States of America</column>
+            <column name="code">US</column>
+        </insert>
+        <insert tableName="countries">
+            <column name="id">2</column>
+            <column name="name">United Kingdom</column>
+            <column name="code">GB</column>
+        </insert>
+        <insert tableName="countries">
+            <column name="id">3</column>
+            <column name="name">Australia</column>
+            <column name="code">AU</column>
+        </insert>
+        <insert tableName="countries">
+            <column name="id">4</column>
+            <column name="name">Brazil</column>
+            <column name="code">BR</column>
+        </insert>
+        <insert tableName="countries">
+            <column name="id">5</column>
+            <column name="name">Canada</column>
+            <column name="code">CA</column>
+        </insert>
+        <insert tableName="countries">
+            <column name="id">6</column>
+            <column name="name">China</column>
+            <column name="code">CN</column>
+        </insert>
+        <insert tableName="countries">
+            <column name="id">7</column>
+            <column name="name">France</column>
+            <column name="code">FR</column>
+        </insert>
+        <insert tableName="countries">
+            <column name="id">8</column>
+            <column name="name">Germany</column>
+            <column name="code">DE</column>
+        </insert>
+        <insert tableName="countries">
+            <column name="id">9</column>
+            <column name="name">India</column>
+            <column name="code">IN</column>
+        </insert>
+        <insert tableName="countries">
+            <column name="id">10</column>
+            <column name="name">Italy</column>
+            <column name="code">IT</column>
+        </insert>
+        <insert tableName="countries">
+            <column name="id">11</column>
+            <column name="name">Japan</column>
+            <column name="code">JP</column>
+        </insert>
+        <insert tableName="countries">
+            <column name="id">12</column>
+            <column name="name">Mexico</column>
+            <column name="code">MX</column>
+        </insert>
+        <insert tableName="countries">
+            <column name="id">13</column>
+            <column name="name">Spain</column>
+            <column name="code">ES</column>
+        </insert>
+        <insert tableName="countries">
+            <column name="id">14</column>
+            <column name="name">Turkey</column>
+            <column name="code">TR</column>
+        </insert>
+
+        <insert tableName="marketplaces">
+            <column name="id">1</column>
+            <column name="name">.com</column>
+            <column name="amazon_id">ATVPDKIKX0DER</column>
+            <column name="country_id">1</column>
+        </insert>
+        <insert tableName="marketplaces">
+            <column name="id">2</column>
+            <column name="name">.co.uk</column>
+            <column name="amazon_id">A1F83G8C2ARO7P</column>
+            <column name="country_id">2</column>
+        </insert>
+        <insert tableName="marketplaces">
+            <column name="id">3</column>
+            <column name="name">.cn</column>
+            <column name="amazon_id">AAHKV2X7AFYLW</column>
+            <column name="country_id">6</column>
+        </insert>
+        <insert tableName="marketplaces">
+            <column name="id">4</column>
+            <column name="name">.de</column>
+            <column name="amazon_id">A1PA6795UKMFR9</column>
+            <column name="country_id">8</column>
+        </insert>
+        <insert tableName="marketplaces">
+            <column name="id">5</column>
+            <column name="name">.com.br</column>
+            <column name="amazon_id">A2Q3Y263D00KWC</column>
+            <column name="country_id">4</column>
+        </insert>
+        <insert tableName="marketplaces">
+            <column name="id">6</column>
+            <column name="name">.es</column>
+            <column name="amazon_id">A1RKKUPIHCS9HS</column>
+            <column name="country_id">13</column>
+        </insert>
+        <insert tableName="marketplaces">
+            <column name="id">7</column>
+            <column name="name">.fr</column>
+            <column name="amazon_id">A13V1IB3VIYZZH</column>
+            <column name="country_id">7</column>
+        </insert>
+        <insert tableName="marketplaces">
+            <column name="id">8</column>
+            <column name="name">.in</column>
+            <column name="amazon_id">A21TJRUUN4KGV</column>
+            <column name="country_id">9</column>
+        </insert>
+        <insert tableName="marketplaces">
+            <column name="id">9</column>
+            <column name="name">.it</column>
+            <column name="amazon_id">APJ6JRA9NG5V4</column>
+            <column name="country_id">10</column>
+        </insert>
+        <insert tableName="marketplaces">
+            <column name="id">10</column>
+            <column name="name">.co.jp</column>
+            <column name="amazon_id">A1VC38T7YXB528</column>
+            <column name="country_id">11</column>
+        </insert>
+        <insert tableName="marketplaces">
+            <column name="id">11</column>
+            <column name="name">.com.mx</column>
+            <column name="amazon_id">A1AM78C64UM0Y8</column>
+            <column name="country_id">12</column>
+        </insert>
+    </changeSet>
+
+    <!-- populate default store information -->
+    <changeSet id="db-insert-change-set-3" author="vkrivcov" context="default">
+        <insert tableName="stores">
+            <column name="name">Book Store</column>
+            <column name="amazon_search_alias">stripbooks-intl-ship</column>
+            <column name="amazon_id">283155</column>
+            <column name="marketplace_id">1</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Kindle Store</column>
+            <column name="amazon_search_alias">digital-text</column>
+            <column name="amazon_id">133140011</column>
+            <column name="marketplace_id">1</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Audiobook Store</column>
+            <column name="amazon_search_alias">audible</column>
+            <column name="amazon_id">2402172011</column>
+            <column name="marketplace_id">1</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Book Store</column>
+            <column name="amazon_search_alias">stripbooks</column>
+            <column name="amazon_id">266239</column>
+            <column name="marketplace_id">2</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Kindle Store</column>
+            <column name="amazon_search_alias">digital-text</column>
+            <column name="amazon_id">341677031</column>
+            <column name="marketplace_id">2</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Audiobook Store</column>
+            <column name="amazon_search_alias">audible</column>
+            <column name="amazon_id">2996091031</column>
+            <column name="marketplace_id">2</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Book Store</column>
+            <column name="amazon_search_alias">stripbooks</column>
+            <column name="amazon_id">658390051</column>
+            <column name="marketplace_id">3</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Kindle Store</column>
+            <column name="amazon_search_alias">digital-text</column>
+            <column name="amazon_id">116087071</column>
+            <column name="marketplace_id">3</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Book Store</column>
+            <column name="amazon_search_alias">stripbooks</column>
+            <column name="amazon_id">186606</column>
+            <column name="marketplace_id">4</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Kindle Store</column>
+            <column name="amazon_search_alias">digital-text</column>
+            <column name="amazon_id">530484031</column>
+            <column name="marketplace_id">4</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Audiobook Store</column>
+            <column name="amazon_search_alias">audible</column>
+            <column name="amazon_id">251105031</column>
+            <column name="marketplace_id">4</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Book Store</column>
+            <column name="amazon_search_alias">stripbooks</column>
+            <column name="amazon_id">6740748011</column>
+            <column name="marketplace_id">5</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Kindle Store</column>
+            <column name="amazon_search_alias">digital-text</column>
+            <column name="amazon_id">5308307011</column>
+            <column name="marketplace_id">5</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Book Store</column>
+            <column name="amazon_search_alias">stripbooks</column>
+            <column name="amazon_id">599364031</column>
+            <column name="marketplace_id">6</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Kindle Store</column>
+            <column name="amazon_search_alias">digital-text</column>
+            <column name="amazon_id">818936031</column>
+            <column name="marketplace_id">6</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Book Store</column>
+            <column name="amazon_search_alias">stripbooks</column>
+            <column name="amazon_id">976389031</column>
+            <column name="marketplace_id">8</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Kindle Store</column>
+            <column name="amazon_search_alias">digital-text</column>
+            <column name="amazon_id">1571277031</column>
+            <column name="marketplace_id">8</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Book Store</column>
+            <column name="amazon_search_alias">stripbooks</column>
+            <column name="amazon_id">411663031</column>
+            <column name="marketplace_id">9</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Kindle Store</column>
+            <column name="amazon_search_alias">digital-text</column>
+            <column name="amazon_id">818937031</column>
+            <column name="marketplace_id">9</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Audiobook Store</column>
+            <column name="amazon_search_alias">audible</column>
+            <column name="amazon_id">8518306031</column>
+            <column name="marketplace_id">9</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Book Store</column>
+            <column name="amazon_search_alias">stripbooks</column>
+            <column name="amazon_id">465392</column>
+            <column name="marketplace_id">10</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Kindle Store</column>
+            <column name="amazon_search_alias">digital-text</column>
+            <column name="amazon_id">2250738051</column>
+            <column name="marketplace_id">10</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Audiobook Store</column>
+            <column name="amazon_search_alias">audible</column>
+            <column name="amazon_id">3479195051</column>
+            <column name="marketplace_id">10</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Book Store</column>
+            <column name="amazon_search_alias">stripbooks</column>
+            <column name="amazon_id">9298576011</column>
+            <column name="marketplace_id">11</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Kindle Store</column>
+            <column name="amazon_search_alias">digital-text</column>
+            <column name="amazon_id">6446439011</column>
+            <column name="marketplace_id">11</column>
+        </insert>
+    </changeSet>
+
+    <!-- populate default store types -->
+    <changeSet id="db-insert-change-set-4" author="okondratiuk" context="default">
+        <insert tableName="store_types">
+            <column name="id">1</column>
+            <column name="name">KINDLE</column>
+        </insert>
+        <insert tableName="store_types">
+            <column name="id">2</column>
+            <column name="name">BOOKS</column>
+        </insert>
+        <insert tableName="store_types">
+            <column name="id">3</column>
+            <column name="name">AUDIOBOOK</column>
+        </insert>
+    </changeSet>
+
+    <!-- populate default store types in stores table -->
+    <changeSet id="db-insert-change-set-5" author="okondratiuk" context="default">
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='2' type="bigint"/>
+            <where>amazon_id='283155'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='1' type="bigint"/>
+            <where>amazon_id='133140011'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='3' type="bigint"/>
+            <where>amazon_id='2402172011'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='2' type="bigint"/>
+            <where>amazon_id='266239'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='1' type="bigint"/>
+            <where>amazon_id='341677031'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='3' type="bigint"/>
+            <where>amazon_id='2996091031'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='2' type="bigint"/>
+            <where>amazon_id='658390051'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='1' type="bigint"/>
+            <where>amazon_id='116087071'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='2' type="bigint"/>
+            <where>amazon_id='186606'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='1' type="bigint"/>
+            <where>amazon_id='530484031'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='3' type="bigint"/>
+            <where>amazon_id='251105031'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='2' type="bigint"/>
+            <where>amazon_id='6740748011'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='1' type="bigint"/>
+            <where>amazon_id='5308307011'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='2' type="bigint"/>
+            <where>amazon_id='599364031'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='1' type="bigint"/>
+            <where>amazon_id='818936031'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='2' type="bigint"/>
+            <where>amazon_id='976389031'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='1' type="bigint"/>
+            <where>amazon_id='1571277031'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='2' type="bigint"/>
+            <where>amazon_id='411663031'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='1' type="bigint"/>
+            <where>amazon_id='818937031'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='3' type="bigint"/>
+            <where>amazon_id='8518306031'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='2' type="bigint"/>
+            <where>amazon_id='465392'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='1' type="bigint"/>
+            <where>amazon_id='2250738051'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='3' type="bigint"/>
+            <where>amazon_id='3479195051'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='2' type="bigint"/>
+            <where>amazon_id='9298576011'</where>
+        </update>
+        <update schemaName="wordwave_db"
+                tableName="stores">
+            <column name="type_id" value='1' type="bigint"/>
+            <where>amazon_id='6446439011'</where>
+        </update>
+    </changeSet>
+    <changeSet id="db-insert-change-set-6" author="okondratiuk" context="default">
+        <insert tableName="marketplaces">
+            <column name="id">12</column>
+            <column name="name">.ca</column>
+            <column name="amazon_id">A2EUQ1WTGCTBG2</column>
+            <column name="country_id">5</column>
+        </insert>
+    </changeSet>
+    <changeSet id="db-insert-change-set-7" author="Mani Rai" context="default">
+        <insert tableName="stores">
+            <column name="name">Audiobook Store</column>
+            <column name="amazon_search_alias">audible</column>
+            <column name="type_id">3</column>
+            <column name="marketplace_id">12</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Book Store</column>
+            <column name="amazon_search_alias">stripbooks</column>
+            <column name="type_id">2</column>
+            <column name="marketplace_id">12</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Kindle Store</column>
+            <column name="amazon_search_alias">digital-text</column>
+            <column name="type_id">1</column>
+            <column name="marketplace_id">12</column>
+        </insert>
+    </changeSet>
+    <changeSet id="db-insert-change-set-8" author="Mani Rai" context="default">
+        <update tableName="users">
+            <column name="user_current_plan" value="PRO67"/>
+            <column name="user_subscription_status" value="1"/>
+            <column name="user_last_billing_date" value="2020-03-27 17:36:42"/>
+            <column name="user_next_billing_date" value="2025-01-01 17:36:42"/>
+            <where>id &lt; 5</where>
+        </update>
+        <update tableName="users">
+            <column name="user_current_plan" value="Basic Annual"/>
+            <column name="user_subscription_status" value="1"/>
+            <column name="user_last_billing_date" value="2020-03-27 17:36:42"/>
+            <column name="user_next_billing_date" value="2025-01-01 17:36:42"/>
+            <where>id = 5</where>
+        </update>
+        <update tableName="users">
+            <column name="user_current_plan" value="Pro Annual"/>
+            <column name="user_subscription_status" value="1"/>
+            <column name="user_last_billing_date" value="2020-03-27 17:36:42"/>
+            <column name="user_next_billing_date" value="2025-01-01 17:36:42"/>
+            <where>id = 6</where>
+        </update>
+    </changeSet>
+
+    <changeSet id="db-insert-change-set-9" author="Mani Rai" context="default">
+        <insert tableName="formulas">
+            <column name="name">
+                GB_PRINTBOOK_ROYALTY_FORMULA
+            </column>
+            <column name="expression">
+                #book.publisher.toLowerCase().contains(&apos;Penguin random house&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Penguin Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Hachette Livre&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;HarperCollins&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Macmillan Publishers&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Simon &amp; Schuster&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;McGraw-Hill Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Pearson Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Scholastic&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Cengage Learning&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Springer Nature&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Wiley (John Wiley &amp; Sons)&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Oxford University Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Kodansha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Shueisha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Grupo Santillana&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bonnier Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Editis&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Klett&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Egmont Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Beacon Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Harper Business&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bantam&apos;.toLowerCase()) ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.12, 2) : #book.pagesQuantity &gt;= 24 &amp;&amp; #book.pagesQuantity &lt;= 109 ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.7, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.7 - #book.pagesQuantity * 0.01, 2)
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                US_PRINTBOOK_ROYALTY_FORMULA
+            </column>
+            <column name="expression">
+                #book.publisher.toLowerCase().contains(&apos;Penguin random house&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Penguin Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Hachette Livre&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;HarperCollins&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Macmillan Publishers&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Simon &amp; Schuster&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;McGraw-Hill Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Pearson Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Scholastic&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Cengage Learning&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Springer Nature&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Wiley (John Wiley &amp; Sons)&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Oxford University Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Kodansha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Shueisha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Grupo Santillana&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bonnier Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Editis&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Klett&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Egmont Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Beacon Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Harper Business&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bantam&apos;.toLowerCase()) ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.12, 2) : #book.pagesQuantity &gt;= 24 &amp;&amp; #book.pagesQuantity &lt;= 109 ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 2.15, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.85 - #book.pagesQuantity * 0.012, 2)
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                DE_PRINTBOOK_ROYALTY_FORMULA
+            </column>
+            <column name="expression">
+                #book.publisher.toLowerCase().contains(&apos;Penguin random house&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Penguin Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Hachette Livre&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;HarperCollins&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Macmillan Publishers&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Simon &amp; Schuster&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;McGraw-Hill Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Pearson Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Scholastic&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Cengage Learning&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Springer Nature&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Wiley (John Wiley &amp; Sons)&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Oxford University Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Kodansha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Shueisha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Grupo Santillana&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bonnier Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Editis&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Klett&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Egmont Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Beacon Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Harper Business&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bantam&apos;.toLowerCase()) ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.12, 2) : #book.pagesQuantity &gt;= 24 &amp;&amp; #book.pagesQuantity &lt;= 109 ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.9, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.6 - #book.pagesQuantity * 0.012, 2)
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                FR_PRINTBOOK_ROYALTY_FORMULA
+            </column>
+            <column name="expression">
+                #book.publisher.toLowerCase().contains(&apos;Penguin random house&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Penguin Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Hachette Livre&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;HarperCollins&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Macmillan Publishers&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Simon &amp; Schuster&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;McGraw-Hill Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Pearson Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Scholastic&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Cengage Learning&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Springer Nature&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Wiley (John Wiley &amp; Sons)&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Oxford University Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Kodansha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Shueisha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Grupo Santillana&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bonnier Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Editis&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Klett&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Egmont Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Beacon Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Harper Business&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bantam&apos;.toLowerCase()) ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.12, 2) : #book.pagesQuantity &gt;= 24 &amp;&amp; #book.pagesQuantity &lt;= 109 ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.9, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.6 - #book.pagesQuantity * 0.012, 2)
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                ES_PRINTBOOK_ROYALTY_FORMULA
+            </column>
+            <column name="expression">
+                #book.publisher.toLowerCase().contains(&apos;Penguin random house&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Penguin Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Hachette Livre&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;HarperCollins&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Macmillan Publishers&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Simon &amp; Schuster&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;McGraw-Hill Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Pearson Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Scholastic&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Cengage Learning&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Springer Nature&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Wiley (John Wiley &amp; Sons)&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Oxford University Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Kodansha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Shueisha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Grupo Santillana&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bonnier Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Editis&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Klett&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Egmont Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Beacon Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Harper Business&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bantam&apos;.toLowerCase()) ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.12, 2) : #book.pagesQuantity &gt;= 24 &amp;&amp; #book.pagesQuantity &lt;= 109 ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.9, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.6 - #book.pagesQuantity * 0.012, 2)
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                IT_PRINTBOOK_ROYALTY_FORMULA
+            </column>
+            <column name="expression">
+                #book.publisher.toLowerCase().contains(&apos;Penguin random house&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Penguin Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Hachette Livre&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;HarperCollins&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Macmillan Publishers&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Simon &amp; Schuster&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;McGraw-Hill Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Pearson Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Scholastic&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Cengage Learning&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Springer Nature&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Wiley (John Wiley &amp; Sons)&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Oxford University Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Kodansha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Shueisha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Grupo Santillana&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bonnier Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Editis&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Klett&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Egmont Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Beacon Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Harper Business&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bantam&apos;.toLowerCase()) ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.12, 2) : #book.pagesQuantity &gt;= 24 &amp;&amp; #book.pagesQuantity &lt;= 109 ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.9, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.6 - #book.pagesQuantity * 0.012, 2)
+            </column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="db-insert-change-set-10" author="Mani Rai" context="default">
+        <insert tableName="formulas">
+            <column name="name">
+                OPPORTUNITY_SCORE_FORMULA
+            </column>
+            <column name="expression">
+                #rankPoint + #competitorPoint + #reviewPoint &lt;= 100 ? 1 : #rankPoint + #competitorPoint + #reviewPoint &lt;= 200 ? 2 : #rankPoint + #competitorPoint + #reviewPoint &lt;= 300 ? 3 : #rankPoint + #competitorPoint + #reviewPoint &lt;= 400 ? 4 : 5
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                OS_COMPETITOR_POINTS_FORMULA
+            </column>
+            <column name="expression">
+                #competitor &lt;= 8000 ? 140 - T(java.lang.Math).round(#competitor * 0.0015) : #competitor &gt; 8000 &amp;&amp; #competitor &lt;= 12000 ? 128 - T(java.lang.Math).round((#competitor - 8000) * 0.004) : #competitor &gt; 12000 &amp;&amp; #competitor &lt;= 20000 ? 112 - T(java.lang.Math).round((#competitor - 12000) * 0.003375) : #competitor &gt; 20000 &amp;&amp; #competitor &lt;= 35000 ? 85 - T(java.lang.Math).round((#competitor - 20000) * 0.000867) : #competitor &gt; 35000 &amp;&amp; #competitor &lt;= 50000 ? 72 - T(java.lang.Math).round((#competitor - 35000) * 0.001467) : #competitor &gt; 50000 &amp;&amp; #competitor &lt;= 70000 ? 50 - T(java.lang.Math).round((#competitor - 50000) * 0.0015) : #competitor &gt; 70000 &amp;&amp; #competitor &lt;= 80000 ? 20 - T(java.lang.Math).round((#competitor - 70000) * 0.001) : #competitor &gt; 80000 &amp;&amp; #competitor &lt;= 100000 ? 10 - T(java.lang.Math).round((#competitor - 80000) * 0.0005) : 0
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                OS_REVIEW_POINTS_FORMULA
+            </column>
+            <column name="expression">
+                #review &lt;= 50 ? 160 - T(java.lang.Math).round(#review * 0.2) : #review &gt; 50 &amp;&amp; #review &lt;= 110 ? 150 - T(java.lang.Math).round((#review - 50) * 0.166667) : #review &gt; 110 &amp;&amp; #review &lt;= 160 ? 140 - T(java.lang.Math).round((#review - 110) * 0.4) : #review &gt; 160 &amp;&amp; #review &lt;= 220 ? 120 - T(java.lang.Math).round((#review - 160) * 0.333333) : #review &gt; 220 &amp;&amp; #review &lt;= 350 ? 100 - T(java.lang.Math).round((#review - 220) * 0.076923) : #review &gt; 350 &amp;&amp; #review &lt;= 450 ? 90 - T(java.lang.Math).round((#review - 350) * 0.1) : #review &gt; 450 &amp;&amp; #review &lt;= 600 ? 80 - T(java.lang.Math).round((#review - 450) * 0.066667) : #review &gt; 600 &amp;&amp; #review &lt;= 1300 ? 70 - T(java.lang.Math).round((#review - 600) * 0.1) : 0
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                OS_RANK_POINTS_FORMULA
+            </column>
+            <column name="expression">
+                #rank &gt;= 1 &amp;&amp; #rank &lt;= 12000 ? 200 - T(java.lang.Math).round(#rank * 0.001667) : #rank &gt; 12000 &amp;&amp; #rank &lt;= 32000 ? 180 - T(java.lang.Math).round((#rank - 12000) * 0.001) : #rank &gt; 32000 &amp;&amp; #rank &lt;= 68000 ? 160 - T(java.lang.Math).round((#rank - 32000) * 0.001111) : #rank &gt; 68000 &amp;&amp; #rank &lt;= 82000 ? 120 - T(java.lang.Math).round((#rank - 68000) * 0.001429) : #rank &gt; 82000 &amp;&amp; #rank &lt;= 90000 ? 100 - T(java.lang.Math).round((#rank - 82000) * 0.00125) : #rank &gt; 90000 &amp;&amp; #rank &lt;= 160000 ? 90 - T(java.lang.Math).round((#rank - 90000) * 0.001) : #rank &gt; 160000 &amp;&amp; #rank &lt;= 250000 ? 20 - T(java.lang.Math).round((#rank - 160000) * 0.0002) : #rank &gt; 250000 &amp;&amp; #rank &lt;= 270000 ? 2 - T(java.lang.Math).round((#rank - 250000) * 0.0001) : 0
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                COMPETITION_SCORE_FORMULA
+            </column>
+            <column name="expression">
+                #competitorPoint + #reviewPoint &lt;= 80 ? 1 : #competitorPoint + #reviewPoint &lt;= 160 ? 2 : #competitorPoint + #reviewPoint &lt;= 240 ? 3 : #competitorPoint + #reviewPoint &lt;= 320 ? 4 : 5
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                CS_COMPETITOR_POINTS_FORMULA
+            </column>
+            <column name="expression">
+                #competitor &lt;= 2000 ? 200 - T(java.lang.Math).round(#competitor * 0.0075) : #competitor &gt; 2000 &amp;&amp; #competitor &lt;= 5000 ? 185 - T(java.lang.Math).round((#competitor - 2000) * 0.005) : #competitor &gt; 5000 &amp;&amp; #competitor &lt;= 10000 ? 170 - T(java.lang.Math).round((#competitor - 5000) * 0.004) : #competitor &gt; 10000 &amp;&amp; #competitor &lt;= 30000 ? 150 - T(java.lang.Math).round((#competitor - 10000) * 0.002) : #competitor &gt; 30000 &amp;&amp; #competitor &lt;= 35000 ? 110 - T(java.lang.Math).round((#competitor - 30000) * 0.001) : #competitor &gt; 35000 &amp;&amp; #competitor &lt;= 40000 ? 105 - T(java.lang.Math).round((#competitor - 35000) * 0.002) : #competitor &gt; 40000 &amp;&amp; #competitor &lt;= 50000 ? 95 - T(java.lang.Math).round((#competitor - 40000) * 0.0025) : #competitor &gt; 50000 &amp;&amp; #competitor &lt;= 60000 ? 70 - T(java.lang.Math).round((#competitor - 50000) * 0.001) : #competitor &gt; 60000 &amp;&amp; #competitor &lt;= 100000 ? 60 - T(java.lang.Math).round((#competitor - 60000) * 0.0015) : 0
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                CS_REVIEW_POINTS_FORMULA
+            </column>
+            <column name="expression">
+                #review &lt;= 100 ? 200 - T(java.lang.Math).round(#review * 0.18) : #review &gt; 100 &amp;&amp; #review &lt;= 140 ? 182 - T(java.lang.Math).round((#review - 100) * 0.25) : #review &gt; 140 &amp;&amp; #review &lt;= 180 ? 172 - T(java.lang.Math).round((#review - 140) * 0.3) : #review &gt; 180 &amp;&amp; #review &lt;= 220 ? 160 - T(java.lang.Math).round((#review - 180) * 0.5) : #review &gt; 220 &amp;&amp; #review &lt;= 360 ? 140 - T(java.lang.Math).round((#review - 220) * 0.142857) : #review &gt; 360 &amp;&amp; #review &lt;= 400 ? 120 - T(java.lang.Math).round((#review - 360) * 0.5) : #review &gt; 400 &amp;&amp; #review &lt;= 600 ? 100 - T(java.lang.Math).round((#review - 400) * 0.25) : #review &gt; 600 &amp;&amp; #review &lt;= 1100 ? 50 - T(java.lang.Math).round((#review - 600) * 0.1) : 0
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                MARKET_SIZE_SCORE_FORMULA
+            </column>
+            <column name="expression">
+                #rank &gt;= 1 &amp;&amp; #rank &lt;= 36000 ? 5 : #rank &gt; 36000 &amp;&amp; #rank &lt;= 125000 ? 4 : #rank &gt; 125000 &amp;&amp; #rank &lt;= 235000 ? 3 : #rank &gt; 235000 &amp;&amp; #rank &lt;= 355000 ? 2 : 1
+            </column>
+        </insert>
+    </changeSet>
+    <changeSet id="db-insert-change-set-11" author="Mani Rai" context="default">
+        <update tableName="formulas">
+            <column name="expression" value="#book.publisher.toLowerCase().contains(&apos;Penguin random house&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Penguin Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Hachette Livre&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;HarperCollins&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Macmillan Publishers&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Simon &amp; Schuster&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;McGraw-Hill Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Pearson Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Scholastic&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Cengage Learning&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Springer Nature&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Wiley (John Wiley &amp; Sons)&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Oxford University Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Kodansha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Shueisha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Grupo Santillana&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bonnier Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Editis&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Klett&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Egmont Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Beacon Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Harper Business&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bantam&apos;.toLowerCase()) ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.12, 2) : #book.pagesQuantity &gt;= 24 &amp;&amp; #book.pagesQuantity &lt;= 109 &amp;&amp; T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 2.15, 2) &gt;= 0 ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 2.15, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.85 - #book.pagesQuantity * 0.012, 2) &gt;= 0 ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.85 - #book.pagesQuantity * 0.012, 2): T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.15, 2)"/>
+            <where>name = 'US_PRINTBOOK_ROYALTY_FORMULA'</where>
+        </update>
+        <update tableName="formulas">
+            <column name="expression" value="#book.publisher.toLowerCase().contains(&apos;Penguin random house&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Penguin Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Hachette Livre&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;HarperCollins&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Macmillan Publishers&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Simon &amp; Schuster&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;McGraw-Hill Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Pearson Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Scholastic&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Cengage Learning&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Springer Nature&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Wiley (John Wiley &amp; Sons)&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Oxford University Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Kodansha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Shueisha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Grupo Santillana&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bonnier Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Editis&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Klett&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Egmont Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Beacon Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Harper Business&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bantam&apos;.toLowerCase()) ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.12, 2) : #book.pagesQuantity &gt;= 24 &amp;&amp; #book.pagesQuantity &lt;= 109 &amp;&amp; T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.7, 2) &gt;= 0 ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.7, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.7 - #book.pagesQuantity * 0.01, 2) &gt;= 0 ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.7 - #book.pagesQuantity * 0.01, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.15, 2)"/>
+            <where>name = 'GB_PRINTBOOK_ROYALTY_FORMULA'</where>
+        </update>
+        <update tableName="formulas">
+            <column name="expression" value="#book.publisher.toLowerCase().contains(&apos;Penguin random house&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Penguin Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Hachette Livre&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;HarperCollins&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Macmillan Publishers&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Simon &amp; Schuster&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;McGraw-Hill Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Pearson Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Scholastic&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Cengage Learning&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Springer Nature&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Wiley (John Wiley &amp; Sons)&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Oxford University Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Kodansha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Shueisha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Grupo Santillana&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bonnier Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Editis&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Klett&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Egmont Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Beacon Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Harper Business&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bantam&apos;.toLowerCase()) ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.12, 2) : #book.pagesQuantity &gt;= 24 &amp;&amp; #book.pagesQuantity &lt;= 109 &amp;&amp; T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.9, 2) &gt;= 0? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.9, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.6 - #book.pagesQuantity * 0.012, 2) &gt;= 0 ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.6 - #book.pagesQuantity * 0.012, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.15, 2)"/>
+            <where>name = 'DE_PRINTBOOK_ROYALTY_FORMULA'</where>
+        </update>
+        <update tableName="formulas">
+            <column name="expression" value="#book.publisher.toLowerCase().contains(&apos;Penguin random house&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Penguin Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Hachette Livre&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;HarperCollins&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Macmillan Publishers&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Simon &amp; Schuster&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;McGraw-Hill Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Pearson Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Scholastic&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Cengage Learning&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Springer Nature&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Wiley (John Wiley &amp; Sons)&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Oxford University Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Kodansha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Shueisha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Grupo Santillana&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bonnier Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Editis&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Klett&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Egmont Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Beacon Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Harper Business&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bantam&apos;.toLowerCase()) ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.12, 2) : #book.pagesQuantity &gt;= 24 &amp;&amp; #book.pagesQuantity &lt;= 109 &amp;&amp; T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.9, 2) &gt;= 0? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.9, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.6 - #book.pagesQuantity * 0.012, 2) &gt;= 0 ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.6 - #book.pagesQuantity * 0.012, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.15, 2)"/>
+            <where>name = 'FR_PRINTBOOK_ROYALTY_FORMULA'</where>
+        </update>
+        <update tableName="formulas">
+            <column name="expression" value="#book.publisher.toLowerCase().contains(&apos;Penguin random house&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Penguin Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Hachette Livre&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;HarperCollins&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Macmillan Publishers&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Simon &amp; Schuster&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;McGraw-Hill Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Pearson Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Scholastic&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Cengage Learning&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Springer Nature&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Wiley (John Wiley &amp; Sons)&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Oxford University Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Kodansha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Shueisha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Grupo Santillana&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bonnier Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Editis&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Klett&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Egmont Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Beacon Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Harper Business&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bantam&apos;.toLowerCase()) ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.12, 2) : #book.pagesQuantity &gt;= 24 &amp;&amp; #book.pagesQuantity &lt;= 109 &amp;&amp; T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.9, 2) &gt;= 0? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.9, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.6 - #book.pagesQuantity * 0.012, 2) &gt;= 0 ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.6 - #book.pagesQuantity * 0.012, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.15, 2)"/>
+            <where>name = 'ES_PRINTBOOK_ROYALTY_FORMULA'</where>
+        </update>
+        <update tableName="formulas">
+            <column name="expression" value="#book.publisher.toLowerCase().contains(&apos;Penguin random house&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Penguin Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Hachette Livre&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;HarperCollins&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Macmillan Publishers&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Simon &amp; Schuster&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;McGraw-Hill Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Pearson Education&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Scholastic&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Cengage Learning&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Springer Nature&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Wiley (John Wiley &amp; Sons)&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Oxford University Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Kodansha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Shueisha&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Grupo Santillana&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bonnier Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Editis&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Klett&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Egmont Books&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Beacon Press&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Harper Business&apos;.toLowerCase()) || #book.publisher.toLowerCase().contains(&apos;Bantam&apos;.toLowerCase()) ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.12, 2) : #book.pagesQuantity &gt;= 24 &amp;&amp; #book.pagesQuantity &lt;= 109 &amp;&amp; T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.9, 2) &gt;= 0? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 1.9, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.6 - #book.pagesQuantity * 0.012, 2) &gt;= 0 ? T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.6 - 0.6 - #book.pagesQuantity * 0.012, 2) : T(co.polarpublishing.common.util.MathUtil).round(#book.price * 0.15, 2)"/>
+            <where>name = 'IT_PRINTBOOK_ROYALTY_FORMULA'</where>
+        </update>
+    </changeSet>
+
+    <changeSet id="db-insert-change-set-12" author="Mani Rai" context="default">
+        <insert tableName="marketplaces">
+            <column name="id">13</column>
+            <column name="name">audible.com</column>
+            <column name="amazon_id">91470</column>
+            <column name="country_id">1</column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                US_AUDIBLE_SALES_ESTIMATION_FORMULA
+            </column>
+            <column name="expression">
+                #bsr > 46000 ? '0' : #bsr > 40000 ? '1' : #bsr > 34000 ? '2' : #bsr > 29000 ? '3' : #bsr > 25000 ? '4' : #bsr > 21000 ? '5' : #bsr > 18000 ? '6' : #bsr > 15000 ? '7' : #bsr > 12000 ? '8' : #bsr > 10000 ? '9' : #bsr > 9000 ? '10' : #bsr > 8000 ? '11' : #bsr > 7000 ? '12' : #bsr > 6300 ? '12-13' : #bsr > 5800 ? '12-14' : #bsr > 5300 ? '13-15' : #bsr > 4900 ? '13-16' : #bsr > 4500 ? '14-17' : #bsr > 4200 ? '15-18' : #bsr > 3900 ? '16-20' : #bsr > 3600 ? '17-21' : #bsr > 3350 ? '18-22' : #bsr > 3100 ? '19-23' : #bsr > 2900 ? '20-25' : #bsr > 2700 ? '22-27' : #bsr > 2550 ? '24-29' : #bsr > 2400 ? '27-33' : #bsr > 2300 ? '31-37' : #bsr > 2200 ? '35-42' : #bsr > 2100 ? '39-47' : #bsr > 2000 ? '44-53' : #bsr > 1900 ? '49-59' : #bsr > 1800 ? '55-66' : #bsr > 1700 ? '61-72' : #bsr > 1600 ? '67-79' : #bsr > 1500 ? '73-85' : #bsr > 1400 ? '80-93' : #bsr > 1300 ? '87-101' : #bsr > 1200 ? '95-109' : #bsr > 1100 ? '103-118' : #bsr > 1000 ? '112-129' : #bsr > 950 ? '121-140' : #bsr > 900 ? '130-150' : #bsr > 850 ? '140-162' : #bsr > 800 ? '151-176' : #bsr > 750 ? '162-187' : #bsr > 700 ? '174-199' : #bsr > 650 ? '187-212' : #bsr > 600 ? '201-232' : #bsr > 550 ? '217-254' : #bsr > 500 ? '236-279' : #bsr > 450 ? '257-307' : #bsr > 400 ? '281-338' : #bsr > 350 ? '306-373' : #bsr > 300 ? '338-412' : #bsr > 250 ? '376-452' : #bsr > 200 ? '412-495' : #bsr > 150 ? '454-544' : #bsr > 100 ? '506-602' : #bsr > 75 ? '542-667' : #bsr > 50 ? '594-729' : #bsr > 30 ? '648-807' : #bsr > 20 ? '722-901' : #bsr > 10 ? '816-1007' : #bsr > 5 ? '922-1245' : #bsr == 5 ? '1008+' : #bsr == 4 ? '1044+' : #bsr == 3 ? '1096+' : #bsr == 2 ? '1125+' : '1185+'
+            </column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="db-insert-change-set-13" author="Mani Rai" context="default">
+        <insert tableName="marketplaces">
+            <column name="id">14</column>
+            <column name="name">audible.co.uk</column>
+            <column name="amazon_id">36061</column>
+            <column name="country_id">2</column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                GB_AUDIBLE_SALES_ESTIMATION_FORMULA
+            </column>
+            <column name="expression">
+                #bsr > 29000 ? '0' : #bsr > 9000 ? '1' : #bsr > 4500 ? '2' : #bsr > 3600 ? '2-3' : #bsr > 3100 ? '3' : #bsr > 2550 ? '3-4' : #bsr > 2300 ? '4-5' : #bsr > 2200 ? '5-6' : #bsr > 2100 ? '6-7' : #bsr > 2000 ? '6-8' : #bsr > 1900 ? '7-8' : #bsr > 1800 ? '8-9' : #bsr > 1700 ? '9-10' : #bsr > 1600 ? '10-11' : #bsr > 1500 ? '10-12' : #bsr > 1400 ? '11-13' : #bsr > 1300 ? '12-14' : #bsr > 1200 ? '14-16' : #bsr > 1100 ? '15-17' : #bsr > 1000 ? '16-18' : #bsr > 950 ? '17-20' : #bsr > 900 ? '19-21' : #bsr > 850 ? '20-23' : #bsr > 800 ? '22-25' : #bsr > 750 ? '23-27' : #bsr > 700 ? '25-28' : #bsr > 650 ? '27-30' : #bsr > 600 ? '29-33' : #bsr > 550 ? '31-36' : #bsr > 500 ? '34-40' : #bsr > 450 ? '37-44' : #bsr > 400 ? '40-48' : #bsr > 350 ? '44-53' : #bsr > 300 ? '48-59' : #bsr > 250 ? '54-65' : #bsr > 200 ? '59-71' : #bsr > 150 ? '65-78' : #bsr > 100 ? '72-86' : #bsr > 75 ? '77-95' : #bsr > 50 ? '85-104' : #bsr > 30 ? '93-115' : #bsr > 20 ? '103-129' : #bsr > 10 ? '117-144' : #bsr > 5 ? '132-178' : #bsr > 4 ? '144+' : #bsr > 3 ? '149+' : #bsr > 2 ? '157+' : #bsr > 1 ? '161+' : '169+'
+            </column>
+        </insert>
+    </changeSet>
+    <changeSet id="db-insert-change-set-14" author="Mani Rai" context="default">
+        <update schemaName="wordwave_db" tableName="formulas">
+            <column name="expression" value="#bsr > 46000 ? '0' : #bsr > 40000 ? '1' : #bsr > 34000 ? '2' : #bsr > 29000 ? '3' : #bsr > 25000 ? (#month == 1 or #month == 11 ? '4' : #month == 12 ? '5' : '4') : #bsr > 21000 ? (#month == 1 or #month == 11 ? '6' : #month == 12 ? '6' : '5') : #bsr > 18000 ? (#month == 1 or #month == 11 ? '7' : #month == 12 ? '7' : '6') : #bsr > 15000 ? (#month == 1 or #month == 11 ? '8' : #month == 12 ? '8' : '7') : #bsr > 12000 ? (#month == 1 or #month == 11 ? '9' : #month == 12 ? '9' : '8') : #bsr > 10000 ? (#month == 1 or #month == 11 ? '10' : #month == 12 ? '10' : '9') : #bsr > 9000 ? (#month == 1 or #month == 11 ? '11' : #month == 12 ? '12' : '10') : #bsr > 8000 ? (#month == 1 or #month == 11 ? '12' : #month == 12 ? '13' : '11') : #bsr > 7000 ? (#month == 1 or #month == 11 ? '13' : #month == 12 ? '14' : '12') : #bsr > 6300 ? (#month == 1 or #month == 11 ? '13-14' : #month == 12 ? '14-15' : '12-13') : #bsr > 5800 ? (#month == 1 or #month == 11 ? '13-15' : #month == 12 ? '14-16' : '12-14') : #bsr > 5300 ? (#month == 1 or #month == 11 ? '14-17' : #month == 12 ? '15-17' : '13-15') : #bsr > 4900 ? (#month == 1 or #month == 11 ? '14-18' : #month == 12 ? '15-18' : '13-16') : #bsr > 4500 ? (#month == 1 or #month == 11 ? '15-19' : #month == 12 ? '16-20' : '14-17') : #bsr > 4200 ? (#month == 1 or #month == 11 ? '17-20' : #month == 12 ? '17-21' : '15-18') : #bsr > 3900 ? (#month == 1 or #month == 11 ? '18-22' : #month == 12 ? '18-23' : '16-20') : #bsr > 3600 ? (#month == 1 or #month == 11 ? '19-23' : #month == 12 ? '20-24' : '17-21') : #bsr > 3350 ? (#month == 1 or #month == 11 ? '20-24' : #month == 12 ? '21-25' : '18-22') : #bsr > 3100 ? (#month == 1 or #month == 11 ? '21-25' : #month == 12 ? '22-26' : '19-23') : #bsr > 2900 ? (#month == 1 or #month == 11 ? '22-28' : #month == 12 ? '23-29' : '20-25') : #bsr > 2700 ? (#month == 1 or #month == 11 ? '24-30' : #month == 12 ? '25-31' : '22-27') : #bsr > 2550 ? (#month == 1 or #month == 11 ? '26-32' : #month == 12 ? '28-33' : '24-29') : #bsr > 2400 ? (#month == 1 or #month == 11 ? '30-36' : #month == 12 ? '31-38' : '27-33') : #bsr > 2300 ? (#month == 1 or #month == 11 ? '34-41' : #month == 12 ? '36-43' : '31-37') : #bsr > 2200 ? (#month == 1 or #month == 11 ? '39-46' : #month == 12 ? '40-48' : '35-42') : #bsr > 2100 ? (#month == 1 or #month == 11 ? '43-52' : #month == 12 ? '45-54' : '39-47') : #bsr > 2000 ? (#month == 1 or #month == 11 ? '48-58' : #month == 12 ? '51-61' : '44-53') : #bsr > 1900 ? (#month == 1 or #month == 11 ? '54-65' : #month == 12 ? '56-68' : '49-59') : #bsr > 1800 ? (#month == 1 or #month == 11 ? '61-73' : #month == 12 ? '63-76' : '55-66') : #bsr > 1700 ? (#month == 1 or #month == 11 ? '67-79' : #month == 12 ? '70-83' : '61-72') : #bsr > 1600 ? (#month == 1 or #month == 11 ? '74-87' : #month == 12 ? '77-91' : '67-79') : #bsr > 1500 ? (#month == 1 or #month == 11 ? '80-94' : #month == 12 ? '84-98' : '73-85') : #bsr > 1400 ? (#month == 1 or #month == 11 ? '88-102' : #month == 12 ? '92-107' : '80-93') : #bsr > 1300 ? (#month == 1 or #month == 11 ? '96-111' : #month == 12 ? '100-116' : '87-101') : #bsr > 1200 ? (#month == 1 or #month == 11 ? '105-120' : #month == 12 ? '109-125' : '95-109') : #bsr > 1100 ? (#month == 1 or #month == 11 ? '113-130' : #month == 12 ? '118-136' : '103-118') : #bsr > 1000 ? (#month == 1 or #month == 11 ? '123-142' : #month == 12 ? '129-148' : '112-129') : #bsr > 950 ? (#month == 1 or #month == 11 ? '133-154' : #month == 12 ? '139-161' : '121-140') : #bsr > 900 ? (#month == 1 or #month == 11 ? '143-165' : #month == 12 ? '150-173' : '130-150') : #bsr > 850 ? (#month == 1 or #month == 11 ? '154-178' : #month == 12 ? '161-186' : '140-162') : #bsr > 800 ? (#month == 1 or #month == 11 ? '166-194' : #month == 12 ? '174-202' : '151-176') : #bsr > 750 ? (#month == 1 or #month == 11 ? '178-206' : #month == 12 ? '186-215' : '162-187') : #bsr > 700 ? (#month == 1 or #month == 11 ? '191-219' : #month == 12 ? '200-229' : '174-199') : #bsr > 650 ? (#month == 1 or #month == 11 ? '206-233' : #month == 12 ? '215-244' : '187-212') : #bsr > 600 ? (#month == 1 or #month == 11 ? '221-255' : #month == 12 ? '231-267' : '201-232') : #bsr > 550 ? (#month == 1 or #month == 11 ? '239-279' : #month == 12 ? '250-292' : '217-254') : #bsr > 500 ? (#month == 1 or #month == 11 ? '260-307' : #month == 12 ? '271-321' : '236-279') : #bsr > 450 ? (#month == 1 or #month == 11 ? '283-338' : #month == 12 ? '296-353' : '257-307') : #bsr > 400 ? (#month == 1 or #month == 11 ? '309-372' : #month == 12 ? '323-389' : '281-338') : #bsr > 350 ? (#month == 1 or #month == 11 ? '337-410' : #month == 12 ? '352-429' : '306-373') : #bsr > 300 ? (#month == 1 or #month == 11 ? '372-453' : #month == 12 ? '389-474' : '338-412') : #bsr > 250 ? (#month == 1 or #month == 11 ? '414-497' : #month == 12 ? '432-520' : '376-452') : #bsr > 200 ? (#month == 1 or #month == 11 ? '453-545' : #month == 12 ? '474-569' : '412-495') : #bsr > 150 ? (#month == 1 or #month == 11 ? '499-598' : #month == 12 ? '522-626' : '454-544') : #bsr > 100 ? (#month == 1 or #month == 11 ? '557-662' : #month == 12 ? '582-692' : '506-602') : #bsr > 75 ? (#month == 1 or #month == 11 ? '596-734' : #month == 12 ? '623-767' : '542-667') : #bsr > 50 ? (#month == 1 or #month == 11 ? '653-802' : #month == 12 ? '683-838' : '594-729') : #bsr > 30 ? (#month == 1 or #month == 11 ? '713-888' : #month == 12 ? '745-928' : '648-807') : #bsr > 20 ? (#month == 1 or #month == 11 ? '794-991' : #month == 12 ? '830-1036' : '722-901') : #bsr > 10 ? (#month == 1 or #month == 11 ? '898-1108' : #month == 12 ? '938-1158' : '816-1007') : #bsr > 5 ? (#month == 1 or #month == 11 ? '1014-1370' : #month == 12 ? '1060-1432' : '922-1245') : #bsr == 5 ? (#month == 1 or #month == 11 ? '1109+' : #month == 12 ? '1159+' : '1008+') : #bsr == 4 ? (#month == 1 or #month == 11 ? '1148+' : #month == 12 ? '1201+' : '1044+') : #bsr == 3 ? (#month == 1 or #month == 11 ? '1206+' : #month == 12 ? '1260+' : '1096+') : #bsr == 2 ? (#month == 1 or #month == 11 ? '1238+' : #month == 12 ? '1294+' : '1125+') : (#month == 1 or #month == 11 ? '1304+' : #month == 12 ? '1363+' : '1185+')" type="bigint"/>
+            <where>name='US_AUDIBLE_SALES_ESTIMATION_FORMULA'</where>
+        </update>
+        <update schemaName="wordwave_db" tableName="formulas">
+            <column name="expression" value="#bsr > 29000 ? '0' : #bsr > 9000 ? '1' : #bsr > 4500 ? '2' : #bsr > 3600 ? '2-3' : #bsr > 3100 ? '3' : #bsr > 2550 ? (#month == 1 or #month == 11 ? '3-4' : #month == 12 ? '3-5' : '3-4') : #bsr > 2300 ? (#month == 1 or #month == 11 ? '4-6' : #month == 12 ? '5-6' : '4-5') : #bsr > 2200 ? (#month == 1 or #month == 11 ? '6-7' : #month == 12 ? '6-7' : '5-6') : #bsr > 2100 ? (#month == 1 or #month == 11 ? '7-8' : #month == 12 ? '7-8' : '6-7') : #bsr > 2000 ? (#month == 1 or #month == 11 ? '7-9' : #month == 12 ? '7-9' : '6-8') : #bsr > 1900 ? (#month == 1 or #month == 11 ? '8-9' : #month == 12 ? '8-9' : '7-8') : #bsr > 1800 ? (#month == 1 or #month == 11 ? '9-10' : #month == 12 ? '9-10' : '8-9') : #bsr > 1700 ? (#month == 1 or #month == 11 ? '10-11' : #month == 12 ? '10-12' : '9-10') : #bsr > 1600 ? (#month == 1 or #month == 11 ? '11-12' : #month == 12 ? '12-13' : '10-11') : #bsr > 1500 ? (#month == 1 or #month == 11 ? '11-13' : #month == 12 ? '12-14' : '10-12') : #bsr > 1400 ? (#month == 1 or #month == 11 ? '12-14' : #month == 12 ? '13-15' : '11-13') : #bsr > 1300 ? (#month == 1 or #month == 11 ? '13-15' : #month == 12 ? '14-16' : '12-14') : #bsr > 1200 ? (#month == 1 or #month == 11 ? '15-18' : #month == 12 ? '16-18' : '14-16') : #bsr > 1100 ? (#month == 1 or #month == 11 ? '17-19' : #month == 12 ? '17-20' : '15-17') : #bsr > 1000 ? (#month == 1 or #month == 11 ? '18-20' : #month == 12 ? '18-21' : '16-18') : #bsr > 950 ? (#month == 1 or #month == 11 ? '19-22' : #month == 12 ? '20-23' : '17-20') : #bsr > 900 ? (#month == 1 or #month == 11 ? '21-23' : #month == 12 ? '22-24' : '19-21') : #bsr > 850 ? (#month == 1 or #month == 11 ? '22-25' : #month == 12 ? '23-26' : '20-23') : #bsr > 800 ? (#month == 1 or #month == 11 ? '24-28' : #month == 12 ? '25-29' : '22-25') : #bsr > 750 ? (#month == 1 or #month == 11 ? '25-30' : #month == 12 ? '26-31' : '23-27') : #bsr > 700 ? (#month == 1 or #month == 11 ? '28-31' : #month == 12 ? '29-32' : '25-28') : #bsr > 650 ? (#month == 1 or #month == 11 ? '30-33' : #month == 12 ? '31-35' : '27-30') : #bsr > 600 ? (#month == 1 or #month == 11 ? '32-36' : #month == 12 ? '33-38' : '29-33') : #bsr > 550 ? (#month == 1 or #month == 11 ? '34-40' : #month == 12 ? '36-41' : '31-36') : #bsr > 500 ? (#month == 1 or #month == 11 ? '37-44' : #month == 12 ? '39-46' : '34-40') : #bsr > 450 ? (#month == 1 or #month == 11 ? '41-48' : #month == 12 ? '43-51' : '37-44') : #bsr > 400 ? (#month == 1 or #month == 11 ? '44-53' : #month == 12 ? '46-55' : '40-48') : #bsr > 350 ? (#month == 1 or #month == 11 ? '48-58' : #month == 12 ? '51-61' : '44-53') : #bsr > 300 ? (#month == 1 or #month == 11 ? '53-65' : #month == 12 ? '55-68' : '48-59') : #bsr > 250 ? (#month == 1 or #month == 11 ? '59-72' : #month == 12 ? '62-75' : '54-65') : #bsr > 200 ? (#month == 1 or #month == 11 ? '65-78' : #month == 12 ? '68-82' : '59-71') : #bsr > 150 ? (#month == 1 or #month == 11 ? '72-86' : #month == 12 ? '75-90' : '65-78') : #bsr > 100 ? (#month == 1 or #month == 11 ? '79-95' : #month == 12 ? '83-99' : '72-86') : #bsr > 75 ? (#month == 1 or #month == 11 ? '85-105' : #month == 12 ? '89-109' : '77-95') : #bsr > 50 ? (#month == 1 or #month == 11 ? '94-114' : #month == 12 ? '98-120' : '85-104') : #bsr > 30 ? (#month == 1 or #month == 11 ? '102-127' : #month == 12 ? '107-132' : '93-115') : #bsr > 20 ? (#month == 1 or #month == 11 ? '113-142' : #month == 12 ? '118-148' : '103-129') : #bsr > 10 ? (#month == 1 or #month == 11 ? '129-158' : #month == 12 ? '135-166' : '117-144') : #bsr > 5 ? (#month == 1 or #month == 11 ? '145-196' : #month == 12 ? '152-205' : '132-178') : #bsr > 4 ? (#month == 1 or #month == 11 ? '158+' : #month == 12 ? '166+' : '144+') : #bsr > 3 ? (#month == 1 or #month == 11 ? '164+' : #month == 12 ? '171+' : '149+') : #bsr > 2 ? (#month == 1 or #month == 11 ? '173+' : #month == 12 ? '181+' : '157+') : #bsr > 1 ? (#month == 1 or #month == 11 ? '177+' : #month == 12 ? '185+' : '161+') : (#month == 1 or #month == 11 ? '186+' : #month == 12 ? '194+' : '169+')" type="bigint"/>
+            <where>name='GB_AUDIBLE_SALES_ESTIMATION_FORMULA'</where>
+        </update>
+    </changeSet>
+    <changeSet id="db-insert-change-set-15" author="Mani Rai" context="default">
+        <insert tableName="stores">
+            <column name="name">Audiobook Store</column>
+            <column name="amazon_search_alias">audible</column>
+            <column name="amazon_id">17465192031</column>
+            <column name="type_id">3</column>
+            <column name="marketplace_id">6</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Book Store</column>
+            <column name="amazon_search_alias">stripbooks</column>
+            <column name="amazon_id">301061</column>
+            <column name="type_id">2</column>
+            <column name="marketplace_id">7</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Kindle Store</column>
+            <column name="amazon_search_alias">digital-text</column>
+            <column name="amazon_id">695398031</column>
+            <column name="type_id">1</column>
+            <column name="marketplace_id">7</column>
+        </insert>
+        <insert tableName="stores">
+            <column name="name">Audiobook Store</column>
+            <column name="amazon_search_alias">audible</column>
+            <column name="amazon_id">0</column>
+            <column name="type_id">3</column>
+            <column name="marketplace_id">7</column>
+        </insert>
+    </changeSet>
+    <changeSet id="db-insert-change-set-16" author="Mani Rai" context="default">
+        <insert tableName="formulas">
+            <column name="name">
+                FR_AMAZON_PRINTBOOK_SALES_ESTIMATION_FORMULA
+            </column>
+            <column name="expression">
+                #bsr > 55000 ? '0' : #bsr > 27000 ? '1' : #bsr > 18000 ? (#month == 12 ? '3' : '2') : #bsr > 11000 ? (#month == 12 ? '4' : '3') : #bsr > 9000 ? (#month > 10 ? '5' : '4') : #bsr > 7000 ? (#month > 10 or #month == 1 ? '6' : '5') : #bsr > 6000 ? (#month == 11 or #month == 1 ? '7' : #month == 12 ? '8' : '6') : #bsr > 5000 ? (#month == 11 or #month == 1 ? '8' : #month == 12 ? '9' : '7') : #bsr > 4500 ? (#month == 11 or #month == 1 ? '9' : #month == 12 ? '10' : '8') : #bsr > 4200 ? (#month == 11 or #month == 1 ? '9-10' : #month == 12 ? '10-11' : '8-9') : #bsr > 4000 ? (#month == 11 or #month == 1 ? '10' : #month == 12 ? '11' : '9') : #bsr > 3600 ? (#month == 1 ? '10-11' : #month == 11 ? '10-12' : #month == 12 ? '11-13' : '9-10') : #bsr > 3200 ? (#month == 1 ? '10-12' : #month == 11 ? '10-13' : #month == 12 ? '11-14' : '9-11') : #bsr > 3000 ? (#month == 1 ? '10-13' : #month == 11 ? '10-14' : #month == 12 ? '11-15' : '9-12') : #bsr > 2800 ? (#month == 1 ? '11-13' : #month == 11 ? '12-14' : #month == 12 ? '13-15' : '10-12') : #bsr > 2600 ? (#month == 1 ? '11-14' : #month == 11 ? '12-15' : #month == 12 ? '13-16' : '10-13') : #bsr > 2400 ? (#month == 1 ? '11-15' : #month == 11 ? '12-16' : #month == 12 ? '13-18' : '10-14') : #bsr > 2200 ? (#month == 1 ? '11-17' : #month == 11 ? '12-17' : #month == 12 ? '13-19' : '10-15') : #bsr > 2100 ? (#month == 1 ? '12-18' : #month == 11 ? '13-18' : #month == 12 ? '14-20' : '11-16') : #bsr > 1900 ? (#month == 1 ? '13-19' : #month == 11 ? '14-20' : #month == 12 ? '15-21' : '12-17') : #bsr > 1800 ? (#month == 1 ? '13-20' : #month == 11 ? '14-21' : #month == 12 ? '15-23' : '12-18') : #bsr > 1700 ? (#month == 1 ? '14-21' : #month == 11 ? '15-22' : #month == 12 ? '16-24' : '13-19') : #bsr > 1600 ? (#month == 1 ? '14-22' : #month == 11 ? '15-23' : #month == 12 ? '16-25' : '13-20') : #bsr > 1500 ? (#month == 1 ? '15-23' : #month == 11 ? '16-24' : #month == 12 ? '18-26' : '14-21') : #bsr > 1400 ? (#month == 1 ? '17-24' : #month == 11 ? '17-25' : #month == 12 ? '19-28' : '15-22') : #bsr > 1300 ? (#month == 1 ? '18-26' : #month == 11 ? '18-28' : #month == 12 ? '20-30' : '16-24') : #bsr > 1200 ? (#month == 1 ? '20-28' : #month == 11 ? '21-29' : #month == 12 ? '23-32' : '18-25') : #bsr > 1100 ? (#month == 1 ? '22-30' : #month == 11 ? '23-31' : #month == 12 ? '25-34' : '20-27') : #bsr > 1000 ? (#month == 1 ? '24-33' : #month == 11 ? '25-35' : #month == 12 ? '28-38' : '22-30') : #bsr > 900 ? (#month == 1 ? '26-36' : #month == 11 ? '28-38' : #month == 12 ? '30-42' : '24-33') : #bsr > 800 ? (#month == 1 ? '29-41' : #month == 11 ? '30-43' : #month == 12 ? '33-47' : '26-37') : #bsr > 750 ? (#month == 1 ? '30-45' : #month == 11 ? '31-47' : #month == 12 ? '34-52' : '27-41') : #bsr > 700 ? (#month == 1 ? '31-48' : #month == 11 ? '32-51' : #month == 12 ? '35-55' : '28-44') : #bsr > 650 ? (#month == 1 ? '33-54' : #month == 11 ? '35-56' : #month == 12 ? '38-62' : '30-49') : #bsr > 600 ? (#month == 1 ? '35-59' : #month == 11 ? '37-62' : #month == 12 ? '40-68' : '32-54') : #bsr > 550 ? (#month == 1 ? '37-65' : #month == 11 ? '39-68' : #month == 12 ? '43-74' : '34-59') : #bsr > 500 ? (#month == 1 ? '41-70' : #month == 11 ? '43-74' : #month == 12 ? '47-81' : '37-64') : #bsr > 450 ? (#month == 1 ? '44-77' : #month == 11 ? '46-81' : #month == 12 ? '50-88' : '40-70') : #bsr > 400 ? (#month == 1 ? '48-85' : #month == 11 ? '51-89' : #month == 12 ? '55-97' : '44-77') : #bsr > 350 ? (#month == 1 ? '54-94' : #month == 11 ? '56-98' : #month == 12 ? '62-107' : '49-85') : #bsr > 300 ? (#month == 1 ? '61-103' : #month == 11 ? '63-108' : #month == 12 ? '69-118' : '55-94') : #bsr > 250 ? (#month == 1 ? '68-112' : #month == 11 ? '71-117' : #month == 12 ? '78-129' : '62-102') : #bsr > 225 ? (#month == 1 ? '78-129' : #month == 11 ? '82-135' : #month == 12 ? '89-147' : '71-117') : #bsr > 200 ? (#month == 1 ? '89-143' : #month == 11 ? '93-150' : #month == 12 ? '102-164' : '81-130') : #bsr > 150 ? (#month == 1 ? '105-164' : #month == 11 ? '109-171' : #month == 12 ? '120-188' : '95-149') : #bsr > 125 ? (#month == 1 ? '130-195' : #month == 11 ? '136-204' : #month == 12 ? '149-223' : '118-177') : #bsr > 100 ? (#month == 1 ? '155-233' : #month == 11 ? '162-244' : #month == 12 ? '178-267' : '141-212') : #bsr > 50 ? (#month == 1 ? '186-281' : #month == 11 ? '194-293' : #month == 12 ? '213-321' : '169-255') : #bsr > 20 ? (#month == 1 ? '224-340' : #month == 11 ? '235-355' : #month == 12 ? '257-389' : '204-309') : #bsr > 10 ? (#month == 1 ? '260-394' : #month == 11 ? '271-412' : #month == 12 ? '297-451' : '236-358') : #bsr > 7 ? (#month == 1 ? '282-429' : #month == 11 ? '294-448' : #month == 12 ? '323-491' : '256-390') : #bsr > 5 ? (#month == 1 ? '307-471' : #month == 11 ? '321-492' : #month == 12 ? '352-539' : '279-428') : #bsr > 2 ? (#month == 1 ? '337-578' : #month == 11 ? '352-604' : #month == 12 ? '386-662' : '306-525') : (#month == 1 ? '528+' : #month == 11 ? '552+' : #month == 12 ? '605+' : '480+')
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                FR_AMAZON_EBOOK_SALES_ESTIMATION_FORMULA
+            </column>
+            <column name="expression">
+                #bsr > 55000 ? '0' : #bsr > 27000 ? '1' : #bsr > 18000 ? (#month == 1 ? '2' : #month == 11 ? '2' : #month == 12 ? '3' : '2') : #bsr > 11000 ? (#month == 1 ? '3' : #month == 11 ? '3' : #month == 12 ? '4' : '3') : #bsr > 9000 ? (#month == 1 ? '4' : #month == 11 ? '5' : #month == 12 ? '5' : '4') : #bsr > 7000 ? (#month == 1 ? '7' : #month == 11 ? '7' : #month == 12 ? '8' : '6') : #bsr > 6000 ? (#month == 1 ? '8' : #month == 11 ? '8' : #month == 12 ? '9' : '7') : #bsr > 5000 ? (#month == 1 ? '9' : #month == 11 ? '9' : #month == 12 ? '10' : '8') : #bsr > 4500 ? (#month == 1 ? '10' : #month == 11 ? '10' : #month == 12 ? '11' : '9') : #bsr > 4200 ? (#month == 1 ? '10-11' : #month == 11 ? '10-12' : #month == 12 ? '11-13' : '9-10') : #bsr > 4000 ? (#month == 1 ? '11' : #month == 11 ? '12' : #month == 12 ? '13' : '10') : #bsr > 3600 ? (#month == 1 ? '11-12' : #month == 11 ? '12-13' : #month == 12 ? '13-14' : '10-11') : #bsr > 3200 ? (#month == 1 ? '11-13' : #month == 11 ? '12-14' : #month == 12 ? '13-15' : '10-12') : #bsr > 3000 ? (#month == 1 ? '11-14' : #month == 11 ? '12-15' : #month == 12 ? '13-16' : '10-13') : #bsr > 2800 ? (#month == 1 ? '12-14' : #month == 11 ? '13-15' : #month == 12 ? '14-16' : '11-13') : #bsr > 2600 ? (#month == 1 ? '12-15' : #month == 11 ? '13-16' : #month == 12 ? '14-18' : '11-14') : #bsr > 2400 ? (#month == 1 ? '12-17' : #month == 11 ? '13-17' : #month == 12 ? '14-19' : '11-15') : #bsr > 2200 ? (#month == 1 ? '12-19' : #month == 11 ? '13-20' : #month == 12 ? '14-21' : '11-17') : #bsr > 2100 ? (#month == 1 ? '13-20' : #month == 11 ? '14-21' : #month == 12 ? '15-23' : '12-18') : #bsr > 1900 ? (#month == 1 ? '14-21' : #month == 11 ? '15-22' : #month == 12 ? '16-24' : '13-19') : #bsr > 1800 ? (#month == 1 ? '14-22' : #month == 11 ? '15-23' : #month == 12 ? '16-25' : '13-20') : #bsr > 1700 ? (#month == 1 ? '15-23' : #month == 11 ? '16-24' : #month == 12 ? '18-26' : '14-21') : #bsr > 1600 ? (#month == 1 ? '15-24' : #month == 11 ? '16-25' : #month == 12 ? '18-28' : '14-22') : #bsr > 1500 ? (#month == 1 ? '17-25' : #month == 11 ? '17-26' : #month == 12 ? '19-29' : '15-23') : #bsr > 1400 ? (#month == 1 ? '19-26' : #month == 11 ? '20-28' : #month == 12 ? '21-30' : '17-24') : #bsr > 1300 ? (#month == 1 ? '20-29' : #month == 11 ? '21-30' : #month == 12 ? '23-33' : '18-26') : #bsr > 1200 ? (#month == 1 ? '22-31' : #month == 11 ? '23-32' : #month == 12 ? '25-35' : '20-28') : #bsr > 1100 ? (#month == 1 ? '24-33' : #month == 11 ? '25-35' : #month == 12 ? '28-38' : '22-30') : #bsr > 1000 ? (#month == 1 ? '26-36' : #month == 11 ? '28-38' : #month == 12 ? '30-42' : '24-33') : #bsr > 900 ? (#month == 1 ? '29-40' : #month == 11 ? '30-41' : #month == 12 ? '33-45' : '26-36') : #bsr > 800 ? (#month == 1 ? '32-45' : #month == 11 ? '33-47' : #month == 12 ? '37-52' : '29-41') : #bsr > 750 ? (#month == 1 ? '33-50' : #month == 11 ? '35-52' : #month == 12 ? '38-57' : '30-45') : #bsr > 700 ? (#month == 1 ? '34-53' : #month == 11 ? '36-55' : #month == 12 ? '39-60' : '31-48') : #bsr > 650 ? (#month == 1 ? '36-59' : #month == 11 ? '38-62' : #month == 12 ? '42-68' : '33-54') : #bsr > 600 ? (#month == 1 ? '39-65' : #month == 11 ? '40-68' : #month == 12 ? '44-74' : '35-59') : #bsr > 550 ? (#month == 1 ? '41-72' : #month == 11 ? '43-75' : #month == 12 ? '47-82' : '37-65') : #bsr > 500 ? (#month == 1 ? '45-77' : #month == 11 ? '47-81' : #month == 12 ? '52-88' : '41-70') : #bsr > 450 ? (#month == 1 ? '48-85' : #month == 11 ? '51-89' : #month == 12 ? '55-97' : '44-77') : #bsr > 400 ? (#month == 1 ? '53-94' : #month == 11 ? '55-98' : #month == 12 ? '60-107' : '48-85') : #bsr > 350 ? (#month == 1 ? '59-103' : #month == 11 ? '62-108' : #month == 12 ? '68-118' : '54-94') : #bsr > 300 ? (#month == 1 ? '67-113' : #month == 11 ? '70-118' : #month == 12 ? '77-130' : '61-103') : #bsr > 250 ? (#month == 1 ? '75-123' : #month == 11 ? '78-129' : #month == 12 ? '86-141' : '68-112') : #bsr > 225 ? (#month == 1 ? '86-142' : #month == 11 ? '90-148' : #month == 12 ? '98-163' : '78-129') : #bsr > 200 ? (#month == 1 ? '98-157' : #month == 11 ? '102-164' : #month == 12 ? '112-180' : '89-143') : #bsr > 150 ? (#month == 1 ? '116-180' : #month == 11 ? '121-189' : #month == 12 ? '132-207' : '105-164') : #bsr > 125 ? (#month == 1 ? '143-215' : #month == 11 ? '150-224' : #month == 12 ? '164-246' : '130-195') : #bsr > 100 ? (#month == 1 ? '171-256' : #month == 11 ? '178-268' : #month == 12 ? '195-294' : '155-233') : #bsr > 50 ? (#month == 1 ? '205-309' : #month == 11 ? '214-323' : #month == 12 ? '234-354' : '186-281') : #bsr > 20 ? (#month == 1 ? '246-374' : #month == 11 ? '258-391' : #month == 12 ? '282-428' : '224-340') : #bsr > 10 ? (#month == 1 ? '286-433' : #month == 11 ? '299-453' : #month == 12 ? '328-496' : '260-394') : #bsr > 7 ? (#month == 1 ? '310-472' : #month == 11 ? '324-493' : #month == 12 ? '355-541' : '282-429') : #bsr > 5 ? (#month == 1 ? '338-518' : #month == 11 ? '353-542' : #month == 12 ? '387-593' : '307-471') : #bsr > 2 ? (#month == 1 ? '371-636' : #month == 11 ? '388-665' : #month == 12 ? '425-728' : '337-578') : (#month == 1 ? '581+' : #month == 11 ? '607+' : #month == 12 ? '665+' : '528+')
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                ES_AMAZON_PRINTBOOK_SALES_ESTIMATION_FORMULA
+            </column>
+            <column name="expression">
+                #bsr > 24000 ? '0' : #bsr > 21000 ? '0-1' : #bsr > 11000 ? '1' : #bsr > 7000 ? (#month == 1 ? '2' : #month == 11 ? '2' : #month == 12 ? '3' : '2') : #bsr > 4500 ? (#month == 1 ? '3' : #month == 11 ? '3' : #month == 12 ? '4' : '3') : #bsr > 3400 ? (#month == 1 ? '4' : #month == 11 ? '5' : #month == 12 ? '5' : '4') : #bsr > 2700 ? (#month == 1 ? '6' : #month == 11 ? '6' : #month == 12 ? '6' : '5') : #bsr > 2100 ? (#month == 1 ? '7' : #month == 11 ? '7' : #month == 12 ? '8' : '6') : #bsr > 1600 ? (#month == 1 ? '8' : #month == 11 ? '8' : #month == 12 ? '9' : '7') : #bsr > 1100 ? (#month == 1 ? '9' : #month == 11 ? '9' : #month == 12 ? '10' : '8') : #bsr > 1000 ? (#month == 1 ? '9-10' : #month == 11 ? '9-10' : #month == 12 ? '10-11' : '8-9') : #bsr > 800 ? (#month == 1 ? '10-11' : #month == 11 ? '10-12' : #month == 12 ? '11-13' : '9-10') : #bsr > 750 ? (#month == 1 ? '10-12' : #month == 11 ? '10-13' : #month == 12 ? '11-14' : '9-11') : #bsr > 700 ? (#month == 1 ? '11-13' : #month == 11 ? '12-14' : #month == 12 ? '13-15' : '10-12') : #bsr > 650 ? (#month == 1 ? '11-14' : #month == 11 ? '12-15' : #month == 12 ? '13-16' : '10-13') : #bsr > 600 ? (#month == 1 ? '12-15' : #month == 11 ? '13-16' : #month == 12 ? '14-18' : '11-14') : #bsr > 550 ? (#month == 1 ? '13-17' : #month == 11 ? '14-17' : #month == 12 ? '15-19' : '12-15') : #bsr > 500 ? (#month == 1 ? '13-18' : #month == 11 ? '14-18' : #month == 12 ? '15-20' : '12-16') : #bsr > 450 ? (#month == 1 ? '14-19' : #month == 11 ? '15-20' : #month == 12 ? '16-21' : '13-17') : #bsr > 400 ? (#month == 1 ? '14-20' : #month == 11 ? '15-21' : #month == 12 ? '16-23' : '13-18') : #bsr > 350 ? (#month == 1 ? '15-21' : #month == 11 ? '16-22' : #month == 12 ? '18-24' : '14-19') : #bsr > 300 ? (#month == 1 ? '15-22' : #month == 11 ? '16-23' : #month == 12 ? '18-25' : '14-20') : #bsr > 250 ? (#month == 1 ? '17-23' : #month == 11 ? '17-24' : #month == 12 ? '19-26' : '15-21') : #bsr > 225 ? (#month == 1 ? '17-24' : #month == 11 ? '17-25' : #month == 12 ? '19-28' : '15-22') : #bsr > 200 ? (#month == 1 ? '18-25' : #month == 11 ? '18-26' : #month == 12 ? '20-29' : '16-23') : #bsr > 175 ? (#month == 1 ? '19-28' : #month == 11 ? '20-29' : #month == 12 ? '21-32' : '17-25') : #bsr > 150 ? (#month == 1 ? '21-31' : #month == 11 ? '22-32' : #month == 12 ? '24-35' : '19-28') : #bsr > 125 ? (#month == 1 ? '25-39' : #month == 11 ? '26-40' : #month == 12 ? '29-44' : '23-35') : #bsr > 100 ? (#month == 1 ? '31-46' : #month == 11 ? '32-48' : #month == 12 ? '35-53' : '28-42') : #bsr > 75 ? (#month == 1 ? '39-58' : #month == 11 ? '40-61' : #month == 12 ? '44-67' : '35-53') : #bsr > 50 ? (#month == 1 ? '47-73' : #month == 11 ? '49-76' : #month == 12 ? '54-83' : '43-66') : #bsr > 25 ? (#month == 1 ? '59-91' : #month == 11 ? '62-95' : #month == 12 ? '68-105' : '54-83') : #bsr > 10 ? (#month == 1 ? '77-117' : #month == 11 ? '81-122' : #month == 12 ? '88-134' : '70-106') : #bsr > 7 ? (#month == 1 ? '100-152' : #month == 11 ? '105-159' : #month == 12 ? '115-174' : '91-138') : #bsr > 5 ? (#month == 1 ? '116-178' : #month == 11 ? '121-186' : #month == 12 ? '132-204' : '105-162') : #bsr > 2 ? (#month == 1 ? '134-206' : #month == 11 ? '140-215' : #month == 12 ? '154-236' : '122-187') : (#month == 1 ? '176+' : #month == 11 ? '184+' : #month == 12 ? '202+' : '160+')
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">
+                ES_AMAZON_EBOOK_SALES_ESTIMATION_FORMULA
+            </column>
+            <column name="expression">
+                #bsr > 24000 ? '0' : #bsr > 21000 ? '0-1' : #bsr > 11000 ? '1' : #bsr > 7000 ? (#month == 1 ? '2' : #month == 11 ? '2' : #month == 12 ? '3' : '2') : #bsr > 4500 ? (#month == 1 ? '3' : #month == 11 ? '3' : #month == 12 ? '4' : '3') : #bsr > 3400 ? (#month == 1 ? '4' : #month == 11 ? '5' : #month == 12 ? '5' : '4') : #bsr > 2700 ? (#month == 1 ? '7' : #month == 11 ? '7' : #month == 12 ? '8' : '6') : #bsr > 2100 ? (#month == 1 ? '8' : #month == 11 ? '8' : #month == 12 ? '9' : '7') : #bsr > 1600 ? (#month == 1 ? '9' : #month == 11 ? '9' : #month == 12 ? '10' : '8') : #bsr > 1100 ? (#month == 1 ? '10' : #month == 11 ? '10' : #month == 12 ? '11' : '9') : #bsr > 1000 ? (#month == 1 ? '10-11' : #month == 11 ? '10-12' : #month == 12 ? '11-13' : '9-10') : #bsr > 800 ? (#month == 1 ? '11-12' : #month == 11 ? '12-13' : #month == 12 ? '13-14' : '10-11') : #bsr > 750 ? (#month == 1 ? '11-13' : #month == 11 ? '12-14' : #month == 12 ? '13-15' : '10-12') : #bsr > 700 ? (#month == 1 ? '12-14' : #month == 11 ? '13-15' : #month == 12 ? '14-16' : '11-13') : #bsr > 650 ? (#month == 1 ? '12-15' : #month == 11 ? '13-16' : #month == 12 ? '14-18' : '11-14') : #bsr > 600 ? (#month == 1 ? '13-17' : #month == 11 ? '14-17' : #month == 12 ? '15-19' : '12-15') : #bsr > 550 ? (#month == 1 ? '14-19' : #month == 11 ? '15-20' : #month == 12 ? '16-21' : '13-17') : #bsr > 500 ? (#month == 1 ? '14-20' : #month == 11 ? '15-21' : #month == 12 ? '16-23' : '13-18') : #bsr > 450 ? (#month == 1 ? '15-21' : #month == 11 ? '16-22' : #month == 12 ? '18-24' : '14-19') : #bsr > 400 ? (#month == 1 ? '15-22' : #month == 11 ? '16-23' : #month == 12 ? '18-25' : '14-20') : #bsr > 350 ? (#month == 1 ? '17-23' : #month == 11 ? '17-24' : #month == 12 ? '19-26' : '15-21') : #bsr > 300 ? (#month == 1 ? '17-24' : #month == 11 ? '17-25' : #month == 12 ? '19-28' : '15-22') : #bsr > 250 ? (#month == 1 ? '19-25' : #month == 11 ? '20-26' : #month == 12 ? '21-29' : '17-23') : #bsr > 225 ? (#month == 1 ? '19-26' : #month == 11 ? '20-28' : #month == 12 ? '21-30' : '17-24') : #bsr > 200 ? (#month == 1 ? '20-28' : #month == 11 ? '21-29' : #month == 12 ? '23-32' : '18-25') : #bsr > 175 ? (#month == 1 ? '21-31' : #month == 11 ? '22-32' : #month == 12 ? '24-35' : '19-28') : #bsr > 150 ? (#month == 1 ? '23-34' : #month == 11 ? '24-36' : #month == 12 ? '26-39' : '21-31') : #bsr > 125 ? (#month == 1 ? '28-43' : #month == 11 ? '29-45' : #month == 12 ? '32-49' : '25-39') : #bsr > 100 ? (#month == 1 ? '34-51' : #month == 11 ? '36-53' : #month == 12 ? '39-58' : '31-46') : #bsr > 75 ? (#month == 1 ? '43-64' : #month == 11 ? '45-67' : #month == 12 ? '49-73' : '39-58') : #bsr > 50 ? (#month == 1 ? '52-80' : #month == 11 ? '54-84' : #month == 12 ? '59-92' : '47-73') : #bsr > 25 ? (#month == 1 ? '65-100' : #month == 11 ? '68-105' : #month == 12 ? '74-115' : '59-91') : #bsr > 10 ? (#month == 1 ? '85-129' : #month == 11 ? '89-135' : #month == 12 ? '97-147' : '77-117') : #bsr > 7 ? (#month == 1 ? '110-167' : #month == 11 ? '115-175' : #month == 12 ? '126-192' : '100-152') : #bsr > 5 ? (#month == 1 ? '128-196' : #month == 11 ? '133-205' : #month == 12 ? '146-224' : '116-178') : #bsr > 2 ? (#month == 1 ? '147-227' : #month == 11 ? '154-237' : #month == 12 ? '169-260' : '134-206') : (#month == 1 ? '194+' : #month == 11 ? '202+' : #month == 12 ? '222+' : '176+')
+            </column>
+        </insert>
+    </changeSet>
+    <changeSet id="db-insert-change-set-17" author="Mani Rai" context="default">
+        <insert tableName="formulas">
+            <column name="name">US_AMAZON_AUDIOBOOK_SALES_ESTIMATION_FORMULA</column>
+            <column name="expression">
+                #bsr > 46000 ? '0' : #bsr > 40000 ? '1' : #bsr > 34000 ? '2' : #bsr > 29000 ? '3' : #bsr > 25000 ? (#month == 1 or #month == 11 ? '4' : #month == 12 ? '5' : '4') : #bsr > 21000 ? (#month == 1 or #month == 11 ? '6' : #month == 12 ? '6' : '5') : #bsr > 18000 ? (#month == 1 or #month == 11 ? '7' : #month == 12 ? '7' : '6') : #bsr > 15000 ? (#month == 1 or #month == 11 ? '8' : #month == 12 ? '8' : '7') : #bsr > 12000 ? (#month == 1 or #month == 11 ? '9' : #month == 12 ? '9' : '8') : #bsr > 10000 ? (#month == 1 or #month == 11 ? '10' : #month == 12 ? '10' : '9') : #bsr > 9000 ? (#month == 1 or #month == 11 ? '11' : #month == 12 ? '12' : '10') : #bsr > 8000 ? (#month == 1 or #month == 11 ? '12' : #month == 12 ? '13' : '11') : #bsr > 7000 ? (#month == 1 or #month == 11 ? '13' : #month == 12 ? '14' : '12') : #bsr > 6300 ? (#month == 1 or #month == 11 ? '13-14' : #month == 12 ? '14-15' : '12-13') : #bsr > 5800 ? (#month == 1 or #month == 11 ? '13-15' : #month == 12 ? '14-16' : '12-14') : #bsr > 5300 ? (#month == 1 or #month == 11 ? '14-17' : #month == 12 ? '15-17' : '13-15') : #bsr > 4900 ? (#month == 1 or #month == 11 ? '14-18' : #month == 12 ? '15-18' : '13-16') : #bsr > 4500 ? (#month == 1 or #month == 11 ? '15-19' : #month == 12 ? '16-20' : '14-17') : #bsr > 4200 ? (#month == 1 or #month == 11 ? '17-20' : #month == 12 ? '17-21' : '15-18') : #bsr > 3900 ? (#month == 1 or #month == 11 ? '18-22' : #month == 12 ? '18-23' : '16-20') : #bsr > 3600 ? (#month == 1 or #month == 11 ? '19-23' : #month == 12 ? '20-24' : '17-21') : #bsr > 3350 ? (#month == 1 or #month == 11 ? '20-24' : #month == 12 ? '21-25' : '18-22') : #bsr > 3100 ? (#month == 1 or #month == 11 ? '21-25' : #month == 12 ? '22-26' : '19-23') : #bsr > 2900 ? (#month == 1 or #month == 11 ? '22-28' : #month == 12 ? '23-29' : '20-25') : #bsr > 2700 ? (#month == 1 or #month == 11 ? '24-30' : #month == 12 ? '25-31' : '22-27') : #bsr > 2550 ? (#month == 1 or #month == 11 ? '26-32' : #month == 12 ? '28-33' : '24-29') : #bsr > 2400 ? (#month == 1 or #month == 11 ? '30-36' : #month == 12 ? '31-38' : '27-33') : #bsr > 2300 ? (#month == 1 or #month == 11 ? '34-41' : #month == 12 ? '36-43' : '31-37') : #bsr > 2200 ? (#month == 1 or #month == 11 ? '39-46' : #month == 12 ? '40-48' : '35-42') : #bsr > 2100 ? (#month == 1 or #month == 11 ? '43-52' : #month == 12 ? '45-54' : '39-47') : #bsr > 2000 ? (#month == 1 or #month == 11 ? '48-58' : #month == 12 ? '51-61' : '44-53') : #bsr > 1900 ? (#month == 1 or #month == 11 ? '54-65' : #month == 12 ? '56-68' : '49-59') : #bsr > 1800 ? (#month == 1 or #month == 11 ? '61-73' : #month == 12 ? '63-76' : '55-66') : #bsr > 1700 ? (#month == 1 or #month == 11 ? '67-79' : #month == 12 ? '70-83' : '61-72') : #bsr > 1600 ? (#month == 1 or #month == 11 ? '74-87' : #month == 12 ? '77-91' : '67-79') : #bsr > 1500 ? (#month == 1 or #month == 11 ? '80-94' : #month == 12 ? '84-98' : '73-85') : #bsr > 1400 ? (#month == 1 or #month == 11 ? '88-102' : #month == 12 ? '92-107' : '80-93') : #bsr > 1300 ? (#month == 1 or #month == 11 ? '96-111' : #month == 12 ? '100-116' : '87-101') : #bsr > 1200 ? (#month == 1 or #month == 11 ? '105-120' : #month == 12 ? '109-125' : '95-109') : #bsr > 1100 ? (#month == 1 or #month == 11 ? '113-130' : #month == 12 ? '118-136' : '103-118') : #bsr > 1000 ? (#month == 1 or #month == 11 ? '123-142' : #month == 12 ? '129-148' : '112-129') : #bsr > 950 ? (#month == 1 or #month == 11 ? '133-154' : #month == 12 ? '139-161' : '121-140') : #bsr > 900 ? (#month == 1 or #month == 11 ? '143-165' : #month == 12 ? '150-173' : '130-150') : #bsr > 850 ? (#month == 1 or #month == 11 ? '154-178' : #month == 12 ? '161-186' : '140-162') : #bsr > 800 ? (#month == 1 or #month == 11 ? '166-194' : #month == 12 ? '174-202' : '151-176') : #bsr > 750 ? (#month == 1 or #month == 11 ? '178-206' : #month == 12 ? '186-215' : '162-187') : #bsr > 700 ? (#month == 1 or #month == 11 ? '191-219' : #month == 12 ? '200-229' : '174-199') : #bsr > 650 ? (#month == 1 or #month == 11 ? '206-233' : #month == 12 ? '215-244' : '187-212') : #bsr > 600 ? (#month == 1 or #month == 11 ? '221-255' : #month == 12 ? '231-267' : '201-232') : #bsr > 550 ? (#month == 1 or #month == 11 ? '239-279' : #month == 12 ? '250-292' : '217-254') : #bsr > 500 ? (#month == 1 or #month == 11 ? '260-307' : #month == 12 ? '271-321' : '236-279') : #bsr > 450 ? (#month == 1 or #month == 11 ? '283-338' : #month == 12 ? '296-353' : '257-307') : #bsr > 400 ? (#month == 1 or #month == 11 ? '309-372' : #month == 12 ? '323-389' : '281-338') : #bsr > 350 ? (#month == 1 or #month == 11 ? '337-410' : #month == 12 ? '352-429' : '306-373') : #bsr > 300 ? (#month == 1 or #month == 11 ? '372-453' : #month == 12 ? '389-474' : '338-412') : #bsr > 250 ? (#month == 1 or #month == 11 ? '414-497' : #month == 12 ? '432-520' : '376-452') : #bsr > 200 ? (#month == 1 or #month == 11 ? '453-545' : #month == 12 ? '474-569' : '412-495') : #bsr > 150 ? (#month == 1 or #month == 11 ? '499-598' : #month == 12 ? '522-626' : '454-544') : #bsr > 100 ? (#month == 1 or #month == 11 ? '557-662' : #month == 12 ? '582-692' : '506-602') : #bsr > 75 ? (#month == 1 or #month == 11 ? '596-734' : #month == 12 ? '623-767' : '542-667') : #bsr > 50 ? (#month == 1 or #month == 11 ? '653-802' : #month == 12 ? '683-838' : '594-729') : #bsr > 30 ? (#month == 1 or #month == 11 ? '713-888' : #month == 12 ? '745-928' : '648-807') : #bsr > 20 ? (#month == 1 or #month == 11 ? '794-991' : #month == 12 ? '830-1036' : '722-901') : #bsr > 10 ? (#month == 1 or #month == 11 ? '898-1108' : #month == 12 ? '938-1158' : '816-1007') : #bsr > 5 ? (#month == 1 or #month == 11 ? '1014-1370' : #month == 12 ? '1060-1432' : '922-1245') : #bsr == 5 ? (#month == 1 or #month == 11 ? '1109+' : #month == 12 ? '1159+' : '1008+') : #bsr == 4 ? (#month == 1 or #month == 11 ? '1148+' : #month == 12 ? '1201+' : '1044+') : #bsr == 3 ? (#month == 1 or #month == 11 ? '1206+' : #month == 12 ? '1260+' : '1096+') : #bsr == 2 ? (#month == 1 or #month == 11 ? '1238+' : #month == 12 ? '1294+' : '1125+') : (#month == 1 or #month == 11 ? '1304+' : #month == 12 ? '1363+' : '1185+')
+            </column>
+        </insert>
+        <insert tableName="formulas">
+            <column name="name">GB_AMAZON_AUDIOBOOK_SALES_ESTIMATION_FORMULA</column>
+            <column name="expression">
+                #bsr > 29000 ? '0' : #bsr > 9000 ? '1' : #bsr > 4500 ? '2' : #bsr > 3600 ? '2-3' : #bsr > 3100 ? '3' : #bsr > 2550 ? (#month == 1 or #month == 11 ? '3-4' : #month == 12 ? '3-5' : '3-4') : #bsr > 2300 ? (#month == 1 or #month == 11 ? '4-6' : #month == 12 ? '5-6' : '4-5') : #bsr > 2200 ? (#month == 1 or #month == 11 ? '6-7' : #month == 12 ? '6-7' : '5-6') : #bsr > 2100 ? (#month == 1 or #month == 11 ? '7-8' : #month == 12 ? '7-8' : '6-7') : #bsr > 2000 ? (#month == 1 or #month == 11 ? '7-9' : #month == 12 ? '7-9' : '6-8') : #bsr > 1900 ? (#month == 1 or #month == 11 ? '8-9' : #month == 12 ? '8-9' : '7-8') : #bsr > 1800 ? (#month == 1 or #month == 11 ? '9-10' : #month == 12 ? '9-10' : '8-9') : #bsr > 1700 ? (#month == 1 or #month == 11 ? '10-11' : #month == 12 ? '10-12' : '9-10') : #bsr > 1600 ? (#month == 1 or #month == 11 ? '11-12' : #month == 12 ? '12-13' : '10-11') : #bsr > 1500 ? (#month == 1 or #month == 11 ? '11-13' : #month == 12 ? '12-14' : '10-12') : #bsr > 1400 ? (#month == 1 or #month == 11 ? '12-14' : #month == 12 ? '13-15' : '11-13') : #bsr > 1300 ? (#month == 1 or #month == 11 ? '13-15' : #month == 12 ? '14-16' : '12-14') : #bsr > 1200 ? (#month == 1 or #month == 11 ? '15-18' : #month == 12 ? '16-18' : '14-16') : #bsr > 1100 ? (#month == 1 or #month == 11 ? '17-19' : #month == 12 ? '17-20' : '15-17') : #bsr > 1000 ? (#month == 1 or #month == 11 ? '18-20' : #month == 12 ? '18-21' : '16-18') : #bsr > 950 ? (#month == 1 or #month == 11 ? '19-22' : #month == 12 ? '20-23' : '17-20') : #bsr > 900 ? (#month == 1 or #month == 11 ? '21-23' : #month == 12 ? '22-24' : '19-21') : #bsr > 850 ? (#month == 1 or #month == 11 ? '22-25' : #month == 12 ? '23-26' : '20-23') : #bsr > 800 ? (#month == 1 or #month == 11 ? '24-28' : #month == 12 ? '25-29' : '22-25') : #bsr > 750 ? (#month == 1 or #month == 11 ? '25-30' : #month == 12 ? '26-31' : '23-27') : #bsr > 700 ? (#month == 1 or #month == 11 ? '28-31' : #month == 12 ? '29-32' : '25-28') : #bsr > 650 ? (#month == 1 or #month == 11 ? '30-33' : #month == 12 ? '31-35' : '27-30') : #bsr > 600 ? (#month == 1 or #month == 11 ? '32-36' : #month == 12 ? '33-38' : '29-33') : #bsr > 550 ? (#month == 1 or #month == 11 ? '34-40' : #month == 12 ? '36-41' : '31-36') : #bsr > 500 ? (#month == 1 or #month == 11 ? '37-44' : #month == 12 ? '39-46' : '34-40') : #bsr > 450 ? (#month == 1 or #month == 11 ? '41-48' : #month == 12 ? '43-51' : '37-44') : #bsr > 400 ? (#month == 1 or #month == 11 ? '44-53' : #month == 12 ? '46-55' : '40-48') : #bsr > 350 ? (#month == 1 or #month == 11 ? '48-58' : #month == 12 ? '51-61' : '44-53') : #bsr > 300 ? (#month == 1 or #month == 11 ? '53-65' : #month == 12 ? '55-68' : '48-59') : #bsr > 250 ? (#month == 1 or #month == 11 ? '59-72' : #month == 12 ? '62-75' : '54-65') : #bsr > 200 ? (#month == 1 or #month == 11 ? '65-78' : #month == 12 ? '68-82' : '59-71') : #bsr > 150 ? (#month == 1 or #month == 11 ? '72-86' : #month == 12 ? '75-90' : '65-78') : #bsr > 100 ? (#month == 1 or #month == 11 ? '79-95' : #month == 12 ? '83-99' : '72-86') : #bsr > 75 ? (#month == 1 or #month == 11 ? '85-105' : #month == 12 ? '89-109' : '77-95') : #bsr > 50 ? (#month == 1 or #month == 11 ? '94-114' : #month == 12 ? '98-120' : '85-104') : #bsr > 30 ? (#month == 1 or #month == 11 ? '102-127' : #month == 12 ? '107-132' : '93-115') : #bsr > 20 ? (#month == 1 or #month == 11 ? '113-142' : #month == 12 ? '118-148' : '103-129') : #bsr > 10 ? (#month == 1 or #month == 11 ? '129-158' : #month == 12 ? '135-166' : '117-144') : #bsr > 5 ? (#month == 1 or #month == 11 ? '145-196' : #month == 12 ? '152-205' : '132-178') : #bsr > 4 ? (#month == 1 or #month == 11 ? '158+' : #month == 12 ? '166+' : '144+') : #bsr > 3 ? (#month == 1 or #month == 11 ? '164+' : #month == 12 ? '171+' : '149+') : #bsr > 2 ? (#month == 1 or #month == 11 ? '173+' : #month == 12 ? '181+' : '157+') : #bsr > 1 ? (#month == 1 or #month == 11 ? '177+' : #month == 12 ? '185+' : '161+') : (#month == 1 or #month == 11 ? '186+' : #month == 12 ? '194+' : '169+')
+            </column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="db-insert-change-set-18" author="Mani Rai" context="default">
+        <update tableName="marketplaces">
+            <column name="priority_level" value="1"/>
+            <where>id=1</where>
+        </update>
+        <update tableName="marketplaces">
+            <column name="priority_level" value="2"/>
+            <where>id=2</where>
+        </update>
+        <update tableName="marketplaces">
+            <column name="priority_level" value="3"/>
+            <where>id=4</where>
+        </update>
+        <update tableName="marketplaces">
+            <column name="priority_level" value="4"/>
+            <where>id=9</where>
+        </update>
+        <update tableName="marketplaces">
+            <column name="priority_level" value="5"/>
+            <where>id=7</where>
+        </update>
+        <update tableName="marketplaces">
+            <column name="priority_level" value="6"/>
+            <where>id=6</where>
+        </update>
+        <update tableName="marketplaces">
+            <column name="priority_level" value="7"/>
+            <where>id=3</where>
+        </update>
+        <update tableName="marketplaces">
+            <column name="priority_level" value="8"/>
+            <where>id=5</where>
+        </update>
+        <update tableName="marketplaces">
+            <column name="priority_level" value="9"/>
+            <where>id=8</where>
+        </update>
+        <update tableName="marketplaces">
+            <column name="priority_level" value="10"/>
+            <where>id=10</where>
+        </update>
+        <update tableName="marketplaces">
+            <column name="priority_level" value="11"/>
+            <where>id=11</where>
+        </update>
+        <update tableName="marketplaces">
+            <column name="priority_level" value="12"/>
+            <where>id=12</where>
+        </update>
+        <update tableName="marketplaces">
+            <column name="priority_level" value="1"/>
+            <where>id=13</where>
+        </update>
+        <update tableName="marketplaces">
+            <column name="priority_level" value="2"/>
+            <where>id=14</where>
+        </update>
+        <insert tableName="subscription_plans">
+            <column name="id">1</column>
+            <column name="name">PRO67</column>
+        </insert>
+        <insert tableName="subscription_plans">
+            <column name="id">2</column>
+            <column name="name">Basic Annual</column>
+        </insert>
+        <insert tableName="subscription_plans">
+            <column name="id">3</column>
+            <column name="name">Basic Annual Old</column>
+        </insert>
+        <insert tableName="subscription_plans">
+            <column name="id">4</column>
+            <column name="name">Basic Monthly</column>
+        </insert>
+        <insert tableName="subscription_plans">
+            <column name="id">5</column>
+            <column name="name">BASIC37</column>
+        </insert>
+        <insert tableName="subscription_plans">
+            <column name="id">6</column>
+            <column name="name">Chrome Extension Annual</column>
+        </insert>
+        <insert tableName="subscription_plans">
+            <column name="id">7</column>
+            <column name="name">Chrome Extension Monthly</column>
+        </insert>
+        <insert tableName="subscription_plans">
+            <column name="id">8</column>
+            <column name="name">Custom Monthly</column>
+        </insert>
+        <insert tableName="subscription_plans">
+            <column name="id">9</column>
+            <column name="name">Pro Annual</column>
+        </insert>
+        <insert tableName="subscription_plans">
+            <column name="id">10</column>
+            <column name="name">Pro Monthly</column>
+        </insert>
+        <insert tableName="subscription_plans">
+            <column name="id">11</column>
+            <column name="name">Sign up for one month</column>
+        </insert>
+        <insert tableName="subscription_plans">
+            <column name="id">12</column>
+            <column name="name">Starter Annual</column>
+        </insert>
+        <insert tableName="subscription_plans">
+            <column name="id">13</column>
+            <column name="name">Starter Monthly</column>
+        </insert>
+        <insert tableName="subscription_plans">
+            <column name="id">14</column>
+            <column name="name">Starter Yearly</column>
+        </insert>
+        <insert tableName="subscription_plans">
+            <column name="id">15</column>
+            <column name="name">Trial</column>
+        </insert>
+        <insert tableName="feature_usage_limits">
+            <column name="feature">LISTING_ANALYSIS</column>
+            <column name="subscription_plan_id">2</column>
+            <column name="max_allowed_usage">50</column>
+            <column name="enforcement_method">MONTHLY</column>
+        </insert>
+        <insert tableName="feature_usage_limits">
+            <column name="feature">LISTING_ANALYSIS</column>
+            <column name="subscription_plan_id">3</column>
+            <column name="max_allowed_usage">50</column>
+            <column name="enforcement_method">MONTHLY</column>
+        </insert>
+        <insert tableName="feature_usage_limits">
+            <column name="feature">LISTING_ANALYSIS</column>
+            <column name="subscription_plan_id">4</column>
+            <column name="max_allowed_usage">50</column>
+            <column name="enforcement_method">MONTHLY</column>
+        </insert>
+        <insert tableName="feature_usage_limits">
+            <column name="feature">LISTING_ANALYSIS</column>
+            <column name="subscription_plan_id">5</column>
+            <column name="max_allowed_usage">50</column>
+            <column name="enforcement_method">MONTHLY</column>
+        </insert>
+        <insert tableName="feature_usage_limits">
+            <column name="feature">LISTING_ANALYSIS</column>
+            <column name="subscription_plan_id">6</column>
+            <column name="max_allowed_usage">0</column>
+            <column name="enforcement_method">MONTHLY</column>
+        </insert>
+        <insert tableName="feature_usage_limits">
+            <column name="feature">LISTING_ANALYSIS</column>
+            <column name="subscription_plan_id">7</column>
+            <column name="max_allowed_usage">0</column>
+            <column name="enforcement_method">MONTHLY</column>
+        </insert>
+        <insert tableName="feature_usage_limits">
+            <column name="feature">LISTING_ANALYSIS</column>
+            <column name="subscription_plan_id">8</column>
+            <column name="max_allowed_usage">150</column>
+            <column name="enforcement_method">MONTHLY</column>
+        </insert>
+        <insert tableName="feature_usage_limits">
+            <column name="feature">LISTING_ANALYSIS</column>
+            <column name="subscription_plan_id">9</column>
+            <column name="max_allowed_usage">150</column>
+            <column name="enforcement_method">MONTHLY</column>
+        </insert>
+        <insert tableName="feature_usage_limits">
+            <column name="feature">LISTING_ANALYSIS</column>
+            <column name="subscription_plan_id">10</column>
+            <column name="max_allowed_usage">150</column>
+            <column name="enforcement_method">MONTHLY</column>
+        </insert>
+        <insert tableName="feature_usage_limits">
+            <column name="feature">LISTING_ANALYSIS</column>
+            <column name="subscription_plan_id">11</column>
+            <column name="max_allowed_usage">15</column>
+            <column name="enforcement_method">MONTHLY</column>
+        </insert>
+        <insert tableName="feature_usage_limits">
+            <column name="feature">LISTING_ANALYSIS</column>
+            <column name="subscription_plan_id">12</column>
+            <column name="max_allowed_usage">15</column>
+            <column name="enforcement_method">MONTHLY</column>
+        </insert>
+        <insert tableName="feature_usage_limits">
+            <column name="feature">LISTING_ANALYSIS</column>
+            <column name="subscription_plan_id">13</column>
+            <column name="max_allowed_usage">15</column>
+            <column name="enforcement_method">MONTHLY</column>
+        </insert>
+        <insert tableName="feature_usage_limits">
+            <column name="feature">LISTING_ANALYSIS</column>
+            <column name="subscription_plan_id">14</column>
+            <column name="max_allowed_usage">15</column>
+            <column name="enforcement_method">MONTHLY</column>
+        </insert>
+        <insert tableName="feature_usage_limits">
+            <column name="feature">LISTING_ANALYSIS</column>
+            <column name="subscription_plan_id">15</column>
+            <column name="max_allowed_usage">15</column>
+            <column name="enforcement_method">MONTHLY</column>
+        </insert>
+    </changeSet>
+		
+</databaseChangeLog>

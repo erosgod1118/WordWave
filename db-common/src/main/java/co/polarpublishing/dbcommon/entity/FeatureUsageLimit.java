@@ -22,7 +22,7 @@ import lombok.ToString;
 @Table(name = "feature_usage_limits")
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @ToString(onlyExplicitlyIncluded = true)
 @Builder
 @AllArgsConstructor

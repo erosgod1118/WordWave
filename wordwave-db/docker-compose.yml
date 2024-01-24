@@ -1,0 +1,13 @@
+version: '2'
+services:
+  mysql:
+    image: mysql
+    volumes:
+       - ./data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: aEDNACczkhSkX5ugRWc7mOUiN9tpMUpD
+      MYSQL_DATABASE: wordwave_db
+      MYSQL_USER: wordwave
+      MYSQL_PASSWORD: aEDNACczkhSkX5ugRWc7mOUiN9tpMUpD
+    ports:
+      - "3306:3306"
