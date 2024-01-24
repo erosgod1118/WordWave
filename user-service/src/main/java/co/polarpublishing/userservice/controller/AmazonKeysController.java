@@ -48,7 +48,9 @@ public class AmazonKeysController {
 	}
 
 	@ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
-	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success. Returns updated user object.")})
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "Success. Returns updated user object.")
+	})
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ResponseEntity getListOfAmazonKeysForUser(HttpServletRequest request) {
 		try {
@@ -57,15 +59,17 @@ public class AmazonKeysController {
 
 			return ResponseEntity.ok(amazonKeysService.getKeysForUser(user));
 		} catch (UserNotFoundException ex) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-					ErrorResponse
-						.builder()
-						.code(ex.getCode())
-						.message(ex.getMessage())
-						.status(HttpStatus.BAD_REQUEST.value())
-						.timestamp(DateAndTimeUtil.getCurrentEpochTime())
-						.build()
-					);
+			return ResponseEntity
+							.status(HttpStatus.BAD_REQUEST)
+							.body(
+								ErrorResponse
+									.builder()
+									.code(ex.getCode())
+									.message(ex.getMessage())
+									.status(HttpStatus.BAD_REQUEST.value())
+									.timestamp(DateAndTimeUtil.getCurrentEpochTime())
+									.build()
+							);
 		}
 	}
 

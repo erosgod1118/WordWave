@@ -20,28 +20,37 @@ public class AmazonKeysAssembler {
 	}
 
 	public AmazonKeysDto toDto(AmazonKeys keys) {
-		return AmazonKeysDto.builder()
+		return AmazonKeysDto
+						.builder()
 						.id(keys.getId())
 						.accessKey(keys.getAccessKey())
 						.associateId(keys.getAssociateId())
 						.secretKey(keys.getSecretKey())
-						.marketplace(marketplaceAssembler.toDto(keys.getMarketplace()))
+						.marketplace(
+							marketplaceAssembler
+								.toDto(keys.getMarketplace())
+						)
 						.build();
 	}
 
 	public AmazonKeys toEntity(long userId, AmazonKeysDto keys) {
-			return AmazonKeys.builder()
+			return AmazonKeys
+							.builder()
 							.associateId(keys.getAssociateId())
 							.accessKey(keys.getAccessKey())
 							.secretKey(keys.getSecretKey())
 							.marketplace(
-								Marketplace.builder()
+								Marketplace
+									.builder()
 									.id(keys.getMarketplace().getId())
-									.build())
+									.build()
+							)
 							.user(
-									User.builder()
-										.id(userId)
-										.build())
+								User
+									.builder()
+									.id(userId)
+									.build()
+							)
 							.build();
 	}
 

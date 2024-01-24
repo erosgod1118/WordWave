@@ -33,7 +33,9 @@ public class AmazonKeysServiceImpl implements AmazonKeysService {
 
 	@Override
 	public List<MarketplaceKeysDto> getListOfMarketplaces() {
-		return marketplaceReadRepository.findAll().stream()
+		return marketplaceReadRepository
+				.findAll()
+				.stream()
 				.map(marketplaceAssembler::toDto)
 				.collect(Collectors.toList());
 	}
@@ -42,7 +44,7 @@ public class AmazonKeysServiceImpl implements AmazonKeysService {
 	public AmazonKeysDto addKeys(Long userId, AmazonKeysDto dto) throws KeysForSuchMarketplaceAlreadyExistsException {
 		AmazonKeys keys = amazonKeysWriteRepository.findByUserAndMarketplace(userId, dto.getMarketplace().getId());
 		if (keys != null) {
-				throw new KeysForSuchMarketplaceAlreadyExistsException();
+			throw new KeysForSuchMarketplaceAlreadyExistsException();
 		}
 
 		keys = amazonKeysWriteRepository.save(assembler.toEntity(userId, dto));

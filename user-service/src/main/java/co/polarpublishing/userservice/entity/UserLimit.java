@@ -5,6 +5,7 @@ import co.polarpublishing.dbcommon.entity.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 @Builder
 @Entity
 @Table(name = "user_limits")

@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
-import org.hibernate.mapping.Map;
+// import org.hibernate.mapping.Map;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -93,6 +93,7 @@ public class UserController {
   public ResponseEntity findById(@PathVariable Long id) {
     try {
       UserDto userDto = userService.findById(id);
+
       return ResponseEntity.ok(userDto);
     } catch (UserNotFoundException ex) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -121,6 +122,7 @@ public class UserController {
       UserDto userDto = userService.findByEmail(tokenInfo.getEmail());
 
       userService.changePassword(userDto.getUserId(), changePasswordDto);
+
       return ResponseEntity.noContent().build();
     } catch (UserNotFoundException ex) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -396,6 +398,7 @@ public class UserController {
   @RequestMapping(value = "/get-wp-data", method = RequestMethod.GET)
   public ResponseEntity<UserWpDataDto> getDataFromWp(@RequestParam(required = false) String userEmail, HttpServletRequest request) throws UserNotFoundException {
     String email = "";
+    
     if (userEmail != null && !userEmail.equals("")) {
       email = userEmail;
     } else {
@@ -547,6 +550,7 @@ public class UserController {
   @RequestMapping(value = "/limits", method = RequestMethod.GET, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
   public ResponseEntity getUserLimits(@RequestParam(required = false) Long userId, @RequestParam(required = false) String type, HttpServletRequest request) throws UserNotFoundException {
     Long id = userId;
+    
     if (id == null || id.equals(0L)) {
       id = jwtService.getAccessTokenInfo(request.getHeader(HttpHeaders.AUTHORIZATION)).getUserId();
     }
@@ -568,7 +572,6 @@ public class UserController {
   public void updateUserDataFromWp() throws UserNotFoundException {
     userService.updateUserWpData();
   }
-
 
   @GetMapping(path = "/is-admin")
   public ResponseEntity isAdmin(HttpServletRequest request) {

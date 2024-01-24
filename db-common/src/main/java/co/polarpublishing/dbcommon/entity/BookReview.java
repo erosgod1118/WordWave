@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
+// import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,13 +16,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "reviews")
 @Builder
-@Slf4j
+// @Slf4j
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+// @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class BookReview extends AbstractEntity {
 
 	@Id

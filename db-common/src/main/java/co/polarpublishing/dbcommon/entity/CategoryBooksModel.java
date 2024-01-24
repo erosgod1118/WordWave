@@ -3,14 +3,13 @@ package co.polarpublishing.dbcommon.entity;
 import co.polarpublishing.common.constant.BookType;
 
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "category_books")
 @Builder
-@Slf4j
+// @Slf4j
 @Getter
 @Setter
 @AllArgsConstructor
@@ -50,6 +49,7 @@ public class CategoryBooksModel {
 	private Double price;
 
 	@Column(name = "created_at")
+	@Builder.Default
 	private Long createdAt = System.currentTimeMillis();
 
 	@Column(name = "updated_at")

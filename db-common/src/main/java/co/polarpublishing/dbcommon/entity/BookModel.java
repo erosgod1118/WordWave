@@ -11,13 +11,13 @@ import co.polarpublishing.common.vo.BookHistoryItem;
 import co.polarpublishing.dbcommon.entity.attributeconverter.BothWaysJsonNodeConverter;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+// import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+// import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+// import java.text.ParseException;
+// import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -48,7 +48,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+// @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class BookModel extends AbstractEntity {
 
   @EmbeddedId
