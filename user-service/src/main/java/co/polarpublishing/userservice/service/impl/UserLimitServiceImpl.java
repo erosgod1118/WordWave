@@ -21,20 +21,55 @@ import java.util.Set;
 @AllArgsConstructor
 public class UserLimitServiceImpl implements UserLimitService {
 
-	private static final Set<UserLimit.UserLimitBuilder> TRIAL_LIMITS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-		UserLimit.builder().name("POST:/book-tracker-service/api/v1/tracking-books").type("BOOK_TRACKER_BOOKS").value(0).max(1),
-		UserLimit.builder().name("POST:/book-tracker-service/api/v1/niche-finder").type("NICHE_FINDER_SEARCHES").value(0).max(2),
-		UserLimit.builder().name("GET:/administration-service/api/v1/configurations/limit").type("CHROME_EXTENSION").value(0).max(15),
-		UserLimit.builder().name("GET:/book-tracker-service/api/v1/suggestions/limit").type("KEYWORD_GENERATOR_SEARCHES").value(0).max(3),
-		UserLimit.builder().name("POST:/keyword-research-service/api/v1/keyword-research-updates/start").type("KEYWORD_RESEARCH_SEARCHES").value(0).max(3),
-		UserLimit.builder().name("GET:/category-explorer-service/api/v1/categoryexplorer/subcategories/").type("CATEGORY_EXPLORER_SEARCHES").value(0).max(2)
-	)));
+	private static final Set<UserLimit.UserLimitBuilder> TRIAL_LIMITS = 
+		Collections.unmodifiableSet(
+			new HashSet<>(
+				Arrays.asList(
+					UserLimit
+						.builder()
+						.name("POST:/book-tracker-service/api/v1/tracking-books")
+						.type("BOOK_TRACKER_BOOKS")
+						.value(0)
+						.max(1),
+					UserLimit
+						.builder()
+						.name("POST:/book-tracker-service/api/v1/niche-finder")
+						.type("NICHE_FINDER_SEARCHES")
+						.value(0)
+						.max(2),
+					UserLimit
+						.builder()
+						.name("GET:/administration-service/api/v1/configurations/limit")
+						.type("CHROME_EXTENSION")
+						.value(0)
+						.max(15),
+					UserLimit
+						.builder()
+						.name("GET:/book-tracker-service/api/v1/suggestions/limit")
+						.type("KEYWORD_GENERATOR_SEARCHES")
+						.value(0)
+						.max(3),
+					UserLimit
+						.builder()
+						.name("POST:/keyword-research-service/api/v1/keyword-research-updates/start")
+						.type("KEYWORD_RESEARCH_SEARCHES")
+						.value(0)
+						.max(3),
+					UserLimit
+						.builder()
+						.name("GET:/category-explorer-service/api/v1/categoryexplorer/subcategories/")
+						.type("CATEGORY_EXPLORER_SEARCHES")
+						.value(0)
+						.max(2)
+				)
+			)
+		);
 
 	UserLimitRepository userLimitRepository;
 
 	public boolean exceeds(String endpoint, String type, Long userId, String plan) {
 		if (!"Trial".equals(plan)) {
-				return false;
+			return false;
 		}
 
 		UserLimit userLimit = userLimitRepository.findByUserIdAndType(userId, type);

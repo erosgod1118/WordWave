@@ -33,7 +33,6 @@
     <apache.commons.io.version>2.5</apache.commons.io.version>
     <springfox-bean-validators.version>2.4.0</springfox-bean-validators.version>
     <fmp.version>4.3.1</fmp.version>
-    <spring-cloud-kubernetes.version>1.0.1.RELEASE</spring-cloud-kubernetes.version>
   </properties>
 
   <dependencies>
@@ -98,21 +97,6 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-kubernetes</artifactId>
-      <version>${spring-cloud-kubernetes.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-kubernetes-config</artifactId>
-      <version>${spring-cloud-kubernetes.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-kubernetes-ribbon</artifactId>
-      <version>${spring-cloud-kubernetes.version}</version>
     </dependency>
   </dependencies>
 

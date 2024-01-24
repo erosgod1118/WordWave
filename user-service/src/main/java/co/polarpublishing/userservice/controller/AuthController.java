@@ -66,7 +66,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class AuthController {
 
-	private static final String USER_NOT_EXISTS_MSG = "User with such email and password does not exist.";
+	// private static final String USER_NOT_EXISTS_MSG = "User with such email and password does not exist.";
 	private static final String CONFIRMATION_TOKEN_PLACEHOLDER = "[CONFIRMATION_TOKEN_PLACEHOLDER]";
 	private static final String RESET_TOKEN_PLACEHOLDER = "[RESET_TOKEN_PLACEHOLDER]";
 	private static final String NAME_PLACEHOLDER = "[NAME_PLACEHOLDER]";
